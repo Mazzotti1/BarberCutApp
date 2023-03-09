@@ -36,7 +36,9 @@ export function ServicesGrid(){
                             <View key={index} className='flex items-center  w-fit rounded-3xl'style={{backgroundColor:'#0a0a0a'}}>
                             <View>{item.img}</View>
                             <Text className='text-gray-300 text-lg font-regular p-1 '>{item.title}</Text>
+
                             </View>
+
 
                          )
                           })}

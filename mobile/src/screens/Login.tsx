@@ -25,19 +25,33 @@ export function Login(){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    async function saveUser(token:string) {
+        await AsyncStorage.setItem('userToken', JSON.stringify(token))
+      }
+
+
+
+
     const handleSubmit = async () => {
-        try {
-            const response = await api.post('/login', { email, password });
-            const { token } = response.data;
+        if (email && password) {
+          try {
+        const  response =  await api.post('/login', { email, password });
+            const token = response.data
+            await saveUser(token)
 
-
-            await AsyncStorage.setItem('token', token);
+            setEmail('');
+            setPassword('');
 
             Alert.alert('Login realizado com sucesso!');
+            navigate('home')
           } catch (error) {
             Alert.alert('Erro ao realizar login', 'Verifique seu email e senha e tente novamente.');
           }
-        };
+        } else {
+          Alert.alert('Por favor, preencha seu email e senha para fazer login');
+        }
+      };
+
 
     return(
         <View className='flex-1'>

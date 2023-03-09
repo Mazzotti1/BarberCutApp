@@ -9,6 +9,7 @@ import { NavContainer } from "../components/NavContainer";
 import Logo from '../assets/logo.svg'
 import {DeviceMobileCamera, Envelope, InstagramLogo, FacebookLogo} from 'phosphor-react-native'
 
+
 const days = ['Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
 
 const time = ['13:00 - 20:30']
