@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, Text } from "react-native";
+import { View, TouchableOpacity, Text, Animated, TouchableWithoutFeedback, StyleSheet } from "react-native";
 
 import { useNavigation, useIsFocused  } from "@react-navigation/native";
 
@@ -8,14 +8,19 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {User} from 'phosphor-react-native'
 
 
+interface SidebarProps {
+  handleSidebar: () => void
+}
 
-
-export function Header() {
+export function Header({handleSidebar}:SidebarProps) {
 
   const navigation = useNavigation();
 
   const [isLogged, setIsLogged] = useState(false);
   const isFocused = useIsFocused();
+
+  const [openSidebar, setOpenSidebar] = useState(false);
+  const translateX = useRef(new Animated.Value(-400)).current;
 
 
   useEffect(() => {
@@ -31,6 +36,8 @@ export function Header() {
 
 
 
+
+
   return (
     <View className="w-screen h-16 justify-center bg-black   ">
 
@@ -38,7 +45,7 @@ export function Header() {
 
         {isLogged ? (
           <View className="flex-row items-center justify-between">
-                <TouchableOpacity >
+                <TouchableOpacity onPress={() => handleSidebar()} >
                     <View  className="bg-white w-7 h-1 ml-10 mb-1 rounded-md"></View>
                     <View  className="bg-white w-7 h-1 ml-10 mb-1 rounded-md"></View>
                     <View  className="bg-white w-7 h-1 ml-10 rounded-md"></View>
@@ -54,6 +61,8 @@ export function Header() {
                   </View>
                 </View>
 
+
+
          </View>
          ):(
           <View className="items-center"><Text className="text-white font-regular  text-2xl"  >SHARP CUT</Text></View>
@@ -63,3 +72,4 @@ export function Header() {
     </View>
   )
 }
+

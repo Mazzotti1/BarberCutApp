@@ -14,7 +14,9 @@ import { Login } from '../screens/Login';
 export function AppRoutes() {
   return (
     <Navigator screenOptions={{ headerShown: false }}>
+
       <Screen
+
         name="home"
         component={Home}
       />

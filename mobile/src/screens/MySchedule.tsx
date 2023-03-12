@@ -1,14 +1,36 @@
 import { useNavigation } from "@react-navigation/native"
 import { Calendar, FacebookLogo, GoogleLogo } from "phosphor-react-native"
-import { View, Text, TouchableOpacity } from "react-native"
+import { useRef, useState } from "react"
+import { View, Text, TouchableOpacity, Animated, TouchableWithoutFeedback, StyleSheet } from "react-native"
 import { ScrollView } from "react-native"
 
 import { Header } from "../components/Header/Header"
 import { NavContainer } from "../components/NavContainer"
+import Sidebar from "../components/Utils/SideBar"
 
 
 export function MySchedule (){
     const { navigate } = useNavigation()
+
+  const [openSidebar, setOpenSidebar] = useState(false);
+  const translateX = useRef(new Animated.Value(-400)).current;
+
+  function handleSidebar(){
+    setOpenSidebar(true);
+    Animated.timing(translateX, {
+      toValue: -10,
+      duration: 500,
+      useNativeDriver: true,
+    }).start();
+  }
+  function handleCloseSideBar(){
+    Animated.timing(translateX, {
+      toValue: -350,
+      duration: 500,
+      useNativeDriver: true,
+    }).start(() => setOpenSidebar(false));
+  }
+
 
     return(
         <View className="flex-1">
@@ -19,7 +41,10 @@ export function MySchedule (){
             style={{backgroundColor:'#030303',}}
             >
 
-                <Header />
+              <Header handleSidebar={handleSidebar}/>
+
+              <Sidebar isOpen={openSidebar}  />
+
             <View className="mt-2 bg-black h-full  items-center">
                 <View className="mt-5  ">
                     <Calendar size={208} color="#ededed" weight="thin" />
@@ -66,6 +91,11 @@ export function MySchedule (){
             </View>
 
             </ScrollView>
+            {openSidebar && (
+              <TouchableWithoutFeedback onPress={handleCloseSideBar}>
+                <View style={StyleSheet.absoluteFillObject} />
+              </TouchableWithoutFeedback>
+            )}
             <NavContainer />
         </View>
     )

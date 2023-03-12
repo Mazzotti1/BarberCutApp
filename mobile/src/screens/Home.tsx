@@ -1,6 +1,7 @@
 import { Loading } from "../components/Utils/Loading";
 
-import { View, Text, ScrollView, TouchableOpacity, Linking } from "react-native"
+import { View, Text, ScrollView, TouchableOpacity, Linking,
+   Animated, TouchableWithoutFeedback, StyleSheet } from "react-native"
 
 import { Header } from "../components/Header/Header"
 import { HomeButtons } from "../components/HomeButtons";
@@ -8,12 +9,33 @@ import { NavContainer } from "../components/NavContainer";
 
 import Logo from '../assets/logo.svg'
 import {DeviceMobileCamera, Envelope, InstagramLogo, FacebookLogo} from 'phosphor-react-native'
+import { useRef, useState } from "react";
+import Sidebar from "../components/Utils/SideBar";
 
 
 const days = ['Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
 
 const time = ['13:00 - 20:30']
 export function Home(){
+
+  const [openSidebar, setOpenSidebar] = useState(false);
+  const translateX = useRef(new Animated.Value(-400)).current;
+
+  function handleSidebar(){
+    setOpenSidebar(true);
+    Animated.timing(translateX, {
+      toValue: -10,
+      duration: 500,
+      useNativeDriver: true,
+    }).start();
+  }
+  function handleCloseSideBar(){
+    Animated.timing(translateX, {
+      toValue: -350,
+      duration: 500,
+      useNativeDriver: true,
+    }).start(() => setOpenSidebar(false));
+  }
 
     if (!Home) {
         return (
@@ -28,7 +50,13 @@ export function Home(){
     contentContainerStyle={{ paddingBottom: 100, }}
     className='flex-1 pt-11'
     style={{backgroundColor:'#030303',}}>
-        <Header />
+
+
+        <Header handleSidebar={handleSidebar}/>
+
+
+          <Sidebar isOpen={openSidebar}  />
+
 
         <View className=" flex-1 items-center mt-6">
           <Logo width={350} height={335} />
@@ -145,8 +173,18 @@ export function Home(){
         </View>
 
     </ScrollView>
+
+    {openSidebar && (
+      <TouchableWithoutFeedback onPress={handleCloseSideBar}>
+        <View style={StyleSheet.absoluteFillObject} />
+      </TouchableWithoutFeedback>
+    )}
+
         <NavContainer />
     </View>
 
       )
 }
+
+
+
