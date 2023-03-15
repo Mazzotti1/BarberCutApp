@@ -38,3 +38,16 @@ export async function findUsers() {
   })
 }
 
+export async function findUser(id: string) {
+  return prisma.user.findUnique({
+    where: { id },
+    select: {
+      userNumber:true,
+      email: true,
+      nome: true,
+      id: true,
+    },
+  });
+}
+
+

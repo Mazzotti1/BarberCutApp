@@ -1,8 +1,12 @@
-import  { FastifyInstance } from "fastify";
+import  { FastifyInstance, FastifyReply, FastifyRequest } from "fastify";
 import prisma from "../utils/prisma";
-import { loginHandler, registerUserHandler, getUsersHandler,  } from "./user.controller";
-import { $ref } from "./user.schema";
+import { loginHandler, registerUserHandler, getUsersHandler, getUser,  } from "./user.controller";
+import { $ref, LoginInput } from "./user.schema";
+import { findUserByEmail, findUserByNumber } from "./user.service";
 import { admin } from "./userAdmin.auth";
+
+
+
 
 async function userRoutes(app: FastifyInstance) {
     app.post('/register', {
@@ -29,17 +33,29 @@ async function userRoutes(app: FastifyInstance) {
     reply.send({ message: 'Bem vindo admin' });
     });
 
-    app.get('/', {preHandler:[app.authenticate]},getUsersHandler)
+    app.get('/users', {preHandler:[app.authenticate]},getUsersHandler)
 
 
-//     app.patch('/myData',{
-//         preHandler:[app.authenticate],
-//         schema:{
-//             body: $ref('updateUserSchema'),
-//             response:{200: $ref('createUserResponseSchema'),
-//         },
-//       },
-//     },updateUserHandler)
+    app.get<{ Params: { id: string } }>('/users/:id', async (request, reply) => {
+        try {
+          const id = request.params.id;
+          const user = await getUser(id);
+          if (!user) {
+            reply.status(404).send({
+              error: 'Usuário não encontrado.',
+            });
+            return;
+          }
+          reply.send(user);
+        } catch (error) {
+          reply.status(500).send({
+            error: 'Erro interno do servidor.',
+          });
+        }
+      });
+
+
+
 
 
 }

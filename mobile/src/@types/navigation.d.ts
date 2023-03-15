@@ -8,6 +8,8 @@ export declare global {
         myschedule:undefined;
         register:undefined;
         login:undefined;
+        mydata:undefined;
+        address:undefined;
       }
     }
   }

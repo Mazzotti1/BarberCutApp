@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 
-import {View, Text, ScrollView, SafeAreaView, Animated, TouchableWithoutFeedback, StyleSheet} from 'react-native'
+import {View, Text, ScrollView, SafeAreaView, Animated, TouchableWithoutFeedback, StyleSheet, TouchableOpacity} from 'react-native'
 import { Loading } from '../components/Utils/Loading';
 
 import { NavContainer } from '../components/NavContainer';
@@ -47,6 +47,11 @@ import Sidebar from '../components/Utils/SideBar';
 
 
     return(
+      <TouchableOpacity
+      activeOpacity={1}
+      onPress={handleCloseSideBar}
+      style={{ flex: 1 }}
+    >
         <View className='flex-1'>
 
             <ScrollView
@@ -91,13 +96,10 @@ import Sidebar from '../components/Utils/SideBar';
 
 
             </ScrollView>
-            {openSidebar && (
-            <TouchableWithoutFeedback onPress={handleCloseSideBar}>
-              <View style={StyleSheet.absoluteFillObject} />
-            </TouchableWithoutFeedback>
-              )}
+
            <NavContainer />
 
         </View>
+        </TouchableOpacity>
     )
  }

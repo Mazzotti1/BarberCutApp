@@ -1,23 +1,31 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { House, MapPin, Scissors, SignOut, User, UsersThree } from "phosphor-react-native";
-import { useEffect, useRef, useState } from "react";
-import { Animated, Text, View, StyleSheet, TouchableWithoutFeedback, TouchableOpacity } from "react-native";
+import { useEffect, useRef, useState, } from "react";
+import { Animated, Text, View, StyleSheet, TouchableOpacity, TouchableWithoutFeedback } from "react-native";
+
+
 import { api } from "../../lib/axios";
-
 import jwt_decode from 'jwt-decode'
-import { Home } from "../../screens/Home";
-import { Barbers } from "../../screens/Barbers";
-import { Services } from "../../screens/Services";
 
+
+import { useNavigation } from "@react-navigation/native";
 
 interface SidebarProps {
     isOpen: boolean;
-
   }
 
-export default function Sidebar({ isOpen,  }: SidebarProps) {
-    const translateX = useRef(new Animated.Value(-400)).current;
+   interface DecodedToken {
+     id: string;
+     name: string;
+     email: string;
 
+   }
+
+export default function Sidebar({ isOpen }: SidebarProps) {
+    const translateX = useRef(new Animated.Value(-400)).current;
+    const [usuario, setUsuario] = useState({ nome: '', email: '' });
+
+    const { navigate } = useNavigation()
 
     useEffect(() => {
       if (isOpen) {
@@ -34,31 +42,57 @@ export default function Sidebar({ isOpen,  }: SidebarProps) {
         }).start();
       }
 
+      async function carregarUsuario() {
+        const token = await AsyncStorage.getItem('userToken');
+        const decodeToken = jwt_decode(token ?? '') as DecodedToken
+        const userId = decodeToken.id
+        try {
+          const response = await api.get(`/users/${userId}`, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
+          setUsuario(response.data);
+        } catch (error) {
+          console.error(error);
+        }
+
+      }
+      carregarUsuario()
     }, [isOpen]);
 
+
     const singOut = async () => {
-      const token = await AsyncStorage.removeItem('userToken');
+      try {
+        await AsyncStorage.removeItem('userToken');
+        console.log(SignOut)
+      } catch (error) {
+
+      }
     };
 
     return (
 
       <Animated.View style={[styles.sidebar,{transform: [{ translateX }],},]}>
 
+
         <View className="m-10 flex-row" >
             <View  className="bg-slate-300 w-12 h-12  rounded-full justify-center items-center mr-4">
                      <User size={27} color="#0b0b0b" weight="thin" />
             </View>
             <View className="">
-                <Text className="text-red-900   font-regular text-lg">asdas</Text>
-                <Text className="text-black font-regular">asd</Text>
+                <Text className="text-black  font-regular text-lg ">{usuario.nome.charAt(0).toUpperCase() + usuario.nome.slice(1)}</Text>
+                <Text className="text-black font-regular ">{usuario.email.charAt(0).toUpperCase() + usuario.email.slice(1)}</Text>
             </View>
 
         </View>
         <View className="Line w-60 flex justify-center items-center  ml-6  bg-zinc-500"style={{height:1}} ></View>
 
         <TouchableOpacity activeOpacity={0.5}
-
-        >
+          onPress={()=>{
+            navigate('home')
+           }}
+           >
 
         <View className="ml-10 mt-2 mb-4 flex-row items-center">
         <House size={52} color="#0b0b0b" weight="thin" />
@@ -68,7 +102,9 @@ export default function Sidebar({ isOpen,  }: SidebarProps) {
 
 
         <TouchableOpacity activeOpacity={0.5}
-
+            onPress={()=>{
+              navigate('mydata')
+            }}
         >
         <View className="ml-10 mt-2 mb-4 flex-row items-center">
         <User size={52} color="#0b0b0b" weight="thin" />
@@ -78,7 +114,9 @@ export default function Sidebar({ isOpen,  }: SidebarProps) {
 
 
         <TouchableOpacity activeOpacity={0.5}
-
+          onPress={()=>{
+            navigate('address')
+          }}
         >
         <View className="ml-10 mt-2 mb-4 flex-row items-center">
         <MapPin size={52} color="#0b0b0b" weight="thin" />
@@ -87,8 +125,10 @@ export default function Sidebar({ isOpen,  }: SidebarProps) {
         </TouchableOpacity>
 
         <TouchableOpacity activeOpacity={0.5}
-        onPress={Barbers}
-        >
+          onPress={()=>{
+            navigate('barbers')
+           }}
+           >
         <View className="ml-10 mt-2 mb-4 flex-row items-center">
         <UsersThree size={52} color="#0b0b0b" weight="thin" />
         <Text className="ml-4">Profissionais</Text>
@@ -96,8 +136,10 @@ export default function Sidebar({ isOpen,  }: SidebarProps) {
         </TouchableOpacity>
 
         <TouchableOpacity activeOpacity={0.5}
-        onPress={Services}
-        >
+          onPress={()=>{
+            navigate('services')
+           }}
+           >
         <View className="ml-10 mt-2 mb-4 flex-row items-center">
         <Scissors size={52} color="#0b0b0b" weight="thin" />
         <Text className="ml-4">Serviços</Text>

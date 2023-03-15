@@ -1,6 +1,6 @@
 import {FastifyRequest, FastifyReply} from "fastify"
 import {   CreatUserInput, LoginInput,  } from "./user.schema"
-import { createUser, findUserByEmail, findUsers, findUserByNumber,  } from "./user.service"
+import { createUser, findUserByEmail, findUsers, findUserByNumber, findUser } from "./user.service"
 import bcrypt from "bcrypt"
 import { app } from "../server";
 import {  registerValidate } from "./user.validate";
@@ -91,5 +91,13 @@ export async function getUsersHandler(){
 
     return users;
 }
+
+
+export async function getUser(id: string){
+    const user = await findUser(id)
+
+    return user;
+}
+
 
 

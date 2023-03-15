@@ -10,6 +10,8 @@ import { Barbers } from '../screens/Barbers';
 import { MySchedule } from '../screens/MySchedule';
 import { Register } from '../screens/Register';
 import { Login } from '../screens/Login';
+import { MyData } from '../screens/MyData';
+import { Address } from '../screens/Address';
 
 export function AppRoutes() {
   return (
@@ -49,6 +51,16 @@ export function AppRoutes() {
       <Screen
         name="login"
         component={Login}
+      />
+
+      <Screen
+        name="mydata"
+        component={MyData}
+      />
+
+      <Screen
+        name="address"
+        component={Address}
       />
 
 

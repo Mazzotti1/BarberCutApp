@@ -44,6 +44,11 @@ export function Home(){
       }
 
     return(
+      <TouchableOpacity
+      activeOpacity={1}
+      onPress={handleCloseSideBar}
+      style={{ flex: 1 }}
+    >
       <View className="flex-1">
     <ScrollView
     showsVerticalScrollIndicator={false}
@@ -174,15 +179,11 @@ export function Home(){
 
     </ScrollView>
 
-    {openSidebar && (
-      <TouchableWithoutFeedback onPress={handleCloseSideBar}>
-        <View style={StyleSheet.absoluteFillObject} />
-      </TouchableWithoutFeedback>
-    )}
+
 
         <NavContainer />
     </View>
-
+    </TouchableOpacity>
       )
 }
 

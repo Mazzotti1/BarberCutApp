@@ -33,6 +33,11 @@ export function MySchedule (){
 
 
     return(
+      <TouchableOpacity
+      activeOpacity={1}
+      onPress={handleCloseSideBar}
+      style={{ flex: 1 }}
+    >
         <View className="flex-1">
               <ScrollView
             showsVerticalScrollIndicator={false}
@@ -91,13 +96,9 @@ export function MySchedule (){
             </View>
 
             </ScrollView>
-            {openSidebar && (
-              <TouchableWithoutFeedback onPress={handleCloseSideBar}>
-                <View style={StyleSheet.absoluteFillObject} />
-              </TouchableWithoutFeedback>
-            )}
             <NavContainer />
         </View>
+        </TouchableOpacity>
     )
 }
 
