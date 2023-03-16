@@ -51,6 +51,7 @@ export function Home(){
     >
       <View className="flex-1">
     <ScrollView
+
     showsVerticalScrollIndicator={false}
     contentContainerStyle={{ paddingBottom: 100, }}
     className='flex-1 pt-11'
@@ -60,7 +61,7 @@ export function Home(){
         <Header handleSidebar={handleSidebar}/>
 
 
-          <Sidebar isOpen={openSidebar}  />
+          <Sidebar isOpen={openSidebar}  handleCloseSideBar={handleCloseSideBar}/>
 
 
         <View className=" flex-1 items-center mt-6">

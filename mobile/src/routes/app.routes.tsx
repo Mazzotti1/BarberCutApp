@@ -13,6 +13,8 @@ import { Login } from '../screens/Login';
 import { MyData } from '../screens/MyData';
 import { Address } from '../screens/Address';
 
+
+
 export function AppRoutes() {
   return (
     <Navigator screenOptions={{ headerShown: false }}>
@@ -52,8 +54,7 @@ export function AppRoutes() {
         name="login"
         component={Login}
       />
-
-      <Screen
+         <Screen
         name="mydata"
         component={MyData}
       />
@@ -62,8 +63,6 @@ export function AppRoutes() {
         name="address"
         component={Address}
       />
-
-
 
 
     </Navigator>

@@ -12,6 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 
 interface SidebarProps {
     isOpen: boolean;
+    handleCloseSideBar: ()=> void;
   }
 
    interface DecodedToken {
@@ -21,9 +22,11 @@ interface SidebarProps {
 
    }
 
-export default function Sidebar({ isOpen }: SidebarProps) {
+export default function Sidebar({ isOpen, handleCloseSideBar }: SidebarProps) {
     const translateX = useRef(new Animated.Value(-400)).current;
     const [usuario, setUsuario] = useState({ nome: '', email: '' });
+
+
 
     const { navigate } = useNavigation()
 
@@ -44,13 +47,13 @@ export default function Sidebar({ isOpen }: SidebarProps) {
 
       async function carregarUsuario() {
         const token = await AsyncStorage.getItem('userToken');
+        if (!token) {
+          return; // usuário não está logado
+        }
         const decodeToken = jwt_decode(token ?? '') as DecodedToken
         const userId = decodeToken.id
         try {
           const response = await api.get(`/users/${userId}`, {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
           });
           setUsuario(response.data);
         } catch (error) {
@@ -65,6 +68,8 @@ export default function Sidebar({ isOpen }: SidebarProps) {
     const singOut = async () => {
       try {
         await AsyncStorage.removeItem('userToken');
+        navigate('login')
+        handleCloseSideBar()
         console.log(SignOut)
       } catch (error) {
 
@@ -102,9 +107,9 @@ export default function Sidebar({ isOpen }: SidebarProps) {
 
 
         <TouchableOpacity activeOpacity={0.5}
-            onPress={()=>{
+             onPress={()=>{
               navigate('mydata')
-            }}
+             }}
         >
         <View className="ml-10 mt-2 mb-4 flex-row items-center">
         <User size={52} color="#0b0b0b" weight="thin" />
@@ -148,6 +153,7 @@ export default function Sidebar({ isOpen }: SidebarProps) {
 
         <TouchableOpacity activeOpacity={0.5}
         onPress={singOut}
+
         >
         <View className="ml-10 mt-2 mb-4 flex-row items-center">
         <SignOut size={52} color="#0b0b0b" weight="thin" />
@@ -168,11 +174,13 @@ export default function Sidebar({ isOpen }: SidebarProps) {
       top: 0,
       bottom: 0,
       left: 0,
+      height:800,
       right: 100,
       backgroundColor: 'white',
       zIndex: 999,
       borderTopLeftRadius: 20,
       borderTopRightRadius: 20,
+      borderBottomRightRadius: 20,
     },
 
   });

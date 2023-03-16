@@ -48,7 +48,7 @@ export function MySchedule (){
 
               <Header handleSidebar={handleSidebar}/>
 
-              <Sidebar isOpen={openSidebar}  />
+              <Sidebar isOpen={openSidebar} handleCloseSideBar={handleCloseSideBar}  />
 
             <View className="mt-2 bg-black h-full  items-center">
                 <View className="mt-5  ">

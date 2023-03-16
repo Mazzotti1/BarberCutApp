@@ -31,11 +31,11 @@ export function Header({handleSidebar}:SidebarProps) {
     const token = await AsyncStorage.getItem('userToken');
     if (token) {
       setIsLogged(true);
+    } else {
+      setIsLogged(false);
     }
+
   };
-
-
-
 
 
   return (

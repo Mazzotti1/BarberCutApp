@@ -164,7 +164,7 @@ app.get('/calendar', async (request, reply) => {
     } else {
       // Caso o nome ou o name não sejam strings, pode-se retornar um erro ou uma mensagem de erro adequada.
       reply.code(400).send({
-        message: 'Nome ou nome do barbeiro inválido.'
+        message: 'Nome do usuario ou nome do barbeiro inválido.'
       });
     }
 

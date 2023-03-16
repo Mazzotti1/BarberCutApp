@@ -26,6 +26,8 @@ export function Register(){
     const [password, setPassword] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
 
+    const [disabled, setDisabled] = useState(false);
+
     const handleNameChange = (value:string) => {
       setName(value);
     };
@@ -43,6 +45,10 @@ export function Register(){
     };
 
     const handleSubmit = async () => {
+      setDisabled(true);
+       setTimeout(() => {
+      setDisabled(false);
+    }, 2000);
         if (name && email && password && phoneNumber) {
           const userData = {
             nome: name,
@@ -89,7 +95,9 @@ export function Register(){
                     <Password value={password} onChangeText={handlePasswordChange}/>
                     <PhoneNumber value={phoneNumber} onChangeText={handlePhoneNumberChange}/>
 
-                <TouchableOpacity onPress={handleSubmit}
+                <TouchableOpacity
+                disabled={disabled}
+                onPress={handleSubmit}
                 className="w-64 h-10 mt-6 flex-row bg-zinc-300  items-center justify-center   border rounded-full">
                     <Text className="text-black text-xl font-regular">Cadastrar</Text>
 

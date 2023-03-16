@@ -25,6 +25,8 @@ export function Login(){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const [disabled, setDisabled] = useState(false);
+
     async function saveUser(token:string) {
         await AsyncStorage.setItem('userToken', JSON.stringify(token))
       }
@@ -33,6 +35,10 @@ export function Login(){
 
 
     const handleSubmit = async () => {
+      setDisabled(true);
+      setTimeout(() => {
+        setDisabled(false);
+      }, 2000);
         if (email && password) {
           try {
         const  response =  await api.post('/login', { email, password });
@@ -42,10 +48,15 @@ export function Login(){
             setEmail('');
             setPassword('');
 
+
+
             Alert.alert('Login realizado com sucesso!');
             navigate('home')
           } catch (error) {
             Alert.alert('Erro ao realizar login', 'Verifique seu email e senha e tente novamente.');
+            setEmail('');
+            setPassword('');
+
           }
         } else {
           Alert.alert('Por favor, preencha seu email e senha para fazer login');
@@ -79,7 +90,9 @@ export function Login(){
 
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={handleSubmit}
+                <TouchableOpacity
+                disabled={disabled}
+                onPress={handleSubmit}
                 className="w-64 h-10 mt-6 flex-row bg-zinc-300  items-center justify-center   border rounded-full">
                     <Text className="text-black text-xl font-regular">Entrar</Text>
 
