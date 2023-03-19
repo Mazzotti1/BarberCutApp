@@ -18,6 +18,7 @@ import Sidebar from '../components/Utils/SideBar';
 
 import { useIsFocused } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ScheduleButtonLogged } from '../components/Schedule/ScheduleButtonLogged';
 
  export function Schedule(){
 
@@ -96,7 +97,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
                   <Text className='text-white text-2xl font-regular p-5'>Escolha um profissional</Text>
                   </View>
                        <BarbersProfile />
-                      <ScheduleButton />
+                      <ScheduleButtonLogged />
               </View>
            </ScrollView>
           <NavContainer />

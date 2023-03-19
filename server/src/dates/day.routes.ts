@@ -1,6 +1,7 @@
 import moment from "moment";
 import { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
 import prisma from "utils/prisma";
+import { string } from "zod";
 
 
 
@@ -19,38 +20,26 @@ date:Date;
 time:string;
 }
 
+interface AvailabilityRequest {
+  id: string;
+  date: string;
+}
+
 export async function dayRoutes(app: FastifyInstance) {
 
 
 
-app.get('/calendar', async (request, reply) => {
-  const today = new Date();
-  const dates = [];
+  app.get('/calendar', async (request, reply) => {
+    const today = new Date();
+    const dates = [];
 
-  const authHeader = request.headers.authorization;
-  const token = authHeader?.split(' ')[1];
+    for (let i = 0; i < 7; i++) {
+      const date = new Date(today.getTime() + i * 24 * 60 * 60 * 1000);
+      dates.push(date);
+    }
 
-  if (!token) {
-    reply.code(401).send({
-      message: "Token de autenticação ausente na solicitação."
-    });
-    return;
-  }
-
-  try {
-    const decodedToken = app.jwt.verify(token) as { id: string };
-
-  for (let i = 0; i < 7; i++) {
-    const date = new Date(today.getTime() + i * 24 * 60 * 60 * 1000);
-    dates.push(date);
-  }
-  reply.send(dates);
-} catch (err) {
-  reply.code(401).send({
-    message: "Token de autenticação inválido."
+    reply.send(dates);
   });
-}
-});
 
 
   app.post('/barbers', async (request: FastifyRequest, reply: FastifyReply) => {
@@ -91,11 +80,21 @@ app.get('/calendar', async (request, reply) => {
     }
   });
 
-  app.get('/availability', async (request, reply) => {
-    const { id, date } = request.id as CreateBarberRequestBody;
+  app.get('/availability', async (request: FastifyRequest, reply) => {
+    const { id, date } = request.query as { id: string; date: string };
+
+    if (!id || !date) {
+      reply.status(400).send({ message: 'Missing parameters' });
+      return;
+    }
 
     const availability = [];
     const barber = await prisma.barbers.findFirst({ where: { id: id } });
+
+    if (!barber) {
+      reply.status(404).send({ message: 'Barber not found' });
+      return;
+    }
 
     const day = moment(date).format('YYYY-MM-DD');
     const appointments = await prisma.appointment.findMany({
@@ -122,6 +121,8 @@ app.get('/calendar', async (request, reply) => {
 
     reply.send({ barber, availability });
   });
+
+
 
   app.post('/confirm', async (request, reply) => {
     const authHeader = request.headers.authorization;
@@ -175,5 +176,4 @@ app.get('/calendar', async (request, reply) => {
 
 
 }
-
 

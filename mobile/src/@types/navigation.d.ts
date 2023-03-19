@@ -10,7 +10,7 @@ export declare global {
         login:undefined;
         mydata:undefined;
         address:undefined;
-
+        availability:undefined;
       }
     }
   }

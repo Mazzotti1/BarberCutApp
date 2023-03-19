@@ -12,6 +12,7 @@ import { Register } from '../screens/Register';
 import { Login } from '../screens/Login';
 import { MyData } from '../screens/MyData';
 import { Address } from '../screens/Address';
+import Availability from '../screens/Availability';
 
 
 
@@ -63,7 +64,10 @@ export function AppRoutes() {
         name="address"
         component={Address}
       />
-
+       <Screen
+        name="availability"
+        component={Availability}
+      />
 
     </Navigator>
   )

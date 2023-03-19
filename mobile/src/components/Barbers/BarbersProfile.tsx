@@ -1,18 +1,20 @@
 
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
-import {View, ScrollView, Text} from 'react-native'
+import {View, ScrollView, Text, TouchableOpacity} from 'react-native'
 
 import Barber1 from '../../assets/barber1.svg'
 import Barber2 from '../../assets/barber2.svg'
 import { api } from '../../lib/axios';
 
 interface Barber {
-    id: number;
+    id: string;
     name: string;
   }
 
 export function BarbersProfile(){
     const [barbers, setBarbers] = useState<Barber[]>([]);
+    const [selectedBarberId, setSelectedBarberId] = useState('');
 
     useEffect(() => {
       async function loadBarbers() {
@@ -36,17 +38,31 @@ export function BarbersProfile(){
 
     ];
 
+    async function handleClick(id: string) {
+      setSelectedBarberId(id);
+      await AsyncStorage.setItem('selectedBarber', id);
+
+    }
+
+
     return(
         <ScrollView
         horizontal={true}
         className=' '>
-            <View className='grid-rows-3 flex-row gap-10 p-7 ' >
+            <View className='grid-rows-3 flex-row  gap-10 p-7 ' >
                 { barbersList.map(function(item, index){
                 return(
-                        <View key={index} className='flex items-center  w-fit rounded-3xl'style={{backgroundColor:'#0a0a0a'}}>
+                        <TouchableOpacity
+                         key={index}
+                         className={`flex items-center w-fit rounded-3xl ${
+                          item.id === selectedBarberId ? 'border-2 border-white rounded-xl' : null
+                        }`}
+                         style={{backgroundColor:'#0a0a0a'}}
+                         onPress={() => handleClick(item.id)}
+                         >
                         <View>{item.img}</View>
-                        <Text className='text-gray-300 text-lg font-regular p-3 '>{item.name}</Text>
-                        </View>
+                        <Text className='text-gray-300  text-lg font-regular p-3 '>{item.name}</Text>
+                        </TouchableOpacity>
 
                      )
                       })}
