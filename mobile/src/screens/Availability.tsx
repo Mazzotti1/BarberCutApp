@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { View, Text, ScrollView, SafeAreaView } from "react-native";
+import { View, Text, ScrollView, SafeAreaView, TouchableOpacity } from "react-native";
 
 import { HeaderService } from "../components/Header/HeaderService";
 
@@ -11,10 +11,15 @@ import Barber1 from '../assets/barber1.svg'
 import Barber2 from '../assets/barber2.svg'
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import React from "react";
 
 interface Barber {
   id: string;
   name: string;
+}
+
+interface Time {
+  time: string;
 }
 
 export default function Availability (){
@@ -22,7 +27,8 @@ export default function Availability (){
   const [selectedBarberId, setSelectedBarberId] = useState('');
   const [selectedDate, setSelectedDate] = useState('');
 
-  const [times, setTimes] = useState<string[]>([]);
+  const [availableTimes, setAvailableTimes] = useState<Time[]>([]);
+  const [selectedTime, setSelectedTime] = useState('');
 
   useEffect(() => {
     async function loadBarbers() {
@@ -56,24 +62,31 @@ export default function Availability (){
   }, []);
 
 
-  async function getAvailability() {
-    const id = await AsyncStorage.getItem('selectedBarberId');
-    const date = await AsyncStorage.getItem('selectedDate');
-    const response = await api.get('/availability', {
-      params: {
-        id,
-        date,
-      },
-    });
+  useEffect(() => {
+    async function loadAvailability() {
+      const id = await AsyncStorage.getItem('selectedBarber');
+      const date = await AsyncStorage.getItem('selectedDate');
+      try {
+        const response = await api.get(`/availability?id=${id}&date=${date}`);
+        const data = response.data;
+        setAvailableTimes(data.availability);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    loadAvailability();
+  }, []);
 
-    const times = response.data.times;
-    setTimes(times);
+  async function SelectTime(time: string) {
+    setSelectedTime(time);
+    await AsyncStorage.setItem('selectedTime', time);
 
   }
 
-
-
-
+  async function imprimirData() {
+    const selectedDate = await AsyncStorage.getItem('selectedDate');
+    console.log(selectedDate);
+  }
 
     return(
         <View className='flex-1'>
@@ -88,46 +101,42 @@ export default function Availability (){
           {barbersList.map(function(item, index){
             if (item.id === selectedBarberId) {
             return(
-              <>
-                <View  key={index} className={` w-screen bg-zinc-500 mt-4 ${
-                          item.id === selectedBarberId ? 'w-screen bg-white mt-4' : null
-                        }`}
+
+              <React.Fragment key={item.id}>
+                <View   className= 'w-screen bg-zinc-500 mt-4'
                         style={{height:1}}></View>
 
                 <View className="flex-row mt-7">
                   <View className="flex-col items-center ml-4">
-                    <Text className={`${
-                          item.id === selectedBarberId ? 'border-2 border-white rounded-xl' : null
-                        }`}>{item.img}</Text>
+                    <Text className='border-2 border-white rounded-xl' >{item.img}</Text>
 
-                    <Text className={`text-white mt-5 w-20 text-center font-regular text-lg ${
-                          item.id === selectedBarberId ? 'text-white' : null
-                        }`}>{item.name}</Text>
+                    <Text className='text-white mt-5 w-20 text-center font-regular text-lg'>{item.name}</Text>
                   </View>
                   <View className="ml-10">
-                    <Text className={`text-white  w-20 text-center font-regular text-lg ${
-                          item.id === selectedBarberId ? 'text-white' : null
-                        }`}>Detalhes:</Text>
+                    <Text className='text-white  w-20 text-center font-regular text-lg'>Detalhes:</Text>
 
                     <Text className="text-white font-regular text-lg">Alisamento</Text>
-                    <Text className="text-white font-regular text-lg">21/03/2023</Text>
+                    <Text className="text-white font-regular text-lg">{selectedDate}</Text>
                   </View>
                 </View>
-                <View className={` w-screen bg-zinc-500 mt-4 ${
-                          item.id === selectedBarberId ? 'w-screen bg-white mt-4' : null
-                        }`} style={{height:1}}></View>
+                <View className='w-screen bg-zinc-500 mt-4'style={{height:1}}></View>
 
-                  {times.map((time) => (
-                    <View key={time} className="border border-white w-20 h-10 mt-4 ml-12 rounded-lg justify-center">
-                      <Text className="text-white text-center">{time}</Text>
-                    </View>
-                  ))}
+                <ScrollView
 
+                horizontal={true}
+                className="flex-row">
+                {availableTimes.map(time => (
+                  <TouchableOpacity
+                  onPress={() => SelectTime(time.time)}
+                   key={time.time}
+                   className={`border border-white w-20 h-10 mt-4 ml-12 rounded-lg justify-center ${selectedTime === time.time ? 'bg-zinc-200' : ''}`}>
+                    <Text className={`text-white text-center ${selectedTime === time.time ? 'text-black' : ''}`}>{time.time}</Text>
+                  </TouchableOpacity>
+                ))}
+              </ScrollView>
 
-                <View className={` w-screen bg-zinc-500 mt-4 ${
-                          item.id === selectedBarberId ? 'w-screen bg-white mt-4' : null
-                        }`} style={{height:1}}></View>
-              </>
+                <View className=' w-screen bg-zinc-500 mt-4 ' style={{height:1}}></View>
+              </React.Fragment>
             )
           }})}
 

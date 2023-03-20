@@ -116,7 +116,7 @@ export async function dayRoutes(app: FastifyInstance) {
         return moment(appt.date).format('HH:mm') !== time;
       });
       availability.push({ time, isAvailable });
-      startOfDay.add(30, 'minutes');
+      startOfDay.add(90, 'minutes');
     }
 
     reply.send({ barber, availability });

@@ -38,11 +38,11 @@ export function BarbersProfile(){
 
     ];
 
-    async function handleClick(id: string) {
-      setSelectedBarberId(id);
-      await AsyncStorage.setItem('selectedBarber', id);
+  async function handleClick(id: string) {
+  setSelectedBarberId(id);
+  await AsyncStorage.setItem('selectedBarber', id);
 
-    }
+}
 
 
     return(
