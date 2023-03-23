@@ -28,6 +28,7 @@ model Appointment {
   barber    String
   date      DateTime
   time      String
+  service   String
   status    String?
 }
 

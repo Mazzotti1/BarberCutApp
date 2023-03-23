@@ -18,6 +18,7 @@ export interface Appointment {
   barber:string;
   date:Date;
   time:string;
+  service:string;
   status:string;
 
 

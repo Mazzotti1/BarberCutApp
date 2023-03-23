@@ -42,6 +42,7 @@ export function BarbersProfile(){
   setSelectedBarberId(id);
   await AsyncStorage.setItem('selectedBarber', id);
 
+
 }
 
 

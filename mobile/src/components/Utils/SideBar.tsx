@@ -70,7 +70,7 @@ export default function Sidebar({ isOpen, handleCloseSideBar }: SidebarProps) {
         await AsyncStorage.removeItem('userToken');
         navigate('login')
         handleCloseSideBar()
-        console.log(SignOut)
+
       } catch (error) {
 
       }

@@ -33,6 +33,7 @@ import { ScheduleButtonLogged } from '../components/Schedule/ScheduleButtonLogge
 
   useEffect(() => {
     checkIsLogged();
+
   }, [isFocused]);
 
   const checkIsLogged = async () => {
@@ -42,6 +43,8 @@ import { ScheduleButtonLogged } from '../components/Schedule/ScheduleButtonLogge
     } else {
       setIsLogged(false);
     }
+
+
 
   };
 
@@ -65,6 +68,8 @@ import { ScheduleButtonLogged } from '../components/Schedule/ScheduleButtonLogge
         return (
           <Loading />
         );
+
+
       }
 
 

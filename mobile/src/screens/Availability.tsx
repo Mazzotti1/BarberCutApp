@@ -12,6 +12,7 @@ import Barber2 from '../assets/barber2.svg'
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import React from "react";
+import ScheduleConfirmation from "../components/Schedule/ScheduleConfirmation";
 
 interface Barber {
   id: string;
@@ -29,6 +30,7 @@ export default function Availability (){
 
   const [availableTimes, setAvailableTimes] = useState<Time[]>([]);
   const [selectedTime, setSelectedTime] = useState('');
+  const [selectedService, setSelectedService] = useState('');
 
   useEffect(() => {
     async function loadBarbers() {
@@ -71,7 +73,7 @@ export default function Availability (){
         const data = response.data;
         setAvailableTimes(data.availability);
       } catch (error) {
-        console.error(error);
+
       }
     }
     loadAvailability();
@@ -83,10 +85,31 @@ export default function Availability (){
 
   }
 
-  async function imprimirData() {
-    const selectedDate = await AsyncStorage.getItem('selectedDate');
-    console.log(selectedDate);
-  }
+  useEffect(() => {
+    async function imprimirData() {
+      const data = await AsyncStorage.getItem('selectedDate');
+      if (data) {
+        const dateObj = new Date(data);
+        const day = dateObj.getDate().toString().padStart(2, '0');
+        const month = (dateObj.getMonth() + 1).toString().padStart(2, '0');
+        const year = dateObj.getFullYear().toString();
+        setSelectedDate(`${day}/${month}/${year}`);
+      }
+    }
+    imprimirData();
+  }, []);
+
+  useEffect(() => {
+    async function imprimirService() {
+      const data = await AsyncStorage.getItem('selectedService');
+      setSelectedService(data ?? '');
+
+      }
+    imprimirService();
+
+
+  }, []);
+
 
     return(
         <View className='flex-1'>
@@ -113,9 +136,9 @@ export default function Availability (){
                     <Text className='text-white mt-5 w-20 text-center font-regular text-lg'>{item.name}</Text>
                   </View>
                   <View className="ml-10">
-                    <Text className='text-white  w-20 text-center font-regular text-lg'>Detalhes:</Text>
+                    <Text className='text-green-500  w-20 font-regular text-lg'>Detalhes:</Text>
 
-                    <Text className="text-white font-regular text-lg">Alisamento</Text>
+                    <Text className="text-white font-regular text-lg">{selectedService}</Text>
                     <Text className="text-white font-regular text-lg">{selectedDate}</Text>
                   </View>
                 </View>
@@ -139,7 +162,7 @@ export default function Availability (){
               </React.Fragment>
             )
           }})}
-
+      {selectedTime && <ScheduleConfirmation />}
             </ScrollView>
         </View>
     )

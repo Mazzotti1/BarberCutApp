@@ -42,10 +42,7 @@ export default function  ScheduleCalendar(){
     if (date) {
       AsyncStorage.setItem('selectedDate', date.toISOString());
 
-      // AsyncStorage.getItem('selectedDate')
-      // .then((selectedDate) => {
-      //   console.log(selectedDate);
-      // })
+
     }
   };
 

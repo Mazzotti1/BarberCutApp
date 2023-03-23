@@ -2,6 +2,7 @@ import moment from "moment";
 import { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
 import prisma from "utils/prisma";
 import { string } from "zod";
+import { getUser } from "user/user.controller";
 
 
 
@@ -17,6 +18,7 @@ interface CreateScheduleRequestBody{
  user:string;
 barber:string;
 date:Date;
+service:string;
 time:string;
 }
 
@@ -125,19 +127,11 @@ export async function dayRoutes(app: FastifyInstance) {
 
 
   app.post('/confirm', async (request, reply) => {
-    const authHeader = request.headers.authorization;
-    const token = authHeader?.split(' ')[1];
 
-    if (!token) {
-      reply.code(401).send({
-        message: "Token de autenticação ausente na solicitação."
-      });
-      return;
-    }
 
     try {
-      const decodedToken = app.jwt.verify(token) as { id: string };
-      const { user, barber, date, time } = request.body as CreateScheduleRequestBody;
+
+      const { user, barber, date, time, service } = request.body as CreateScheduleRequestBody;
 
       const foundUser = await prisma.user.findUnique({
         where: { id: user }
@@ -147,13 +141,15 @@ export async function dayRoutes(app: FastifyInstance) {
         where: { id: barber }
       });
 
-      if (foundUser && typeof foundUser.nome === 'string' && foundBarber && typeof foundBarber.name === 'string') {
+      if (foundUser && typeof foundUser.nome === 'string' && foundBarber && typeof foundBarber.name === 'string' ) {
       const newAppointment = await prisma.appointment.create({
         data: {
           user: foundUser?.nome,
           barber: foundBarber?.name,
           date,
-          time
+          service,
+          time,
+
         }
       });
 
@@ -173,6 +169,28 @@ export async function dayRoutes(app: FastifyInstance) {
       reply.code(401).send(err);
     }
   });
+
+
+ app.get<{ Params: { id: string } }>('/appointments/:id', async (request, reply) => {
+  try {
+    const id = request.params.id;
+    const appointments = await prisma.appointment.findMany({
+      where: { user: id },
+    });
+    if (!appointments || appointments.length === 0) {
+      reply.status(404).send({
+        error: 'Nenhum agendamento encontrado para o usuário especificado.',
+      });
+      return;
+    }
+    reply.send(appointments);
+  } catch (error) {
+    reply.status(500).send({
+      error: 'Erro interno do servidor.',
+    });
+  }
+});
+
 
 
 }

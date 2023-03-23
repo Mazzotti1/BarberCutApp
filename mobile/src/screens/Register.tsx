@@ -64,9 +64,9 @@ export function Register(){
             setEmail('');
             setPassword('');
             setPhoneNumber('');
-            Alert.alert(response.data)
+
           } catch (error : any) {
-            Alert.alert(error.response.data)
+
           }
         } else {
             Alert.alert('Por favor, preencha todos os campos');
