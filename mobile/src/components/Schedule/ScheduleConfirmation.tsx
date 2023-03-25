@@ -37,7 +37,7 @@ export default function  ScheduleConfirmation(){
         const userId = decodeToken.id
 
             const payload = {
-                user: userId,
+                user_id: userId,
                 barber: selectedBarber,
                 date: selectedDate,
                 service: selectedService,
@@ -56,6 +56,8 @@ export default function  ScheduleConfirmation(){
             setDisabled(false);
           }, 5000);
           Alert.alert('Agendamento confirmado');
+
+          navigate('myschedule')
       }
 
 

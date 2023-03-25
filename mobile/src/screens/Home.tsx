@@ -99,8 +99,8 @@ export function Home(){
 
           <View className="Line w-80 flex justify-center items-center mt-5  bg-zinc-500"style={{height:1}} ></View>
 
-          <View className="Contact w-80 flex-row justify-between">
-            <View className="pl-4 mb-3 gap-2 ">
+          <View className="Contact w-80 p-2 flex-row justify-between">
+            <View className=" mb-3 gap-2 ">
               <Text className="text-zinc-600 font-regular text-2xl">Contato</Text>
               <Text className="text-white font-regular text-lg">(51) 99283-7897</Text>
               <Text className="text-white font-regular text-lg">contato@sharpcut.com.br</Text>
@@ -114,8 +114,8 @@ export function Home(){
 
           <View className="Line w-80 flex justify-center items-center mt-5  bg-zinc-500"style={{height:1}} ></View>
 
-          <View className="Adress w-96 gap-10  flex-row">
-            <View className="pl-4 mb-3 gap-2 ">
+          <View className="Adress w-96 p-2 gap-10  flex-row">
+            <View className="mb-3 gap-2 ">
               <Text className="text-zinc-600 font-regular text-2xl">Endereço</Text>
               <Text className="text-white font-regular text-lg">Avenida brasil, 887 - Sharp Cut Barbershop 92039-120 - Los angeles</Text>
 
@@ -127,8 +127,8 @@ export function Home(){
 
         <View className="Line w-80 flex justify-center items-center mt-5  bg-zinc-500"style={{height:1}} ></View>
 
-        <View className="Social w-80 flex-row justify-between">
-            <View className="pl-4 mb-3 gap-2 ">
+        <View className="Social w-80 p-2 flex-row justify-between">
+            <View className=" mb-3 gap-2 ">
               <Text className="text-zinc-600 font-regular text-2xl">SOCIAL</Text>
 
               <TouchableOpacity

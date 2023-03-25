@@ -15,12 +15,11 @@ export interface HorariosDisponiveis {
 export interface Appointment {
   id: string;
   user:string;
+  user_id:string;
   barber:string;
   date:Date;
   time:string;
   service:string;
-  status:string;
-
 
 }
 

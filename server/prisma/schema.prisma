@@ -19,17 +19,18 @@ model User {
   admin Boolean @default(false)
   cpf String?
   birth String ?
+  appointments Appointment[]
 }
 
 
 model Appointment {
   id          String      @id @default(auto()) @map("_id") @db.ObjectId
-  user      String
+  user      User        @relation(fields: [user_id], references: [id])
+  user_id   String      @db.ObjectId
   barber    String
   date      DateTime
   time      String
   service   String
-  status    String?
 }
 
 

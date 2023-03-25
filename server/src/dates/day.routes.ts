@@ -15,7 +15,7 @@ interface CreateBarberRequestBody {
 }
 
 interface CreateScheduleRequestBody{
- user:string;
+ user_id:string;
 barber:string;
 date:Date;
 service:string;
@@ -131,20 +131,16 @@ export async function dayRoutes(app: FastifyInstance) {
 
     try {
 
-      const { user, barber, date, time, service } = request.body as CreateScheduleRequestBody;
-
-      const foundUser = await prisma.user.findUnique({
-        where: { id: user }
-      });
+      const { user_id, barber, date, time, service } = request.body as CreateScheduleRequestBody;
 
       const foundBarber = await prisma.barbers.findUnique({
         where: { id: barber }
       });
 
-      if (foundUser && typeof foundUser.nome === 'string' && foundBarber && typeof foundBarber.name === 'string' ) {
+      if (foundBarber && typeof foundBarber.name === 'string' ) {
       const newAppointment = await prisma.appointment.create({
         data: {
-          user: foundUser?.nome,
+          user_id,
           barber: foundBarber?.name,
           date,
           service,
@@ -171,25 +167,25 @@ export async function dayRoutes(app: FastifyInstance) {
   });
 
 
- app.get<{ Params: { id: string } }>('/appointments/:id', async (request, reply) => {
-  try {
-    const id = request.params.id;
-    const appointments = await prisma.appointment.findMany({
-      where: { user: id },
-    });
-    if (!appointments || appointments.length === 0) {
-      reply.status(404).send({
-        error: 'Nenhum agendamento encontrado para o usuário especificado.',
+  app.get<{ Params: { id: string } }>('/appointments/:id', async (request, reply) => {
+    try {
+      const id = request.params.id;
+      const appointments = await prisma.appointment.findMany({
+        where: { user_id: id }, // usar user_id ao invés de user
       });
-      return;
+      if (!appointments || appointments.length === 0) {
+        reply.status(404).send({
+          error: 'Nenhum agendamento encontrado para o usuário especificado.',
+        });
+        return;
+      }
+      reply.send(appointments);
+    } catch (error) {
+      reply.status(500).send({
+        error: 'Erro interno do servidor.',
+      });
     }
-    reply.send(appointments);
-  } catch (error) {
-    reply.status(500).send({
-      error: 'Erro interno do servidor.',
-    });
-  }
-});
+  });
 
 
 

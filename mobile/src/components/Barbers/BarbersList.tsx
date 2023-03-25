@@ -69,7 +69,7 @@ export function BarbersList(){
                     <View className=''><item.img /></View>
                     <View className='ml-2 grid grid-rows-2 items-start w-52'>
                       <Text className='text-gray-300 text-lg font-regular p-1'>{item.title}</Text>
-                      <Text className='text-gray-300 text-md font-regular p-1 flex-wrap'>{item.description}</Text>
+                      <Text className='text-gray-300 text-md font-regular p-3 flex-wrap'>{item.description}</Text>
                     </View>
                   </View>
                   </TouchableOpacity>

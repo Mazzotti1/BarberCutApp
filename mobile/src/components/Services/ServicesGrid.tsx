@@ -5,7 +5,7 @@ import Corte from '../../assets/corte.svg'
 import Barba from '../../assets/barba.svg'
 import Sobrancelha from '../../assets/sobrancelha.svg'
 import BarbaCorte from '../../assets/barbaCorte.svg'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useFocusEffect } from '@react-navigation/native'
 import { BarbersProfile } from '../Barbers/BarbersProfile'
@@ -51,9 +51,12 @@ export function ServicesGrid(){
 
 
 
+
+
     return(
         <View>
         <ScrollView
+
         horizontal={true}
         className=' '>
                 <View className='grid-rows-3 flex-row gap-10 p-5' >
@@ -68,23 +71,16 @@ export function ServicesGrid(){
                               onPress={() =>{
                                 handleClick(item.title)
                                 saveTittle(item.title)
+
                               } }
                             style={{backgroundColor:'#0a0a0a'}}>
                             <View>{item.img}</View>
                             <Text className='text-gray-300 text-lg font-regular p-1 '>{item.title}</Text>
-
                             </TouchableOpacity>
-
-
                          )
-
                           })}
-
-
                 </View>
-
             </ScrollView>
-
                       </View>
     )
 

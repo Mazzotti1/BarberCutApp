@@ -44,8 +44,6 @@ import { ScheduleButtonLogged } from '../components/Schedule/ScheduleButtonLogge
       setIsLogged(false);
     }
 
-
-
   };
 
   function handleSidebar(){
@@ -68,10 +66,7 @@ import { ScheduleButtonLogged } from '../components/Schedule/ScheduleButtonLogge
         return (
           <Loading />
         );
-
-
       }
-
 
     return(
       <TouchableOpacity
@@ -95,9 +90,12 @@ import { ScheduleButtonLogged } from '../components/Schedule/ScheduleButtonLogge
                       <ScheduleCalendar />
                     </SafeAreaView>
                   </View>
+                  <View className="Line w-screen flex justify-center items-center mt-5  bg-zinc-500"style={{height:1}} ></View>
               </View>
               <View className='bg-black  '>
+              <Text className='text-white text-2xl  font-regular p-5'>Escolha um Serviço</Text>
                       <ServicesGrid />
+
                   <View>
                   <Text className='text-white text-2xl font-regular p-5'>Escolha um profissional</Text>
                   </View>
@@ -107,7 +105,6 @@ import { ScheduleButtonLogged } from '../components/Schedule/ScheduleButtonLogge
            </ScrollView>
           <NavContainer />
           </View>
-
 
                ):(
 
@@ -126,8 +123,11 @@ import { ScheduleButtonLogged } from '../components/Schedule/ScheduleButtonLogge
                             <ScheduleCalendar />
                           </SafeAreaView>
                         </View>
+                        <View className="Line w-screen flex justify-center items-center mt-5  bg-zinc-500"style={{height:1}} ></View>
                     </View>
+
                     <View className='bg-black  '>
+                    <Text className='text-white text-2xl  font-regular p-5'>Escolha um Serviço</Text>
                             <ServicesGrid />
                         <View>
                         <Text className='text-white text-2xl font-regular p-5'>Escolha um profissional</Text>
