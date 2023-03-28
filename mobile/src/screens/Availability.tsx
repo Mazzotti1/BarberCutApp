@@ -30,6 +30,7 @@ export default function Availability (){
 
   const [availableTimes, setAvailableTimes] = useState<Time[]>([]);
   const [selectedTime, setSelectedTime] = useState('');
+
   const [selectedService, setSelectedService] = useState('');
 
   useEffect(() => {

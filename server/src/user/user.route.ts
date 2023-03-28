@@ -6,6 +6,14 @@ import { findUserByEmail, findUserByNumber } from "./user.service";
 import { admin } from "./userAdmin.auth";
 
 
+interface UserUpdate {
+  id:string;
+  nome?: string;
+  email?: string;
+  userNumber?: string;
+  cpf?: string;
+  birth?: string;
+}
 
 
 async function userRoutes(app: FastifyInstance) {
@@ -29,12 +37,15 @@ async function userRoutes(app: FastifyInstance) {
 
     }, loginHandler)
 
+
+
+
+
     app.get('/admin', { preHandler: [app.authenticate, admin] }, (request, reply) => {
     reply.send({ message: 'Bem vindo admin' });
     });
 
     app.get('/users', {preHandler:[app.authenticate]},getUsersHandler)
-
 
     app.get<{ Params: { id: string } }>('/users/:id', async (request, reply) => {
         try {
@@ -54,7 +65,20 @@ async function userRoutes(app: FastifyInstance) {
         }
       });
 
+      app.patch<{ Params: UserUpdate }>('/update/:id', async (request, reply) => {
+        const { id } = request.params;
+        const updateData: UserUpdate = request.body as UserUpdate;
 
+        try {
+          const user = await prisma.user.update({
+            where: { id },
+            data: updateData,
+          });
+          reply.send(user);
+        } catch (err) {
+          reply.status(500).send(err);
+        }
+      });
 
 
 

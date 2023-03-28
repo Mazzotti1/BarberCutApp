@@ -57,9 +57,6 @@ export async function loginHandler(request:FastifyRequest<{
         })
     }
 
-        //verificando a senha, preciso passar a senha incriptada quando colocar o Bcrypt
-
-
     const correctPassword = await bcrypt.compare(body.password, user.password)
         if(correctPassword){
             const {password, ...rest} = user
@@ -70,18 +67,7 @@ export async function loginHandler(request:FastifyRequest<{
          message:"Email ou a senha estão incorretos"
 })
 }
-// export async function updateUserHandler(request:FastifyRequest<{
-//     Params: updateUserInput,
 
-// }>, reply: FastifyReply
-// ) {
-//     const userId = request.id;
-//     const { nome, email, userNumber, cpf, birth } = request.params;
-
-//     const updateUser = await updatedUser(userId)
-
-//     reply.send(updatedUser);
-// }
 
 
 

@@ -36,6 +36,12 @@ import { ScheduleButtonLogged } from '../components/Schedule/ScheduleButtonLogge
 
   }, [isFocused]);
 
+  useEffect(() => {
+    return () => {
+      AsyncStorage.removeItem('selectedService')
+    }
+  }, [])
+
   const checkIsLogged = async () => {
     const token = await AsyncStorage.getItem('userToken');
     if (token) {

@@ -46,6 +46,8 @@ export async function findUser(id: string) {
       email: true,
       nome: true,
       id: true,
+      cpf:true,
+      birth:true,
     },
   });
 }

@@ -43,8 +43,6 @@ export function MySchedule (){
   const [openSidebar, setOpenSidebar] = useState(false);
   const translateX = useRef(new Animated.Value(-400)).current;
 
-  const [usuario, setUsuario] = useState({ nome: '' });
-
   const [hasAppointments, setHasAppointments] = useState(false);
   const [appointments, setAppointments] = useState<Appointment[]>([]);
 
@@ -65,8 +63,6 @@ export function MySchedule (){
       useNativeDriver: true,
     }).start(() => setOpenSidebar(false));
   }
-
-
 
   useEffect(() => {
     checkIsLogged();

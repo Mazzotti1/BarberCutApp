@@ -65,8 +65,9 @@ export function Register(){
             setPassword('');
             setPhoneNumber('');
 
+            navigate("login")
           } catch (error : any) {
-
+            Alert.alert('Email ou número de telefone já existem!')
           }
         } else {
             Alert.alert('Por favor, preencha todos os campos');
