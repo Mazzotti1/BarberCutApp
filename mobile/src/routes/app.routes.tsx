@@ -13,6 +13,7 @@ import { Login } from '../screens/Login';
 import { MyData } from '../screens/MyData';
 import { Address } from '../screens/Address';
 import Availability from '../screens/Availability';
+import { Faq } from '../screens/Faq';
 
 
 
@@ -67,6 +68,10 @@ export function AppRoutes() {
        <Screen
         name="availability"
         component={Availability}
+      />
+        <Screen
+        name="faq"
+        component={Faq}
       />
 
     </Navigator>

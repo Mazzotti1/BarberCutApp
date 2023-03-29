@@ -8,6 +8,11 @@ interface RegisterData {
     userNumber: string;
     cpf?: string;
     birth?: string;
+    cep?:string;
+    rua?:string;
+    bairro?:string;
+    numero?:string;
+    complemento?:string;
   }
 
 export const registerValidate = (data:RegisterData)=>{
@@ -19,6 +24,11 @@ export const registerValidate = (data:RegisterData)=>{
         userNumber:Joi.string().required(),
         cpf:Joi.string().optional(),
         birth:Joi.string().optional(),
+        cep:Joi.string().optional(),
+        rua:Joi.string().optional(),
+        bairro:Joi.string().optional(),
+        numero:Joi.string().optional(),
+        complemento:Joi.string().optional(),
 
     })
     return schema.validate(data)

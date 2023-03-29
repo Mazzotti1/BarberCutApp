@@ -11,6 +11,7 @@ export declare global {
         mydata:undefined;
         address:undefined;
         availability:undefined;
+        faq:undefined;
       }
     }
   }

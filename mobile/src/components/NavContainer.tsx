@@ -2,7 +2,7 @@ import { View, TouchableOpacity, Text } from "react-native";
 
 import { useNavigation } from "@react-navigation/native";
 
-import {House, Calendar, BookBookmark, Newspaper } from 'phosphor-react-native'
+import {House, Calendar, BookBookmark, Newspaper, Question } from 'phosphor-react-native'
 
 
 export function NavContainer() {
@@ -36,9 +36,9 @@ export function NavContainer() {
       <TouchableOpacity
                activeOpacity={0.5}
                onPress={()=>{
-                navigate('schedule')
+                navigate('faq')
                }}>
-      <Newspaper size={48} color="#ededed" weight="thin" />
+      <Question size={48} color="#ededed" weight="thin" />
       </TouchableOpacity>
     </View>
   )

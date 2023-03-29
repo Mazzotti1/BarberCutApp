@@ -13,6 +13,11 @@ interface UserUpdate {
   userNumber?: string;
   cpf?: string;
   birth?: string;
+  cep?:string;
+  rua?:string;
+  bairro?:string;
+  numero?:string;
+  complemento?:string;
 }
 
 

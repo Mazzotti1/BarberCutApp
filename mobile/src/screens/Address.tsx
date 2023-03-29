@@ -1,7 +1,7 @@
 
 
  import React, { useState, useEffect } from 'react';
- import {View, Text, TextInput, TouchableOpacity} from 'react-native'
+ import {View, Text, TextInput, TouchableOpacity, Alert} from 'react-native'
 
 
  import { HeaderService } from '../components/Header/HeaderService'
@@ -15,20 +15,25 @@
 
  interface DecodedToken {
      id: string;
-     name: string;
-     email: string;
-     userNumber:string;
-     cpf:string;
-     birthDate:string;
+     cep: string;
+     rua: string;
+     bairro:string;
+     numero:string;
+     complemento:string;
    }
 
 
 
  export function Address(){
-      const [usuario, setUsuario] = useState({ nome: '', email: '', userNumber:'', cpf:'' , birthDate:'', });
-     useEffect(() => {
+      const [usuario, setUsuario] = useState({ cep: '', rua: '', bairro:'', numero:'' , complemento:'', });
 
+      const [cep, setCep] = useState(usuario.cep);
+      const [rua, setRua] = useState(usuario.rua);
+      const [bairro, setBairro] = useState(usuario.bairro);
+      const [numero, setNumero] = useState(usuario.numero);
+      const [complemento, setComplemento] = useState(usuario.complemento);
 
+      useEffect(() => {
          async function carregarUsuario() {
            const token = await AsyncStorage.getItem('userToken');
            const decodeToken = jwt_decode(token ?? '') as DecodedToken
@@ -50,12 +55,63 @@
        }, []);
 
        const datas = [
-        { title: '', placeholder:'CEP', },
-        { title: '', placeholder:'Rua',},
-        { title: '', placeholder:'Bairro', },
-        { title: '', placeholder:'Número',},
-        { title: '', placeholder:'Complemento',},
+        { title: usuario.cep, placeholder:'CEP', onChangeText: setCep, maxLenght: 8, minLenght: 8,},
+        { title: usuario.rua, placeholder:'Rua', onChangeText: setRua,maxLenght: 30, minLenght: 5,},
+        { title: usuario.bairro, placeholder:'Bairro', onChangeText: setBairro, maxLenght: 30, minLenght: 5,},
+        { title: usuario.numero, placeholder:'Número', onChangeText: setNumero,maxLenght: 6, minLenght: 1,},
+        { title: usuario.complemento, placeholder:'Complemento', onChangeText: setComplemento, maxLenght: 25, minLenght: 5,},
       ];
+
+      async function atualizarDados() {
+        const token = await AsyncStorage.getItem('userToken');
+        const decodeToken = jwt_decode(token ?? '') as DecodedToken;
+        const userId = decodeToken.id;
+
+        const dataToUpdate: any = {};
+
+
+
+        if (cep && cep !== usuario.cep && cep.length >= 8) {
+          dataToUpdate.cep = cep;
+        } else if (cep && cep.length < 8) {
+          Alert.alert("O cep é inválido!");
+          return;
+        }
+        if (rua && rua !== usuario.rua && rua.length > 5) {
+          dataToUpdate.rua = rua;
+        } else if (rua && rua.length < 8) {
+          Alert.alert("A rua é inválida!");
+          return;
+        }
+        if (bairro && bairro !== usuario.bairro && bairro.length > 5) {
+          dataToUpdate.bairro = bairro;
+        } else if (bairro && bairro.length < 8) {
+          Alert.alert("O bairro é inválido!");
+          return;
+        }
+
+        if (numero && numero !== usuario.numero && numero.length > 1) {
+          dataToUpdate.numero = numero;
+        } else if (numero && numero.length < 8) {
+          Alert.alert("O numero é inválido!");
+          return;
+        }
+        if (complemento && complemento !== usuario.complemento) {
+          dataToUpdate.complemento = complemento;
+
+        }
+
+        try {
+          const response = await api.patch(`/update/${userId}`, dataToUpdate, {
+
+          });
+
+          Alert.alert("Endereço atualizado com sucesso!")
+
+        } catch (error) {
+          console.error(error);
+        }
+      }
 
      return(
          <View className='flex-1 pt-11'style={{backgroundColor:'#030303',}}>
@@ -71,10 +127,11 @@
 
         <View className='justify-center'>
           <TextInput
-            className="text-slate-400 font-regular ml-2 text-base whitespace-nowrap text-ellipsis overflow-hidden"
+            className="text-white font-regular ml-2 text-base whitespace-nowrap text-ellipsis overflow-hidden"
             placeholder={data.placeholder}
-            placeholderTextColor="#696b6a"
-            maxLength={30}
+            placeholderTextColor="#8b8c8b"
+            maxLength={data.maxLenght}
+            onChangeText={data.onChangeText}
           >
             {data.title ? data.title.charAt(0).toUpperCase() + data.title.slice(1) : ''}
           </TextInput>
@@ -83,7 +140,9 @@
       </View>
     ))}
 
-    <TouchableOpacity className="w-36 h-10 mt-10 flex-row  bg-slate-200 items-center justify-center ml-32  border rounded-xl">
+    <TouchableOpacity
+     onPress={atualizarDados}
+    className="w-36 h-10 mt-10 flex-row  bg-slate-200 items-center justify-center ml-32  border rounded-xl">
         <Text className='text-center font-regular text-xl'>Salvar endereço</Text>
     </TouchableOpacity>
 

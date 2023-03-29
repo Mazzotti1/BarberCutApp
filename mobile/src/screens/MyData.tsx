@@ -1,7 +1,7 @@
 
 
   import React, { useState, useEffect } from 'react';
-  import {View, Text, TextInput, TouchableOpacity} from 'react-native'
+  import {View, Text, TextInput, TouchableOpacity, Alert} from 'react-native'
 
 
   import { HeaderService } from '../components/Header/HeaderService'
@@ -68,30 +68,40 @@
             placeholder: 'Nome completo',
             icon: <User size={42} color="#ededed" weight="thin" />,
             onChangeText: setNome,
+            maxLenght: 30,
+            minLenght: 3,
           },
           {
             title: usuario.email,
             placeholder: 'Email',
             icon: <Envelope size={42} color="#ededed" weight="thin" />,
             onChangeText: setEmail,
+            maxLenght: 40,
+            minLenght: 13,
           },
           {
             title: usuario.userNumber,
             placeholder: 'Número de telefone',
             icon: <Phone size={42} color="#ededed" weight="thin" />,
             onChangeText: setUserNumber,
+            maxLenght: 11,
+            minLenght: 11,
           },
           {
             title: usuario.cpf,
-            placeholder: 'CPF',
+            placeholder: 'CPF (000.000.000-00)',
             icon: <IdentificationCard size={42} color="#ededed" weight="thin" />,
             onChangeText: setCpf,
+            maxLenght: 14,
+            minLenght: 11,
           },
           {
             title: usuario.birth,
-            placeholder: 'Data de nascimento',
+            placeholder: 'Data de nascimento (dia/mes/ano)',
             icon: <Calendar size={42} color="#ededed" weight="thin" />,
             onChangeText: setBirth,
+            maxLenght: 10,
+            minLenght: 8,
           },
         ];
 
@@ -104,32 +114,48 @@
 
           const dataToUpdate: any = {};
 
-          if (nome && nome !== usuario.nome) {
+          if (nome && nome !== usuario.nome && nome.length > 3) {
             dataToUpdate.nome = nome;
+          } else if (nome && nome.length < 3) {
+            Alert.alert("O nome deve ter pelo menos 3 caracteres.");
+            return;
           }
-          if (email && email !== usuario.email) {
+          if (email && email !== usuario.email && email.length > 13) {
             dataToUpdate.email = email;
+          } else if (email && email.length < 13) {
+            Alert.alert("O Email é inválido!");
+            return;
           }
-          if (userNumber && userNumber !== usuario.userNumber) {
+          if (userNumber && userNumber !== usuario.userNumber && userNumber.length > 11) {
             dataToUpdate.userNumber = userNumber;
+          } else if (userNumber && userNumber.length < 11) {
+            Alert.alert("O Número de telefone é inválido!");
+            return;
           }
-          if (cpf && cpf !== usuario.cpf) {
+          if (cpf && cpf !== usuario.cpf && cpf.length > 11 ) {
             dataToUpdate.cpf = cpf;
+          } else if (cpf && cpf.length < 11) {
+            Alert.alert("O cpf é inválido!");
+            return;
           }
-          if (birth && birth !== usuario.birth) {
+          if (birth && birth !== usuario.birth && birth.length > 8) {
             dataToUpdate.birth = birth;
+          } else if (birth && birth.length < 8) {
+            Alert.alert("A data de nascimento é inválido!");
+            return;
           }
 
           try {
             const response = await api.patch(`/update/${userId}`, dataToUpdate, {
 
             });
-            console.log(response.data);
+
+            Alert.alert("Dados atualizados com sucesso!")
           } catch (error) {
+            Alert.alert("Novos dados escritos são inválidos, verifique e tente salvar novamente!")
             console.error(error);
           }
         }
-
 
 
 
@@ -149,8 +175,9 @@
          <TextInput
               className="text-white font-regular ml-2 text-base whitespace-nowrap text-ellipsis overflow-hidden"
               placeholder={data.placeholder}
-              placeholderTextColor="#d3d3d3"
-              maxLength={30}
+              placeholderTextColor="#8b8c8b"
+              maxLength={data.maxLenght}
+
               onChangeText={data.onChangeText}
               >
                {data.title ? data.title.charAt(0).toUpperCase() + data.title.slice(1) : ''}

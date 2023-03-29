@@ -48,6 +48,11 @@ export async function findUser(id: string) {
       id: true,
       cpf:true,
       birth:true,
+      cep:true,
+      rua:true,
+      bairro:true,
+      numero:true,
+      complemento:true,
     },
   });
 }
