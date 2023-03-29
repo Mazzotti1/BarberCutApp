@@ -24,6 +24,7 @@ model User {
   bairro String?
   numero String?
   complemento String?
+  resetCode String?
   appointments Appointment[]
 }
 

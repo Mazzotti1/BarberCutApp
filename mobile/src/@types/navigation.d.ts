@@ -12,6 +12,7 @@ export declare global {
         address:undefined;
         availability:undefined;
         faq:undefined;
+        forgotpassword:undefined;
       }
     }
   }

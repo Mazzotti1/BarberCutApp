@@ -6,6 +6,7 @@ import { userSchemas} from './user/user.schema'
 import fjwt from "@fastify/jwt"
 import { FastifyRequest ,FastifyReply } from "fastify";
 import { dayRoutes } from "./dates/day.routes";
+import { dataRoutes } from "data/data.route";
 
 
 
@@ -49,6 +50,7 @@ dotenv.config();
 app.register(cors)
 app.register(userRoutes, {prefix:"/"})
 app.register(dayRoutes, {prefix:"/"} )
+app.register(dataRoutes, {prefix:"/"} )
 
 try {
     await app.listen({

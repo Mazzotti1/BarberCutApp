@@ -53,6 +53,7 @@ export async function findUser(id: string) {
       bairro:true,
       numero:true,
       complemento:true,
+      resetCode:true,
     },
   });
 }

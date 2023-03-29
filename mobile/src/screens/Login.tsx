@@ -85,6 +85,9 @@ export function Login(){
                     <Password onChangeText={setPassword} value={password}/>
 
                 <TouchableOpacity
+                onPress={()=>{
+                  navigate('forgotpassword')
+                 }}
                 className="  items-center justify-center   border rounded-full">
                     <Text className="text-slate-300 mt-2 text-base font-regular underline">Esqueci minha senha</Text>
 

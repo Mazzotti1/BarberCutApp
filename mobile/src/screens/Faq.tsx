@@ -31,8 +31,8 @@ export function Faq(){
         <View className='flex ml-10 '>
             <Text className='text-white mt-5  font-regular text-2xl'>Instruções</Text>
 
-            <Text className='text-white mt-5 mr-5 font-regular text-xl'> Você consegue gerenciar o seu perfil e os seus dados nos 3 riscos no canto superior esquerdo</Text>
-              <View className='rounded-full p-3 border mt-2 border-red-600 w-14 h-14 '>
+            <Text className='text-white mt-5 mr-5 font-regular text-xl'> Após estar logado você consegue gerenciar o seu perfil e os seus dados nos 3 riscos no canto superior esquerdo</Text>
+              <View className='rounded-full p-3 border mt-2  border-red-600 w-14 h-14 '>
                 <View  className="bg-white w-7 h-1 mt-1 mb-1 rounded-md"></View>
                 <View  className="bg-white w-7 h-1  mb-1 rounded-md"></View>
                 <View  className="bg-white w-7 h-1  rounded-md"></View>
@@ -43,7 +43,7 @@ export function Faq(){
             <Text className='text-white mt-5 mr-5 font-regular text-xl'> Quando você escolher suas preferências, vai estar disponível para você escolher o horário do agendamento. </Text>
 
             <Text className='text-white mt-5 mr-5 font-regular text-xl'> Basta escolher um horário e confirmar o agendamento! Você ja vai poder verificar na tela dos seus agendamentos!</Text>
-                <View className='items-center mt-2'>
+                <View className='pl-3 mt-2'>
                     <Check size={48} color="#32a850" weight="bold" />
                 </View>
             </View>

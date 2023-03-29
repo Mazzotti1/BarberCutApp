@@ -76,98 +76,63 @@ export default function Sidebar({ isOpen, handleCloseSideBar }: SidebarProps) {
       }
     };
 
+    const menuItems = [
+      {
+        icon: <House size={52} color="#0b0b0b" weight="thin" />,
+        label: 'Principal',
+        onPress: () => navigate('home')
+      },
+      {
+        icon: <User size={52} color="#0b0b0b" weight="thin" />,
+        label: 'Meus dados',
+        onPress: () => navigate('mydata')
+      },
+      {
+        icon: <MapPin size={52} color="#0b0b0b" weight="thin" />,
+        label: 'Meu endereço',
+        onPress: () => navigate('address')
+      },
+      {
+        icon: <UsersThree size={52} color="#0b0b0b" weight="thin" />,
+        label: 'Profissionais',
+        onPress: () => navigate('barbers')
+      },
+      {
+        icon: <Scissors size={52} color="#0b0b0b" weight="thin" />,
+        label: 'Serviços',
+        onPress: () => navigate('services')
+      },
+      {
+        icon: <SignOut size={52} color="#0b0b0b" weight="thin" />,
+        label: 'Sair',
+        onPress: singOut
+      }
+    ];
+
     return (
-
-      <Animated.View style={[styles.sidebar,{transform: [{ translateX }],},]}>
-
-
-        <View className="m-10 flex-row" >
-            <View  className="bg-slate-300 w-12 h-12  rounded-full justify-center items-center mr-4">
-                     <User size={27} color="#0b0b0b" weight="thin" />
+      <Animated.View style={[styles.sidebar, { transform: [{ translateX }], },]}>
+        <View className="m-10 flex-row">
+          <View className="bg-slate-300 w-12 h-12 rounded-full justify-center items-center mr-4">
+            <User size={27} color="#0b0b0b" weight="thin" />
+          </View>
+          <View className="">
+            <Text className="text-black font-regular text-lg">{usuario.nome.charAt(0).toUpperCase() + usuario.nome.slice(1)}</Text>
+            <Text className="text-black font-regular">{usuario.email.charAt(0).toUpperCase() + usuario.email.slice(1)}</Text>
+          </View>
+        </View>
+        <View className="Line w-60 flex justify-center items-center ml-6 bg-zinc-500" style={{ height: 1 }}></View>
+        {menuItems.map((item, index) => (
+          <TouchableOpacity activeOpacity={0.5} onPress={item.onPress} key={index}>
+            <View className="ml-10 mt-2 mb-4 flex-row items-center">
+              {item.icon}
+              <Text className="ml-4">{item.label}</Text>
             </View>
-            <View className="">
-                <Text className="text-black  font-regular text-lg ">{usuario.nome.charAt(0).toUpperCase() + usuario.nome.slice(1)}</Text>
-                <Text className="text-black font-regular ">{usuario.email.charAt(0).toUpperCase() + usuario.email.slice(1)}</Text>
-            </View>
-
-        </View>
-        <View className="Line w-60 flex justify-center items-center  ml-6  bg-zinc-500"style={{height:1}} ></View>
-
-        <TouchableOpacity activeOpacity={0.5}
-          onPress={()=>{
-            navigate('home')
-           }}
-           >
-
-        <View className="ml-10 mt-2 mb-4 flex-row items-center">
-        <House size={52} color="#0b0b0b" weight="thin" />
-        <Text className="ml-4">Principal</Text>
-        </View>
-        </TouchableOpacity>
-
-
-        <TouchableOpacity activeOpacity={0.5}
-             onPress={()=>{
-              navigate('mydata')
-             }}
-        >
-        <View className="ml-10 mt-2 mb-4 flex-row items-center">
-        <User size={52} color="#0b0b0b" weight="thin" />
-        <Text className="ml-4">Meus dados</Text>
-        </View>
-        </TouchableOpacity>
-
-
-        <TouchableOpacity activeOpacity={0.5}
-          onPress={()=>{
-            navigate('address')
-          }}
-        >
-        <View className="ml-10 mt-2 mb-4 flex-row items-center">
-        <MapPin size={52} color="#0b0b0b" weight="thin" />
-        <Text className="ml-4">Meu endereço</Text>
-        </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity activeOpacity={0.5}
-          onPress={()=>{
-            navigate('barbers')
-           }}
-           >
-        <View className="ml-10 mt-2 mb-4 flex-row items-center">
-        <UsersThree size={52} color="#0b0b0b" weight="thin" />
-        <Text className="ml-4">Profissionais</Text>
-        </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity activeOpacity={0.5}
-          onPress={()=>{
-            navigate('services')
-           }}
-           >
-        <View className="ml-10 mt-2 mb-4 flex-row items-center">
-        <Scissors size={52} color="#0b0b0b" weight="thin" />
-        <Text className="ml-4">Serviços</Text>
-        </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity activeOpacity={0.5}
-        onPress={singOut}
-
-        >
-        <View className="ml-10 mt-2 mb-4 flex-row items-center">
-        <SignOut size={52} color="#0b0b0b" weight="thin" />
-        <Text className="ml-4">Sair</Text>
-        </View>
-        </TouchableOpacity>
-
-        <View className="Line w-60 flex justify-center items-center  ml-6  bg-zinc-500"style={{height:1}} ></View>
-
+          </TouchableOpacity>
+        ))}
+        <View className="Line w-60 flex justify-center items-center ml-6 bg-zinc-500" style={{ height: 1 }}></View>
       </Animated.View>
-
     );
-  }
-
+}
   const styles = StyleSheet.create({
     sidebar: {
       position: 'absolute',

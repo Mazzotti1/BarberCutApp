@@ -14,6 +14,7 @@ import { MyData } from '../screens/MyData';
 import { Address } from '../screens/Address';
 import Availability from '../screens/Availability';
 import { Faq } from '../screens/Faq';
+import { ForgotPassword } from '../screens/ForgotPassword';
 
 
 
@@ -72,6 +73,11 @@ export function AppRoutes() {
         <Screen
         name="faq"
         component={Faq}
+      />
+
+        <Screen
+        name="forgotpassword"
+        component={ForgotPassword}
       />
 
     </Navigator>

@@ -18,6 +18,7 @@ interface UserUpdate {
   bairro?:string;
   numero?:string;
   complemento?:string;
+  resetCode?:string;
 }
 
 
