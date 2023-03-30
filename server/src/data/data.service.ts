@@ -1,9 +1,12 @@
 
 import prisma from "../utils/prisma";
-import nodemailer from 'nodemailer';
-import * as dotenv from 'dotenv';
+
+
+import mailgun from 'mailgun-js';
 
 export async function saveResetCode(email: string, resetCode: string): Promise<void> {
+
+
 
     await prisma.user.update({
         where: { email },
@@ -12,22 +15,56 @@ export async function saveResetCode(email: string, resetCode: string): Promise<v
   }
 
  export async function sendResetCodeEmail(email: string, resetCode: string): Promise<void> {
-  const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
-    auth: {
-      user: String(process.env.EMAIL_USER),
-      pass: String(process.env.EMAIL_PASS),
-    },
+
+  const mg = mailgun({
+    apiKey: String(process.env.API_KEY),
+    domain: String(process.env.DOMAIN)
   });
 
-  const message = {
-    from: String(process.env.EMAIL_PASS),
+  const data = {
+    from: String(process.env.FROM),
     to: email,
-    subject: 'Código de redefinição de senha',
-    text: `Seu código de redefinição de senha é ${resetCode}`,
+    subject: 'Código de recuperação de senha',
+    text: `Olá! Seu código de recuperação de senha é ${resetCode}. Por favor, use esse código para redefinir sua senha.`
   };
 
-    await transporter.sendMail(message);
+  mg.messages().send(data, (error, body) => {
+    if (error) {
+      console.error(error);
+    } else {
+      console.log(body);
+    }
+  });
+
+}
+
+export async function removeResetCode(email: string, resetCode: string) {
+  setTimeout(async () => {
+    await prisma.user.update({
+      where: { email: email },
+      data: { resetCode: null },
+    });
+  }, 10 * 60 * 1000);
+}
+
+
+
+
+export async function checkResetCode(email: string, resetCode: string): Promise<boolean> {
+  try {
+    const user = await prisma.user.findUnique({
+      where: { email },
+    });
+    if (user?.resetCode === resetCode) {
+      return true;
+    } else {
+      return false;
+    }
+  } catch (error) {
+    console.error(`Erro ao verificar código de recuperação de senha para o e-mail ${email}:`, error);
+    throw error;
   }
+}
+
+
+
