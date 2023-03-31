@@ -15,6 +15,8 @@ import { Address } from '../screens/Address';
 import Availability from '../screens/Availability';
 import { Faq } from '../screens/Faq';
 import { ForgotPassword } from '../screens/ForgotPassword';
+import { VerifyCode } from '../screens/VerifyCode';
+import { ResetPassword } from '../screens/ResetPassword';
 
 
 
@@ -78,6 +80,14 @@ export function AppRoutes() {
         <Screen
         name="forgotpassword"
         component={ForgotPassword}
+      />
+        <Screen
+        name="verifycode"
+        component={VerifyCode}
+      />
+       <Screen
+        name="resetpassword"
+        component={ResetPassword}
       />
 
     </Navigator>

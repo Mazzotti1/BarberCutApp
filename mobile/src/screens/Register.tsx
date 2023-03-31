@@ -56,6 +56,10 @@ export function Register(){
             password: password,
             userNumber: phoneNumber
           };
+          if (password.length <= 6) {
+            Alert.alert('Senha inválida', 'A senha deve ter pelo menos 6 caracteres');
+            return;
+          }
           try {
             const response = await api.post('/register', userData, {
               headers: {'Content-Type': 'application/json'},

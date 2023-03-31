@@ -13,6 +13,8 @@ export declare global {
         availability:undefined;
         faq:undefined;
         forgotpassword:undefined;
+        verifycode:undefined;
+        resetpassword:undefined;
       }
     }
   }

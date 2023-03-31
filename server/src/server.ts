@@ -7,6 +7,7 @@ import fjwt from "@fastify/jwt"
 import { FastifyRequest ,FastifyReply } from "fastify";
 import { dayRoutes } from "./dates/day.routes";
 import { dataRoutes } from "data/data.route";
+import { awsRoutes } from "aws/aws.routes";
 
 
 
@@ -51,6 +52,7 @@ app.register(cors)
 app.register(userRoutes, {prefix:"/"})
 app.register(dayRoutes, {prefix:"/"} )
 app.register(dataRoutes, {prefix:"/"} )
+app.register(awsRoutes, {prefix:"/"} )
 
 try {
     await app.listen({
