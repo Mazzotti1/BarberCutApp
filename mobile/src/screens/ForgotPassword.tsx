@@ -23,13 +23,14 @@ export function ForgotPassword(){
       setDisabled(false);
     }, 2000);
         try {
-      const  response =  await api.post('/forgot-password',{ email});
+      const  response =  await api.post('/forgot-password',{email});
 
 
       await AsyncStorage.setItem( 'emailSaved', email);
       navigate('verifycode')
       Alert.alert('Código de recuperação foi enviado para o seu email!');
     } catch (error) {
+      console.log(error)
       Alert.alert("Email inválido, verifique se esse é o email da sua conta");
 
     }

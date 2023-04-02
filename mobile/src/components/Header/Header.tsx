@@ -6,6 +6,7 @@ import { useState, useEffect, useRef } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import {User} from 'phosphor-react-native'
+import { Photo } from "../Profile/Photo";
 
 
 interface SidebarProps {
@@ -55,13 +56,7 @@ export function Header({handleSidebar}:SidebarProps) {
                   SHARP CUT
                 </Text>
 
-                <TouchableOpacity  className=" ">
-                  <View  className="bg-slate-300 w-10 h-10 border rounded-full justify-center items-center mr-10">
-                     <User size={27} color="#0b0b0b" weight="thin" />
-                  </View>
-                </TouchableOpacity>
-
-
+                   <Photo />
 
          </View>
          ):(
