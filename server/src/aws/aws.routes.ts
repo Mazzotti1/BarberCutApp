@@ -3,6 +3,7 @@ import { FastifyInstance, FastifyRequest } from 'fastify';
 import {s3} from 'aws/aws.service'
 import path from 'path';
 
+
 interface UploadRequest {
       path: string;
       filename: string;

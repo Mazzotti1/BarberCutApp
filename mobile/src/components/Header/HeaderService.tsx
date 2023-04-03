@@ -7,7 +7,7 @@ import { BackButton } from "../Utils/BackButton";
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import {User} from 'phosphor-react-native'
+import { Photo } from "../Profile/Photo";
 
 export function HeaderService() {
   const { navigate } = useNavigation()
@@ -42,11 +42,7 @@ export function HeaderService() {
                   SHARP CUT
                 </Text>
 
-                <View className=" ">
-                  <View  className="bg-slate-300 w-10 h-10 border rounded-full justify-center items-center mr-10">
-                     <User size={27} color="#0b0b0b" weight="thin" />
-                  </View>
-                </View>
+                <Photo />
          </View>
          ):(
 

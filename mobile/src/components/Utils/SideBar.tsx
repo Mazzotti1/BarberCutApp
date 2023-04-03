@@ -6,7 +6,7 @@ import { Animated, Text, View, StyleSheet, TouchableOpacity, TouchableWithoutFee
 
 import { api } from "../../lib/axios";
 import jwt_decode from 'jwt-decode'
-
+import { Photo } from "../Profile/Photo";
 
 import { useNavigation } from "@react-navigation/native";
 
@@ -112,9 +112,7 @@ export default function Sidebar({ isOpen, handleCloseSideBar }: SidebarProps) {
     return (
       <Animated.View style={[styles.sidebar, { transform: [{ translateX }], },]}>
         <View className="m-10 flex-row">
-          <View className="bg-slate-300 w-12 h-12 rounded-full justify-center items-center mr-4">
-            <User size={27} color="#0b0b0b" weight="thin" />
-          </View>
+           <Photo />
           <View className="">
             <Text className="text-black font-regular text-lg">{usuario.nome.charAt(0).toUpperCase() + usuario.nome.slice(1)}</Text>
             <Text className="text-black font-regular">{usuario.email.charAt(0).toUpperCase() + usuario.email.slice(1)}</Text>
