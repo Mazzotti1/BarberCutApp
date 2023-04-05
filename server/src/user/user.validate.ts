@@ -30,6 +30,7 @@ export const registerValidate = (data:RegisterData)=>{
         numero:Joi.string().optional(),
         complemento:Joi.string().optional(),
         resetCode:Joi.string().optional(),
+        imagepath:Joi.string().optional(),
 
     })
     return schema.validate(data)

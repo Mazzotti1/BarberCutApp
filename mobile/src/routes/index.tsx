@@ -2,7 +2,7 @@ import { NavigationContainer } from "@react-navigation/native";
 
 
 import { View } from "react-native";
-import { Header } from "../components/Header/Header";
+
 
 import { AppRoutes } from "./app.routes";
 

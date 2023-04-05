@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, } from "react";
 import { Animated, Text, View, StyleSheet, TouchableOpacity, TouchableWithoutFeedback } from "react-native";
 
 
+
 import { api } from "../../lib/axios";
 import jwt_decode from 'jwt-decode'
 import { Photo } from "../Profile/Photo";
@@ -25,7 +26,7 @@ interface SidebarProps {
 export default function Sidebar({ isOpen, handleCloseSideBar }: SidebarProps) {
     const translateX = useRef(new Animated.Value(-400)).current;
     const [usuario, setUsuario] = useState({ nome: '', email: '' });
-
+    const [image, setImage] = useState<string | undefined>(undefined);
 
 
     const { navigate } = useNavigation()
@@ -112,7 +113,9 @@ export default function Sidebar({ isOpen, handleCloseSideBar }: SidebarProps) {
     return (
       <Animated.View style={[styles.sidebar, { transform: [{ translateX }], },]}>
         <View className="m-10 flex-row">
-           <Photo />
+
+
+
           <View className="">
             <Text className="text-black font-regular text-lg">{usuario.nome.charAt(0).toUpperCase() + usuario.nome.slice(1)}</Text>
             <Text className="text-black font-regular">{usuario.email.charAt(0).toUpperCase() + usuario.email.slice(1)}</Text>

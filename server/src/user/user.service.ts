@@ -54,6 +54,7 @@ export async function findUser(id: string) {
       numero:true,
       complemento:true,
       resetCode:true,
+      imagepath:true,
     },
   });
 }

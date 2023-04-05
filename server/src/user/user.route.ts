@@ -19,6 +19,7 @@ interface UserUpdate {
   numero?:string;
   complemento?:string;
   resetCode?:string;
+  imagePath?:string;
 }
 
 
@@ -42,10 +43,6 @@ async function userRoutes(app: FastifyInstance) {
         }
 
     }, loginHandler)
-
-
-
-
 
     app.get('/admin', { preHandler: [app.authenticate, admin] }, (request, reply) => {
     reply.send({ message: 'Bem vindo admin' });
@@ -84,10 +81,24 @@ async function userRoutes(app: FastifyInstance) {
         } catch (err) {
           reply.status(500).send(err);
         }
+
+
       });
 
+      app.put<{ Params: UserUpdate }>('/users/:id', async (request, reply) => {
+        const { id } = request.params;
+        const imagePath: UserUpdate = request.body as UserUpdate;
+        try {
+          const user = await prisma.user.update({
+            where: { id },
+            data: imagePath,
+          });
+          reply.send(user.imagepath);
+        } catch (err) {
+          reply.status(500).send(err);
+        }
 
-
+      });
 }
 
 

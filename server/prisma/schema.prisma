@@ -26,6 +26,7 @@ model User {
   complemento String?
   resetCode String?
   appointments Appointment[]
+  imagepath String?
 }
 
 

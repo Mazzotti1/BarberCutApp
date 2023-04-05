@@ -1,62 +1,121 @@
 import { User } from "phosphor-react-native";
 import { useEffect, useState } from "react";
-import { TouchableOpacity, View, Image, StyleSheet, Platform, Alert } from "react-native";
-import RNFS from 'react-native-fs';
-import { api } from "../../lib/axios";
+import { TouchableOpacity, View, Image } from "react-native";
+
 
 import * as ImagePicker from 'expo-image-picker';
-import * as FileSystem from 'expo-file-system';
+
+import { S3, Token } from 'aws-sdk';
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import jwt_decode from 'jwt-decode'
+import { api } from "../../lib/axios";
+
+import { ACCESS_KEY, ACCESS_SECRET_KEY, BUCKET_NAME } from "@env";
+
+import { useSelector, useDispatch } from 'react-redux';
+
+
+interface DecodedToken {
+  id: string;
+  name: string;
+  imagepath:string;
+}
 
 export function Photo() {
+  const s3 = new S3({
+    accessKeyId: ACCESS_KEY,
+    secretAccessKey: ACCESS_SECRET_KEY,
+    region: 'sa-east-1',
+  });
 
   const [image, setImage] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
- const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
+  const MAX_IMAGE_SIZE = 5 * 1024 * 1024;
+  const [user, setUser] = useState({ nome: '' });
 
-const pickImage = async () => {
-  let result = await ImagePicker.launchImageLibraryAsync({
-    mediaTypes: ImagePicker.MediaTypeOptions.All,
+
+  useEffect(() => {
+ async function carregarUsuario() {
+        const token = await AsyncStorage.getItem('userToken');
+        if (!token) {
+          return; // usuário não está logado
+        }
+
+        const decodeToken = jwt_decode(token ?? '') as DecodedToken
+        const userId = decodeToken.id
+        try {
+          const response = await api.get(`/users/${userId}`, {
+          });
+          setUser(response.data);
+          setImage(response.data.imagepath);
+        } catch (error) {
+          console.error('erro aqui');
+        }
+      }
+      carregarUsuario()
+    }, []);
+
+    const imageName = `perfil_${new Date().getTime()}.jpg`;
+
+    async function uploadImageToS3(image :string) {
+      const response = await fetch(image);
+      const blob = await response.blob();
+
+
+      const imagePath = `${user.nome}/${imageName}`;
+
+      const params = {
+        Bucket: BUCKET_NAME,
+        Key: imagePath,
+        ContentType: 'image/jpeg',
+        Body: blob,
+        ACL: 'public-read',
+      };
+      const result = await s3.upload(params).promise();
+      return { imagePath };
+    }
+
+
+async function handlePickImage() {
+
+  const result = await ImagePicker.launchImageLibraryAsync({
     allowsEditing: true,
     aspect: [4, 3],
-    quality: 0.5,
+    quality: 1,
   });
 
   if (!result.canceled) {
-    if (result.assets[0].height > MAX_IMAGE_SIZE) {
-      Alert.alert(
-        'Erro ao selecionar imagem',
-        `O tamanho máximo permitido é de ${MAX_IMAGE_SIZE / (1024 * 1024)} MB`
-      );
-      return;
-    }
-    const imageUri = result.assets[0].uri;
-    setImage(imageUri);
-    try {
-      await AsyncStorage.setItem('imageUri', imageUri);
-    } catch (e) {
-      console.log('Error saving image URI:', e);
+    const response = await fetch(result.assets[0].uri);
+    const blob = await response.blob();
+
+    if (blob.size <= MAX_IMAGE_SIZE) {
+      const imageUrl = await uploadImageToS3(result.assets[0].uri);
+
+      const token = await AsyncStorage.getItem('userToken');
+      const decodeToken = jwt_decode(token ?? '') as DecodedToken
+      const userId = decodeToken.id
+
+      try {
+        const response = await api.put(`/users/${userId}`, {
+          imagepath: result.assets[0].uri ,
+        });
+        setImage(result.assets[0].uri)
+        console.log('Perfil do usuário atualizado com sucesso!');
+      } catch (error) {
+        console.error('Erro ao atualizar o perfil do usuário:', error);
+      }
+
+      console.log('Imagem enviada para o AWS S3:', imageUrl);
+
+    } else {
+      alert(`A imagem selecionada excede o tamanho máximo permitido de ${MAX_IMAGE_SIZE/(1024*1024)} MB.`);
     }
   }
-};
+}
 
- const loadImageUriFromStorage = async () => {
-   try {
-     const imageUri = await AsyncStorage.getItem('imageUri');
-     if (imageUri !== null) {
-       setImage(imageUri);
-     }
-   } catch (e) {
-     console.log('Error loading image URI:', e);
-   }
- };
- useEffect(() => {
-   loadImageUriFromStorage();
- }, []);
 
   return (
     <TouchableOpacity
-    onPress={pickImage}
+    onPress={handlePickImage}
     >
       <View className="bg-slate-300 w-10 h-10 border rounded-full justify-center items-center mr-5">
         {image ? (
@@ -68,5 +127,4 @@ const pickImage = async () => {
     </TouchableOpacity>
   );
 }
-
 
