@@ -12,7 +12,8 @@ import { api } from "../../lib/axios";
 
 import { ACCESS_KEY, ACCESS_SECRET_KEY, BUCKET_NAME } from "@env";
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useFocusEffect, } from '@react-navigation/native';
+import React from "react";
 
 
 interface DecodedToken {
@@ -33,8 +34,9 @@ export function Photo() {
   const [user, setUser] = useState({ nome: '' });
 
 
-  useEffect(() => {
- async function carregarUsuario() {
+  useFocusEffect(
+    React.useCallback(() => {
+      async function carregarUsuario() {
         const token = await AsyncStorage.getItem('userToken');
         if (!token) {
           return; // usuário não está logado
@@ -42,17 +44,18 @@ export function Photo() {
 
         const decodeToken = jwt_decode(token ?? '') as DecodedToken
         const userId = decodeToken.id
+
         try {
-          const response = await api.get(`/users/${userId}`, {
-          });
+          const response = await api.get(`/users/${userId}`, {});
           setUser(response.data);
           setImage(response.data.imagepath);
         } catch (error) {
           console.error('erro aqui');
         }
       }
-      carregarUsuario()
-    }, []);
+      carregarUsuario();
+    }, [])
+  );
 
     const imageName = `perfil_${new Date().getTime()}.jpg`;
 

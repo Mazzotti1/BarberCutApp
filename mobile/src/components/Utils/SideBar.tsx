@@ -114,7 +114,7 @@ export default function Sidebar({ isOpen, handleCloseSideBar }: SidebarProps) {
       <Animated.View style={[styles.sidebar, { transform: [{ translateX }], },]}>
         <View className="m-10 flex-row">
 
-
+        <Photo  />
 
           <View className="">
             <Text className="text-black font-regular text-lg">{usuario.nome.charAt(0).toUpperCase() + usuario.nome.slice(1)}</Text>
