@@ -16,6 +16,8 @@ import { api } from "../lib/axios";
 
 import { useNavigation } from "@react-navigation/native";
 
+import * as WebBrowser from 'expo-web-browser';
+import * as Google from 'expo-auth-session/providers/google';
 
 
 export function Register(){
@@ -27,6 +29,8 @@ export function Register(){
     const [phoneNumber, setPhoneNumber] = useState('');
 
     const [disabled, setDisabled] = useState(false);
+
+
 
     const handleNameChange = (value:string) => {
       setName(value);

@@ -2,15 +2,16 @@
   "expo": {
     "name": "mobile2",
     "slug": "mobile2",
+    "scheme": "mobile2",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "plugins":[
+    "plugins": [
       [
         "expo-image-picker",
         {
-          "photosPermission":"O aplicativo precisa de acesso à sua galeria para selecionar uma foto de perfil"
+          "photosPermission": "O aplicativo precisa de acesso à sua galeria para selecionar uma foto de perfil"
         }
       ]
     ],
@@ -25,16 +26,22 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-    "packagerOpts":{
+    "packagerOpts": {
       "config": "metro.config.js",
-      "sourceExts": ["js", "jsx", "ts", "tsx", "svg" ]
+      "sourceExts": [
+        "js",
+        "jsx",
+        "ts",
+        "tsx",
+        "svg"
+      ]
     },
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
         "NSPhotoLibraryUsageDescription": "Permissão necessária para acessar a galeria de fotos.",
-        "NSAppTransportSecurity":"Permição para uso das imagens",
-        "NSCameraUsageDescription":"Permição para uso dos dados"
+        "NSAppTransportSecurity": "Permição para uso das imagens",
+        "NSCameraUsageDescription": "Permição para uso dos dados"
       }
     },
     "android": {
@@ -43,13 +50,20 @@
         "backgroundColor": "#FFF"
       },
       "permissions": [
-        "READ_EXTERNAL_STORAGE",
-        "WRITE_EXTERNAL_STORAGE",
-        "INTERNET"
-      ]
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.INTERNET",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.mazzotti.mobile2"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "5bbe40ce-7f61-4e7f-a670-5e76ff10b5f3"
+      }
     }
   }
 }

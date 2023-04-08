@@ -12,7 +12,7 @@ import { api } from "../lib/axios"
 
 import jwt_decode from 'jwt-decode'
 import { Loading } from "../components/Utils/Loading"
-import  {Google}  from "../components/SignIn/Google"
+import  {GoogleSign}  from "../components/SignIn/GoogleSign"
 
 interface DecodedToken {
   name: string;
@@ -218,7 +218,7 @@ export function MySchedule (){
                   <Text className='font-regular text-gray-300 text-xl '>Continuar com facebook</Text>
                   </View>
 
-                <Google />
+                <GoogleSign />
 
                   <TouchableOpacity
                 className='items-center mt-4'
