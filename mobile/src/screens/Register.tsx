@@ -1,5 +1,5 @@
 
-import { SetStateAction, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { View, Text, ScrollView, TextInput, Alert } from "react-native"
 
 import { HeaderService } from "../components/Header/HeaderService"
@@ -14,10 +14,12 @@ import { PhoneNumber } from "../components/InputsRegisterLogin/PhoneNumber";
 
 import { api } from "../lib/axios";
 
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 import * as WebBrowser from 'expo-web-browser';
 import * as Google from 'expo-auth-session/providers/google';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 
 export function Register(){
@@ -27,10 +29,8 @@ export function Register(){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
-
+    const [googleData, setGoogleData] = useState<{name: string, email: string, id: string} | null>(null);
     const [disabled, setDisabled] = useState(false);
-
-
 
     const handleNameChange = (value:string) => {
       setName(value);
@@ -74,6 +74,8 @@ export function Register(){
             setPhoneNumber('');
 
             navigate("login")
+            const user = await AsyncStorage.removeItem('googleData');
+            Alert.alert('Usuário registrado com sucesso!')
           } catch (error : any) {
             Alert.alert('Email ou número de telefone já existem!')
           }
@@ -82,51 +84,90 @@ export function Register(){
         }
       };
 
+      useEffect(() => {
+        const getGoogleData = async () => {
+          const user = await AsyncStorage.getItem('googleData');
+          if (user != null) {
+            const data = JSON.parse(user);
+            setEmail(data.email);
+            setName(data.name);
+            setPassword(data.id);
+            setGoogleData(data);
+          }
+        };
+        getGoogleData();
+      }, []);
 
 
 
-    return(
-        <View className='flex-1'>
-        <ScrollView
-        contentContainerStyle={{ paddingBottom: 50, }}
-        className='flex-1 pt-11'
-        style={{backgroundColor:'#030303',}}
-        >
-        <HeaderService />
+      async function saveUser(token:string) {
+          await AsyncStorage.setItem('userToken', JSON.stringify(token))
+        }
 
-        <View className='flex items-center'>
-                <View className="mt-28">
-                    <Text className="font-regular text-3xl text-white  ">Novo Cadastro</Text>
-                </View>
+      const handleLogin = async () => {
+          if (email && password) {
+            try {
+          const  response =  await api.post('/login', { email, password });
+              const token = response.data
+              await saveUser(token)
+              navigate('home')
+            } catch (error) {
+              console.log(error)
+            }
+          }
+        };
 
-                    <Name value={name} onChangeText={handleNameChange}/>
-                    <Email value={email} onChangeText={handleEmailChange}/>
-                    <Password value={password} onChangeText={handlePasswordChange}/>
-                    <PhoneNumber value={phoneNumber} onChangeText={handlePhoneNumberChange}/>
+      return (
+        <View className="flex-1">
+          <ScrollView
+            contentContainerStyle={{ paddingBottom: 50 }}
+            className="flex-1 pt-11"
+            style={{ backgroundColor: "#030303" }}
+          >
+            <HeaderService />
 
-                <TouchableOpacity
+            <View className="flex items-center">
+              <View className="mt-28">
+                <Text className="font-regular text-3xl text-white  ">
+                  Novo Cadastro
+                </Text>
+              </View>
+
+              <Name value={name} onChangeText={handleNameChange} />
+
+              <Email value={email} onChangeText={handleEmailChange} />
+
+              <PhoneNumber value={phoneNumber} onChangeText={handlePhoneNumberChange} />
+
+              {!googleData && (
+                <>
+                  <Password value={password} onChangeText={handlePasswordChange} />
+
+                </>
+              )}
+
+              <TouchableOpacity
                 disabled={disabled}
-                onPress={handleSubmit}
-                className="w-64 h-10 mt-6 flex-row bg-zinc-300  items-center justify-center   border rounded-full">
-                    <Text className="text-black text-xl font-regular">Cadastrar</Text>
+                onPress={() => {
+                  handleSubmit();
+                  handleLogin();
+                }}
+                className="w-64 h-10 mt-6 flex-row bg-zinc-300  items-center justify-center   border rounded-full"
+              >
+                <Text className="text-black text-xl font-regular">Cadastrar</Text>
+              </TouchableOpacity>
 
-                </TouchableOpacity>
-
-                <TouchableOpacity onPress={()=>{
-                navigate('login')
-               }}
-                className="w-64 h-10 mt-6 flex-row   items-center justify-center   border rounded-full">
-                    <Text className="text-zinc-300 text-xl font-regular underline">Já tenho uma conta</Text>
-
-                </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  navigate("login");
+                }}
+                className="w-64 h-10 mt-6 flex-row   items-center justify-center   border rounded-full"
+              >
+                <Text className="text-zinc-300 text-xl font-regular underline">
+                  Já tenho uma conta
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </ScrollView>
         </View>
-
-
-
-
-
-        </ScrollView>
-
-        </View>
-    )
-}
+  )}

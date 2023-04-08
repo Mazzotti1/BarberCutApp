@@ -31,9 +31,6 @@ export function Login(){
         await AsyncStorage.setItem('userToken', JSON.stringify(token))
       }
 
-
-
-
     const handleSubmit = async () => {
       setDisabled(true);
       setTimeout(() => {
@@ -49,7 +46,7 @@ export function Login(){
             setPassword('');
 
 
-
+            const user = await AsyncStorage.removeItem('googleData');
             Alert.alert('Login realizado com sucesso!');
             navigate('home')
           } catch (error) {
