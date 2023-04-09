@@ -17,6 +17,9 @@ import { Faq } from '../screens/Faq';
 import { ForgotPassword } from '../screens/ForgotPassword';
 import { VerifyCode } from '../screens/VerifyCode';
 import { ResetPassword } from '../screens/ResetPassword';
+import { Admin } from '../screens/Admin';
+import { Usuarios } from '../screens/Usuarios';
+import { AdminBarbers } from '../screens/AdminBarbers';
 
 
 
@@ -89,6 +92,19 @@ export function AppRoutes() {
         name="resetpassword"
         component={ResetPassword}
       />
+         <Screen
+        name="admin"
+        component={Admin}
+      />
+           <Screen
+        name="usuarios"
+        component={Usuarios}
+      />
+           <Screen
+        name="adminbarbers"
+        component={AdminBarbers}
+      />
+
 
     </Navigator>
   )

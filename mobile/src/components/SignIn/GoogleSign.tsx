@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import { GoogleLogo } from 'phosphor-react-native';
 
-import * as WebBrowser from "expo-web-browser";
+
 import * as Google from "expo-auth-session/providers/google";
-import { makeRedirectUri } from "expo-auth-session";
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import { api } from "../../lib/axios";
 
-
+import { EXPO_CLIENT__ID, IOS_CLIENT_ID, ANDROID_CLIENT_ID } from "@env";
 
 export function GoogleSign  ()  {
   const { navigate } = useNavigation()
@@ -17,9 +17,9 @@ export function GoogleSign  ()  {
   const [userInfo, setUserInfo] = useState(null);
 
   const [request, response, promptAsync] = Google.useIdTokenAuthRequest({
-    expoClientId:"897651155535-nsd7fgkfmr6qvkqk730io0ebp9mch3go.apps.googleusercontent.com",
-    iosClientId: "897651155535-rifudjpahq7nlb2v8jlj8apkdf4cad73.apps.googleusercontent.com",
-    androidClientId: "897651155535-orpdk8m4cjrl72aji9a5c4c8uckhcgvs.apps.googleusercontent.com",
+    expoClientId: EXPO_CLIENT__ID,
+    iosClientId: IOS_CLIENT_ID,
+    androidClientId: ANDROID_CLIENT_ID,
   });
   useEffect(() => {
 

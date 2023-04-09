@@ -38,6 +38,7 @@ model Appointment {
   date      DateTime
   time      String
   service   String
+
 }
 
 
@@ -45,6 +46,7 @@ model barbers {
   id          String      @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   horarios Schedule[]
+
 }
 
 model Schedule {

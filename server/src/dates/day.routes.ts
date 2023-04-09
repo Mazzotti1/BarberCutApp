@@ -1,10 +1,8 @@
 import moment from "moment";
 import { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
 import prisma from "utils/prisma";
-import { string } from "zod";
-import { getUser } from "user/user.controller";
 
-
+import { deleteUser,  } from "../user/user.controller";
 
 
 interface CreateBarberRequestBody {
@@ -20,12 +18,15 @@ barber:string;
 date:Date;
 service:string;
 time:string;
+
 }
 
 interface AvailabilityRequest {
   id: string;
   date: string;
 }
+
+
 
 export async function dayRoutes(app: FastifyInstance) {
 
@@ -82,6 +83,21 @@ export async function dayRoutes(app: FastifyInstance) {
     }
   });
 
+  app.delete<{ Params: { id: string } }>('/barbers/:id', async (request, reply) => {
+    try {
+      const id = request.params.id;
+      const barbers = await prisma.barbers.deleteMany({where:{id}})
+      reply.code(200).send({
+        message: 'Barbeiros encontrados com sucesso!',
+        barbers
+      });
+    } catch (err) {
+      reply.code(500).send({
+        message: 'Erro ao buscar barbeiros'
+      });
+    }
+  });
+
   app.get('/availability', async (request: FastifyRequest, reply) => {
     const { id, date } = request.query as { id: string; date: string };
 
@@ -98,7 +114,7 @@ export async function dayRoutes(app: FastifyInstance) {
       return;
     }
 
-    const day = moment(date).format('YYYY-MM-DD');
+    const day = moment(date, 'YYYY-MM-DD')
     const appointments = await prisma.appointment.findMany({
       where: {
         id: id,
@@ -114,9 +130,16 @@ export async function dayRoutes(app: FastifyInstance) {
 
     while (startOfDay.isBefore(endOfDay)) {
       const time = startOfDay.format('HH:mm');
-      const isAvailable = appointments.every((appt) => {
-        return moment(appt.date).format('HH:mm') !== time;
-      });
+      let isAvailable = false;
+      if(time == '15:30'){
+        isAvailable = true
+      }else{
+      appointments.forEach((appt) => {
+        if (moment(appt.date).format('HH:mm') === time) {
+          isAvailable = false;
+        }
+
+      });}
       availability.push({ time, isAvailable });
       startOfDay.add(90, 'minutes');
     }
@@ -126,12 +149,13 @@ export async function dayRoutes(app: FastifyInstance) {
 
 
 
+
   app.post('/confirm', async (request, reply) => {
 
 
     try {
 
-      const { user_id, barber, date, time, service } = request.body as CreateScheduleRequestBody;
+      const { user_id, barber, date, time, service, } = request.body as CreateScheduleRequestBody;
 
       const foundBarber = await prisma.barbers.findUnique({
         where: { id: barber }

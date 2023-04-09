@@ -13,6 +13,7 @@ import { api } from "../lib/axios"
 import jwt_decode from 'jwt-decode'
 import { Loading } from "../components/Utils/Loading"
 import  {GoogleSign}  from "../components/SignIn/GoogleSign"
+import { FacebookSign } from "../components/SignIn/FacebookSign"
 
 interface DecodedToken {
   name: string;
@@ -72,7 +73,7 @@ export function MySchedule (){
   const checkIsLogged = async () => {
     try {
       const token = await AsyncStorage.getItem('userToken');
-      if (token) {
+      if (token !== null && token !== undefined) {
         setIsLogged(true);
         loadAppointments();
       } else {
@@ -80,11 +81,11 @@ export function MySchedule (){
         setIsLoading(false);
       }
     } catch (error) {
-      console.log(error);
       setIsLogged(false);
       setIsLoading(false);
     }
   };
+
 
   const loadAppointments = async () => {
     const token = await AsyncStorage.getItem('userToken');
@@ -213,10 +214,7 @@ export function MySchedule (){
               </View>
               </TouchableOpacity>
 
-              <View className='items-center flex-row p-2 w-fit rounded-xl mt-4 bg-blue-800'>
-                  <FacebookLogo size={32} color="#ededed" weight="thin" />
-                  <Text className='font-regular text-gray-300 text-xl '>Continuar com facebook</Text>
-                  </View>
+                <FacebookSign />
 
                 <GoogleSign />
 

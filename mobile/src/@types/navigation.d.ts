@@ -14,7 +14,10 @@ export declare global {
         faq:undefined;
         forgotpassword:undefined;
         verifycode:undefined;
-        resetpassword:undefined;
+        admin:undefined;
+        usuarios:undefined;
+        adminbarbers:undefined;
+
       }
     }
   }

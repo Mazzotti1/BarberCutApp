@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { House, MapPin, Scissors, SignOut, User, UsersThree } from "phosphor-react-native";
 import { useEffect, useRef, useState, } from "react";
-import { Animated, Text, View, StyleSheet, TouchableOpacity, TouchableWithoutFeedback } from "react-native";
+import { Animated, Text, View, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Alert } from "react-native";
 
 
 
@@ -66,16 +66,34 @@ export default function Sidebar({ isOpen, handleCloseSideBar }: SidebarProps) {
     }, [isOpen]);
 
 
+    const confirmSignOut = () => {
+      Alert.alert(
+        'Confirmar saída',
+        'Deseja realmente sair?',
+        [
+          {
+            text: 'Cancelar',
+            style: 'cancel'
+          },
+          {
+            text: 'Sair',
+            onPress: singOut
+          }
+        ],
+        { cancelable: false }
+      );
+    }
+
     const singOut = async () => {
       try {
         await AsyncStorage.removeItem('userToken');
-        navigate('login')
-        handleCloseSideBar()
-
+        navigate('login');
+        handleCloseSideBar();
       } catch (error) {
 
       }
     };
+
 
     const menuItems = [
       {
@@ -106,7 +124,7 @@ export default function Sidebar({ isOpen, handleCloseSideBar }: SidebarProps) {
       {
         icon: <SignOut size={52} color="#0b0b0b" weight="thin" />,
         label: 'Sair',
-        onPress: singOut
+        onPress: confirmSignOut
       }
     ];
 
