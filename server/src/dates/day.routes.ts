@@ -24,6 +24,11 @@ time:string;
 interface AvailabilityRequest {
   id: string;
   date: string;
+  isAvailable:boolean;
+}
+interface BarberID {
+  id:string;
+  horariosDisponiveis:string[];
 }
 
 
@@ -98,56 +103,40 @@ export async function dayRoutes(app: FastifyInstance) {
     }
   });
 
-  app.get('/availability', async (request: FastifyRequest, reply) => {
-    const { id, date } = request.query as { id: string; date: string };
 
-    if (!id || !date) {
-      reply.status(400).send({ message: 'Missing parameters' });
-      return;
+
+  app.post<{ Params: BarberID ; Body: BarberID}>('/barbers/:id/horarios', async (request, reply) => {
+    try {
+      const { id } = request.params;
+      const { horariosDisponiveis } = request.body;
+
+      const updatedBarber = await prisma.barbers.update({
+        where: { id },
+        data: { horariosDisponiveis },
+      });
+
+      reply.send(updatedBarber);
+    } catch (err) {
+      console.error(err);
+      reply.status(500).send({ error: 'Erro ao salvar os horários do barbeiro' });
     }
-
-    const availability = [];
-    const barber = await prisma.barbers.findFirst({ where: { id: id } });
-
-    if (!barber) {
-      reply.status(404).send({ message: 'Barber not found' });
-      return;
-    }
-
-    const day = moment(date, 'YYYY-MM-DD')
-    const appointments = await prisma.appointment.findMany({
-      where: {
-        id: id,
-        date: {
-          gte: moment(day).toDate(),
-          lt: moment(day).add(1, 'day').toDate(),
-        },
-      },
-    });
-
-    const startOfDay = moment(day).hour(8).minute(0);
-    const endOfDay = moment(day).hour(18).minute(0);
-
-    while (startOfDay.isBefore(endOfDay)) {
-      const time = startOfDay.format('HH:mm');
-      let isAvailable = false;
-      if(time == '15:30'){
-        isAvailable = true
-      }else{
-      appointments.forEach((appt) => {
-        if (moment(appt.date).format('HH:mm') === time) {
-          isAvailable = false;
-        }
-
-      });}
-      availability.push({ time, isAvailable });
-      startOfDay.add(90, 'minutes');
-    }
-
-    reply.send({ barber, availability });
   });
 
+  app.get<{ Params: BarberID }>('/barbers/:id/horarios', async (request, reply) => {
+    try {
+      const { id } = request.params;
 
+      const barber = await prisma.barbers.findUnique({
+        where: { id },
+        select: { horariosDisponiveis: true },
+      });
+      const horarios = barber?.horariosDisponiveis;
+      reply.send(horarios);
+    } catch (err) {
+      console.error(err);
+      reply.status(500).send({ error: 'Erro ao obter os horários do barbeiro' });
+    }
+  });
 
 
   app.post('/confirm', async (request, reply) => {
@@ -166,6 +155,7 @@ export async function dayRoutes(app: FastifyInstance) {
         data: {
           user_id,
           barber: foundBarber?.name,
+          barberId: foundBarber?.id,
           date,
           service,
           time,

@@ -29,7 +29,7 @@ export default function Availability (){
   const [selectedBarberId, setSelectedBarberId] = useState('');
   const [selectedDate, setSelectedDate] = useState('');
 
-  const [availableTimes, setAvailableTimes] = useState<Time[]>([]);
+  const [availableTimes, setAvailableTimes] = useState([]);
   const [selectedTime, setSelectedTime] = useState('');
 
   const [selectedService, setSelectedService] = useState('');
@@ -68,11 +68,10 @@ export default function Availability (){
  useEffect(() => {
   async function loadAvailability() {
     const id = await AsyncStorage.getItem('selectedBarber');
-    const date = await AsyncStorage.getItem('selectedDate');
     try {
-      const response = await api.get(`/availability?id=${id}&date=${date}`);
+      const response = await api.get(`/barbers/${id}/horarios`);
       const data = response.data;
-      setAvailableTimes(data.availability.filter((time:Time) => time.isAvailable));
+      setAvailableTimes(data)
     } catch (error) {
       console.log(error)
     }
@@ -153,13 +152,13 @@ export default function Availability (){
               {availableTimes.length > 0 ? (
                 <ScrollView
                 horizontal={true}>
-                  {availableTimes.map(time => (
+                  {availableTimes.map((time, index) => (
                      <TouchableOpacity
-                     onPress={() => SelectTime(time.time)}
-                      key={time.time}
-                      className={`border border-white w-20 h-10 mt-4 ml-12 rounded-lg justify-center ${selectedTime === time.time ? 'bg-zinc-200' : ''}`}>
+                     onPress={() => SelectTime(time)}
+                      key={index}
+                      className={`border border-white w-20 h-10 mt-4 ml-12 rounded-lg justify-center ${selectedTime === time ? 'bg-zinc-200' : ''}`}>
 
-                       <Text className={`text-white text-center ${selectedTime === time.time ? 'text-black' : ''}`}>{time.time}</Text>
+                       <Text className={`text-white text-center ${selectedTime === time ? 'text-black' : ''}`}>{time}</Text>
                     </TouchableOpacity>
                   ))}
                 </ScrollView>
