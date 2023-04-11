@@ -41,6 +41,7 @@ export function AdminButtons() {
 </TouchableOpacity>
 
 <TouchableOpacity
+  onPress={()=> navigate('adminusers')}
                activeOpacity={0.5}>
 <View className=" rounded-full p-2">
 <View className="bg-zinc-900 rounded-full p-2">

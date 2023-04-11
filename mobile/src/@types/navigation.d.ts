@@ -13,10 +13,12 @@ export declare global {
         availability:undefined;
         faq:undefined;
         forgotpassword:undefined;
+        resetpassword:undefined;
         verifycode:undefined;
         admin:undefined;
         usuarios:undefined;
         adminbarbers:undefined;
+        adminusers:undefined;
 
       }
     }

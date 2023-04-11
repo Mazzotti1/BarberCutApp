@@ -66,7 +66,7 @@ export function ResetPassword(){
         <View  className='gap-5  mt-2 flex-row'>
          <View className='justify-center '>
          <TextInput
-              className="text-white  font-regular text-base whitespace-nowrap text-xl overflow-hidden"
+              className="text-white  font-regular  whitespace-nowrap text-xl overflow-hidden"
               placeholder={'Nova senha'}
               placeholderTextColor="#8b8c8b"
               maxLength={100}

@@ -18,10 +18,9 @@ interface DecodedToken {
     birth:string;
     email:string;
     cpf:string;
-    admin:boolean;
   }
 
-  export function Usuarios(){
+  export function AdminUsers(){
 
     const isFocused = useIsFocused();
     const [usuarios, setUsuarios] = useState<DecodedToken[]>([]);
@@ -35,7 +34,7 @@ interface DecodedToken {
         const decodeToken = jwt_decode(token ?? '') as DecodedToken
         const userId = decodeToken.id
         try {
-          const response = await api.get('/users', {
+          const response = await api.get('/admin', {
 
           });
           const userData = response.data;
@@ -80,37 +79,31 @@ interface DecodedToken {
     }
 
     async function promoverUsuario(userId: string) {
-      try {
-        const user = usuarios.find(u => u.id === userId);
-        if (!user) return;
-        if (user.admin) {
-          // usuário já é administrador, não há necessidade de fazer a atualização
-          return;
-        }
-        Alert.alert(
-          'Confirmação',
-          'Tem certeza que deseja promover este usuário?',
-          [
-            {
-              text: 'Cancelar',
-              style: 'cancel'
-            },
-            {
-              text: 'Confirmar',
-              onPress: async () => {
-                const response = await api.patch(`/update/${userId}`, {
-                  admin: true
-                });
-                setUsuarios(usuarios.map(u => u.id === userId ? {...u, admin: true} : u));
-                setDadosUsuario(response.data);
+        try {
+          Alert.alert(
+            'Confirmação',
+            'Tem certeza que deseja tirar a permissão de admin deste usuário?',
+            [
+              {
+                text: 'Cancelar',
+                style: 'cancel'
+              },
+              {
+                text: 'Confirmar',
+                onPress: async () => {
+                  const response = await api.patch(`/update/${userId}`, {
+                    admin: false
+                  });
+                  const updatedAdmins = setUsuarios(usuarios.filter((user) => user.id !== userId));
+                  setDadosUsuario(response.data);
+                }
               }
-            }
-          ]
-        );
-      } catch (error) {
-        console.log(error);
+            ]
+          );
+        } catch (error) {
+          console.log(error);
+        }
       }
-    }
 
     return(
         <View className="flex-1">
@@ -138,49 +131,33 @@ interface DecodedToken {
                       <Text className="font-regular text-white text-md">{user.userNumber}</Text>
                     </View>
                     <View className="flex-row gap-4">
-                    {user.admin ? (
-          <View className="bg-green-700 w-18 border rounded-xl items-center p-2">
-            <Text className="text-white font-regular">Admin</Text>
-          </View>
-        ) : (
-          <>
-            <TouchableOpacity
-              onPress={() => {
-                setSelectedUserId(user.id);
-                promoverUsuario(user.id);
-              }}
-              className="bg-green-700 w-18 border rounded-xl items-center p-2"
-            >
-              <Text className="text-white font-regular">Promover</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                setSelectedUserId(user.id);
-                deletarUsuario(user.id);
-              }}
-              className="bg-red-800 w-16 border rounded-xl items-center p-2"
-            >
-              <Text className="text-white font-regular ">Deletar</Text>
-            </TouchableOpacity>
-          </>
-        )}
-      </View>
-    </TouchableOpacity>
-    {showUserInfo && selectedUserId === user.id && (
-      <View className="p-4 border border-stone-200 rounded-lg bg-zinc-300">
-        <Text className="text-black font-regular text-md">
-          Email: {dadosUsuario.email}
-        </Text>
-        <Text className="text-black font-regular text-md">
-          CPF: {dadosUsuario.cpf}
-        </Text>
-        <Text className="text-black font-regular text-md">
-          Data de Nascimento: {dadosUsuario.birth}
-        </Text>
-      </View>
-    )}
-  </View>
-))}
+                      <TouchableOpacity
+                       onPress={() => {
+                        setSelectedUserId(user.id);
+                        promoverUsuario(user.id)
+                      }}
+                      className="bg-yellow-500 w-18  border rounded-xl items-center p-2">
+                          <Text className="text-white font-regular">Rebaixar</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                         onPress={() => {
+                            setSelectedUserId(user.id);
+                            deletarUsuario(user.id)
+                          }}
+                      className="bg-red-800 w-16 border rounded-xl items-center p-2">
+                          <Text className="text-white font-regular ">Deletar</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </TouchableOpacity>
+                  {showUserInfo && selectedUserId === user.id &&
+                    <View className="p-4 border border-stone-200 rounded-lg bg-zinc-300">
+                      <Text className="text-black font-regular text-md">Email: {dadosUsuario.email}</Text>
+                      <Text className="text-black font-regular text-md">CPF: {dadosUsuario.cpf}</Text>
+                      <Text className="text-black font-regular text-md">Data de Nascimento: {dadosUsuario.birth}</Text>
+                    </View>
+                  }
+                </View>
+              ))}
             </View>
           </ScrollView>
         <NavContainer />

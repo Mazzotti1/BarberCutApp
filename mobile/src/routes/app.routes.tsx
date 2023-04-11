@@ -20,6 +20,7 @@ import { ResetPassword } from '../screens/ResetPassword';
 import { Admin } from '../screens/Admin';
 import { Usuarios } from '../screens/Usuarios';
 import { AdminBarbers } from '../screens/AdminBarbers';
+import { AdminUsers } from '../screens/AdminUsers';
 
 
 
@@ -104,7 +105,10 @@ export function AppRoutes() {
         name="adminbarbers"
         component={AdminBarbers}
       />
-
+              <Screen
+        name="adminusers"
+        component={AdminUsers}
+      />
 
     </Navigator>
   )

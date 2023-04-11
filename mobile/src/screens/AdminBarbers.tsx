@@ -140,8 +140,9 @@ interface Barber {
 
             <View className=" flex-1 m-5 p-2 mt-6 ">
               {barbers.map((barber) => (
-                <View key={barber.name}>
+                <View key={barber.id}>
                   <TouchableOpacity
+
                     onPress={() => {
                       setSelectedBarberId(barber.id);
                       setShowUserInfo(true);
@@ -168,7 +169,7 @@ interface Barber {
                     <View className="  border border-stone-200 rounded-lg bg-zinc-900">
                       <Text className="text-white font-regular text-md text-center mt-5">Escolha o DIA e os HORARIOS disponiveis para você:</Text>
                       <SafeAreaView className='flex-1'>
-                      <ScheduleCalendar />
+
                     </SafeAreaView>
 
                     <ScrollView
@@ -179,7 +180,7 @@ interface Barber {
                     <View className="items-center ml-6">
                      <TouchableOpacity
 
-                     key={index}
+                     key={time}
                      className={`border border-white w-20 h-10 mt-4 mb-4  rounded-lg justify-center ${time ? 'bg-zinc-200' : ''}`}
                      onPress={() => {
                        setSelectedTime(time);

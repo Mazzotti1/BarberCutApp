@@ -35,6 +35,7 @@ export async function findUsers() {
       nome:true,
       id:true,
       userNumber:true,
+
     }
   })
 }
@@ -65,6 +66,21 @@ export async function findAndDelete(id:string){
   return prisma.user.deleteMany({where:{id},
 
   })
+
 }
 
+export async function findAdminUsers() {
+  return prisma.user.findMany({
+    where: {
+      admin: true
+    },
+    select:{
+      email:true,
+      nome:true,
+      id:true,
+      userNumber:true,
+      admin:true
+    }
+  });
+}
 

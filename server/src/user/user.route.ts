@@ -45,11 +45,9 @@ async function userRoutes(app: FastifyInstance) {
 
     }, loginHandler)
 
-    app.get('/admin', { preHandler: [app.authenticate, admin] }, (request, reply) => {
-    reply.send({ message: 'Bem vindo admin' });
-    });
+    app.get('/admin', admin)
 
-    app.get('/users', {preHandler:[app.authenticate]},getUsersHandler)
+    app.get('/users',getUsersHandler)
 
     app.get<{ Params: { id: string } }>('/users/:id', async (request, reply) => {
         try {
