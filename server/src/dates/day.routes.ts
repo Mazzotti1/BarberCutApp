@@ -110,12 +110,14 @@ export async function dayRoutes(app: FastifyInstance) {
       const { id } = request.params;
       const { horariosDisponiveis } = request.body;
 
-      const updatedBarber = await prisma.barbers.update({
-        where: { id },
-        data: { horariosDisponiveis },
+      horariosDisponiveis.forEach(async horario => {
+        await prisma.barbers.update({
+          where: { id },
+          data: { horariosDisponiveis: { push: horario } },
+        });
       });
 
-      reply.send(updatedBarber);
+      reply.send({ message: 'Horários atualizados com sucesso.' });
     } catch (err) {
       console.error(err);
       reply.status(500).send({ error: 'Erro ao salvar os horários do barbeiro' });
@@ -137,6 +139,44 @@ export async function dayRoutes(app: FastifyInstance) {
       reply.status(500).send({ error: 'Erro ao obter os horários do barbeiro' });
     }
   });
+
+app.delete<{ Params: { id: string, horario: string } }>('/barbers/:id/horarios/:horario', async (request, reply) => {
+  try {
+    const { id, horario } = request.params;
+    const barber = await prisma.barbers.findUnique({ where: { id } });
+
+    if (!barber) {
+      return reply.code(404).send({
+        message: 'Barbeiro não encontrado.',
+      });
+    }
+
+
+    const horarioIndex = barber.horariosDisponiveis.indexOf(horario);
+    if (horarioIndex === -1) {
+      return reply.code(404).send({
+        message: 'Horário não encontrado.',
+      });
+    }
+
+    const updatedHorarios = barber.horariosDisponiveis.filter(h => h !== horario);
+
+    const updatedBarber = await prisma.barbers.update({
+      where: { id },
+      data: { horariosDisponiveis: updatedHorarios },
+    });
+
+    reply.code(200).send({
+      message: 'Horário excluído com sucesso.',
+      data: updatedBarber.horariosDisponiveis,
+    });
+  } catch (err) {
+    reply.code(500).send({
+      message: 'Erro ao excluir o horário.',
+    });
+  }
+});
+
 
 
   app.post('/confirm', async (request, reply) => {
@@ -169,7 +209,7 @@ export async function dayRoutes(app: FastifyInstance) {
         appointment: newAppointment
       });
     } else {
-      // Caso o nome ou o name não sejam strings, pode-se retornar um erro ou uma mensagem de erro adequada.
+
       reply.code(400).send({
         message: 'Nome do usuario ou nome do barbeiro inválido.'
       });

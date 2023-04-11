@@ -12,6 +12,7 @@ import { useIsFocused } from "@react-navigation/native";
 import { api } from "../lib/axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ScheduleCalendar from "../components/Schedule/ScheduleCalendar";
+import { XCircle } from "phosphor-react-native";
 
 interface Barber {
     id: string;
@@ -31,7 +32,8 @@ interface Barber {
     const [showUserInfo, setShowUserInfo] = useState(false);
     const [selectedBarberId, setSelectedBarberId] = useState('');
 
-    const [availableTimes, setAvailableTimes] = useState([]);
+    const [availableTimes, setAvailableTimes] = useState<string[]>([]);
+
     const [selectedTime, setSelectedTime] = useState('');
 
     const [value, setValue] = useState('');
@@ -96,6 +98,9 @@ interface Barber {
           horariosDisponiveis: [value],
 
         });
+        const newAvailableTimes = [...availableTimes, value];
+        setAvailableTimes(newAvailableTimes);
+
         alert('Horário salvo com sucesso!');
         setValue('')
       } catch (error) {
@@ -107,6 +112,21 @@ interface Barber {
         setValue(text);
 
     }
+
+    async function deleteAvailability(barberId: string, horario:string)  {
+      try {
+       const response = await api.delete(`/barbers/${barberId}/horarios/${horario}`, {});
+       const updatedAvailableTimes = availableTimes.filter(time => time !== horario);
+       setAvailableTimes(updatedAvailableTimes);
+       }
+         catch (error) {
+          console.log(error)
+      }
+  }
+  const handleDeleteTime = (horario:string, barberId:string) => {
+    deleteAvailability(barberId, horario);
+  }
+
 
     return(
         <View className="flex-1">
@@ -156,10 +176,11 @@ interface Barber {
                     className="mb-8"
                     >
                   {availableTimes.map((time, index) => (
+                    <View className="items-center ml-6">
                      <TouchableOpacity
 
                      key={index}
-                     className={`border border-white w-20 h-10 mt-4 ml-6 rounded-lg justify-center ${time ? 'bg-zinc-200' : ''}`}
+                     className={`border border-white w-20 h-10 mt-4 mb-4  rounded-lg justify-center ${time ? 'bg-zinc-200' : ''}`}
                      onPress={() => {
                        setSelectedTime(time);
 
@@ -167,10 +188,16 @@ interface Barber {
                    >
                      <Text className={`text-white text-center ${time ? 'text-black' : ''}`}>{time}</Text>
                    </TouchableOpacity>
+                   <TouchableOpacity
+                  onPress={() => handleDeleteTime(time, barber.id)}>
+
+                      <XCircle size={30} color="#ededed" weight="thin" />
+                    </TouchableOpacity>
+                   </View>
                   ))}
                 </ScrollView>
                 <View className="items-center">
-                       <View className="w-64 h-10 mt-4 mb-4 flex-row bg-zinc-900 overflow-hidden items-center pl-4  border-white border rounded-xl">
+                       <View className="w-64 h-10  mb-4 flex-row bg-zinc-900 overflow-hidden items-center pl-4  border-white border rounded-xl">
 
                         <TextInput
                         className="text-white font-regular mr-2 ml-2 whitespace-nowrap text-ellipsis overflow-hidden  text-base"

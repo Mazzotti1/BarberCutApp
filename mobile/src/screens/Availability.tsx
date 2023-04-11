@@ -107,9 +107,22 @@ export default function Availability (){
 
       }
     imprimirService();
-
-
   }, []);
+
+
+  async function deleteAvailability(barberId: string, horario:string)  {
+
+    try {
+     const response = await api.delete(`/barbers/${barberId}/horarios/${horario}`, {});
+
+     }
+       catch (error) {
+        console.log(error)
+    }
+}
+const handleDeleteTime = (horario:string, barberId:string) => {
+  deleteAvailability(barberId, horario);
+}
 
 
     return(
@@ -154,7 +167,10 @@ export default function Availability (){
                 horizontal={true}>
                   {availableTimes.map((time, index) => (
                      <TouchableOpacity
-                     onPress={() => SelectTime(time)}
+                     onPress={() => {
+                      SelectTime(time)
+                      handleDeleteTime(time, selectedBarberId )
+                    }}
                       key={index}
                       className={`border border-white w-20 h-10 mt-4 ml-12 rounded-lg justify-center ${selectedTime === time ? 'bg-zinc-200' : ''}`}>
 
