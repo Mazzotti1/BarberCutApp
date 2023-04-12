@@ -118,9 +118,7 @@ export function MySchedule (){
 
 
   return (
-    <TouchableOpacity
-      activeOpacity={1}
-      onPress={handleCloseSideBar}
+    <View
       style={{ flex: 1 }}
     >
 
@@ -234,7 +232,7 @@ export function MySchedule (){
       <NavContainer />
       </View>
       )}
-    </TouchableOpacity>
+    </View>
   );
 
 }

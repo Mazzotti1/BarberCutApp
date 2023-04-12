@@ -60,7 +60,7 @@ export function Register(){
             password: password,
             userNumber: phoneNumber
           };
-          if (password.length <= 6) {
+          if (password.length < 5) {
             Alert.alert('Senha inválida', 'A senha deve ter pelo menos 6 caracteres');
             return;
           }

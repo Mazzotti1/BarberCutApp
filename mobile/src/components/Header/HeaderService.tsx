@@ -30,7 +30,7 @@ export function HeaderService() {
 
 
   return (
-    <View className="w-screen h-16 justify-center bg-black   ">
+    <View className="w-screen h-16 justify-center mt-3 bg-black   ">
 
         {isLogged ? (
           <View className="flex-row items-center justify-between">

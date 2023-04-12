@@ -120,7 +120,7 @@ async function handlePickImage() {
     <TouchableOpacity
     onPress={handlePickImage}
     >
-      <View className="bg-slate-300 w-10 h-10 border rounded-full justify-center items-center mr-5">
+      <View className="bg-slate-300 w-2 h-10 border rounded-full justify-center items-center mr-9">
         {image ? (
           <Image source={{ uri: image }} style={{ width: 53, height: 53, borderRadius:26 }} />
         ) : (

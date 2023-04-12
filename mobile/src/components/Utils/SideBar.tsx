@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { House, MapPin, Scissors, SignOut, User, UsersThree } from "phosphor-react-native";
+import { House, MapPin, Scissors, SignOut, User, UsersThree, XCircle } from "phosphor-react-native";
 import { useEffect, useRef, useState, } from "react";
 import { Animated, Text, View, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Alert } from "react-native";
 
@@ -130,7 +130,14 @@ export default function Sidebar({ isOpen, handleCloseSideBar }: SidebarProps) {
 
     return (
       <Animated.View style={[styles.sidebar, { transform: [{ translateX }], },]}>
-        <View className="m-10 flex-row">
+         <View className="items-end mt-4 mr-4">
+          <TouchableOpacity
+          onPress={()=> handleCloseSideBar()}
+          >
+              <XCircle size={36} color="#000000" weight="thin" />
+            </TouchableOpacity>
+          </View>
+        <View className="ml-10 mb-6 flex-row">
 
         <Photo  />
 
@@ -138,8 +145,10 @@ export default function Sidebar({ isOpen, handleCloseSideBar }: SidebarProps) {
             <Text className="text-black font-regular text-lg">{usuario.nome.charAt(0).toUpperCase() + usuario.nome.slice(1)}</Text>
             <Text className="text-black font-regular">{usuario.email.charAt(0).toUpperCase() + usuario.email.slice(1)}</Text>
           </View>
+
         </View>
-        <View className="Line w-60 flex justify-center items-center ml-6 bg-zinc-500" style={{ height: 1 }}></View>
+
+        <View className="Line w-60 flex justify-center items-center ml-4 bg-zinc-500" style={{ height: 1 }}></View>
         {menuItems.map((item, index) => (
           <TouchableOpacity activeOpacity={0.5} onPress={item.onPress} key={index}>
             <View className="ml-10 mt-2 mb-4 flex-row items-center">
@@ -158,7 +167,7 @@ export default function Sidebar({ isOpen, handleCloseSideBar }: SidebarProps) {
       top: 0,
       bottom: 0,
       left: 0,
-      height:800,
+      height:630,
       right: 100,
       backgroundColor: 'white',
       zIndex: 999,

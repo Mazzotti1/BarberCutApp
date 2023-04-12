@@ -75,9 +75,7 @@ import { ScheduleButtonLogged } from '../components/Schedule/ScheduleButtonLogge
       }
 
     return(
-      <TouchableOpacity
-      activeOpacity={1}
-      onPress={handleCloseSideBar}
+      <View
       style={{ flex: 1 }}
     >
         {isLogged ? (
@@ -146,7 +144,7 @@ import { ScheduleButtonLogged } from '../components/Schedule/ScheduleButtonLogge
                </View>
                )
             }
-        </TouchableOpacity>
+        </View>
     )
  }
 

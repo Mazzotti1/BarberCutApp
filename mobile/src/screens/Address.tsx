@@ -123,7 +123,7 @@
 
 
              {datas.map((data, index) => (
-      <View key={index} className='gap-5 ml-3 mt-2 flex-row'>
+      <View  key={index} className='gap-5 ml-1 mt-2 flex-row'>
 
         <View className='justify-center'>
           <TextInput
@@ -140,12 +140,13 @@
       </View>
     ))}
 
+    <View className='items-center'>
     <TouchableOpacity
      onPress={atualizarDados}
-    className="w-36 h-10 mt-10 flex-row  bg-slate-200 items-center justify-center ml-32  border rounded-xl">
+    className="w-36 h-10 mt-10 flex-row  bg-slate-200 items-center justify-center border rounded-xl">
         <Text className='text-center font-regular text-xl'>Salvar endereço</Text>
     </TouchableOpacity>
-
+    </View>
   </View>
     )
  }

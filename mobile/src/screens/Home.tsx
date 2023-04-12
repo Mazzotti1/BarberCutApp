@@ -32,7 +32,7 @@ export function Home(){
   function handleCloseSideBar(){
     Animated.timing(translateX, {
       toValue: -350,
-      duration: 500,
+      duration: 200,
       useNativeDriver: true,
     }).start(() => setOpenSidebar(false));
   }
@@ -44,12 +44,8 @@ export function Home(){
       }
 
     return(
-      <TouchableOpacity
-      activeOpacity={1}
-      onPress={handleCloseSideBar}
-      style={{ flex: 1 }}
-    >
-      <View className="flex-1">
+
+      <View className="flex-1" >
     <ScrollView
 
     showsVerticalScrollIndicator={false}
@@ -69,33 +65,30 @@ export function Home(){
 
           <HomeButtons />
 
-          <View className="Calendario bg-neutral-900 w-96  mt-3  rounded-xl border-black border shadow-lg" >
-          <Text className="text-white font-regular text-2xl p-6 text-center">SHARP CUT Barber Shop</Text>
-              <Text className="text-zinc-500 font-regular text-base pl-4 mb-3 ">HORÁRIOS DE FUNCIONAMENTO</Text>
+          <View className="Calendario bg-neutral-900  rounded-xl border-black border shadow-lg"
+          style={{ width: '90%' }}
+          >
+  <Text className="text-white font-regular text-2xl p-6 text-center">SHARP CUT Barber Shop</Text>
+  <Text className="text-zinc-500 font-regular text-base pl-4 mb-3">HORÁRIOS DE FUNCIONAMENTO</Text>
+  <View style={{ display: 'flex', flexDirection: 'row', }}>
+    <View className="items-center" style={{ flex: 1,  }}>
+      {days.map(function(item, index) {
+        return (
+          <Text className="text-white font-regular text-base  mb-1" key={index}>{item}</Text>
+        )
+      })}
+    </View>
+    <View className="items-center mb-4" style={{ flex: 1 }}>
+      {Array.from({ length: 5 }, (_, i) => (
+        <Text className="text-white font-regular text-base  mb-1" key={i}>
+          {time[0]}
+        </Text>
+      ))}
+      <Text className="text-white font-regular text-base ">09:00 - 19:00</Text>
+    </View>
+  </View>
+</View>
 
-          <View className="flex-row gap-36">
-            <View className="pb-5 ">
-               { days.map(function(item, index){
-                return(
-                  <Text className="text-white font-regular text-base pl-4 mb-1 " key={index}>{item}</Text>
-                )
-              })}
-            </View>
-              <View>
-                  {
-                  Array.from({ length: 5 }, (_, i) => (
-                    <Text className="text-white font-regular text-base pl-4 mb-1" key={i}>
-                      {time[0]}
-                    </Text>
-
-                  ))
-
-                }
-                  <Text className="text-white font-regular text-base pl-4">09:00 - 19:00 </Text>
-              </View>
-            </View>
-
-          </View>
 
           <View className="Line w-80 flex justify-center items-center mt-5  bg-zinc-500"style={{height:1}} ></View>
 
@@ -184,7 +177,6 @@ export function Home(){
 
         <NavContainer />
     </View>
-    </TouchableOpacity>
       )
 }
 

@@ -79,14 +79,14 @@ export default function  ScheduleCalendar(){
       <CalendarStrip
         selectedDate={new Date()}
         calendarColor={'transparent'}
-        dateNumberStyle={{ color: 'white', fontSize: 15 }}
+        dateNumberStyle={{ color: 'white', fontSize: 14 }}
         dateNameStyle={{ color: 'white', fontSize: 12 }}
         calendarHeaderStyle={{ color: 'white', fontSize: 20 }}
         style={{ height: 90, paddingTop: 5 }}
         scrollable={true}
-        highlightDateContainerStyle={{ borderWidth: 1, borderColor: 'white', backgroundColor: '#dde4f0' }}
-        highlightDateNameStyle={{ color: '#f03c3c', fontSize: 14, marginTop: 7, fontWeight: '700' }}
-        highlightDateNumberStyle={{ color: '#f03c3c', fontSize: 16, justifyContent:'center' }}
+        highlightDateContainerStyle={{  backgroundColor: '#dde4f0', }}
+        highlightDateNameStyle={{ color: '#f03c3c', fontSize: 12, marginTop: 7 }}
+        highlightDateNumberStyle={{ color: '#f03c3c', fontSize: 14, justifyContent:'center' }}
         locale={{ name: 'pt-br', config: { weekdaysMin: 'D_S_T_Q_Q_S_S'.split('_') } }}
         minDate={new Date()}
         markedDates={markedDates}

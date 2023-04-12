@@ -1,4 +1,4 @@
-import { View, TouchableOpacity, Text, Animated, TouchableWithoutFeedback, StyleSheet } from "react-native";
+import { View, TouchableOpacity, Text, Animated, TouchableWithoutFeedback, StyleSheet, SafeAreaView } from "react-native";
 
 import { useNavigation, useIsFocused  } from "@react-navigation/native";
 
@@ -40,7 +40,7 @@ export function Header({handleSidebar}:SidebarProps) {
 
 
   return (
-    <View className="w-screen h-16 justify-center bg-black   ">
+    <SafeAreaView  className="w-screen h-16 mt-3 justify-center bg-black   ">
 
 
 
@@ -64,7 +64,7 @@ export function Header({handleSidebar}:SidebarProps) {
          )
       }
 
-    </View>
+    </SafeAreaView >
   )
 }
 
