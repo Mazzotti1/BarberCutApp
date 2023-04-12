@@ -1,7 +1,5 @@
 import { TouchableOpacity, View,Text } from "react-native";
-
 import { Calendar,Scissors, UsersThree, MapPin } from "phosphor-react-native";
-
 import { useNavigation } from "@react-navigation/native";
 import { Linking } from 'react-native';
 
@@ -17,10 +15,7 @@ export function HomeButtons() {
   }
 
   return (
-    <TouchableOpacity className="flex-row gap-3 mt-1"
-    //   activeOpacity={0.7}
-    //   onPress={}
-    >
+    <View className="flex-row gap-3 mt-1">
 <TouchableOpacity
                activeOpacity={0.5}
                onPress={()=>{
@@ -73,8 +68,6 @@ onPress={handleOpenMaps}
     <Text className="text-white text-base  text-center font-regular">Ver Mapa</Text>
 </View>
 </TouchableOpacity>
-
-
-    </TouchableOpacity>
+    </View>
   )
 }

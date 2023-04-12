@@ -2,8 +2,8 @@
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
-import { Check, Eye } from 'phosphor-react-native';
-import React, { useEffect, useState } from 'react';
+import {  Eye } from 'phosphor-react-native';
+import React, {  useState } from 'react';
 import {View, ScrollView, Text, TextInput, TouchableOpacity, Alert} from 'react-native'
 
 import { HeaderService } from '../components/Header/HeaderService'
@@ -46,8 +46,6 @@ export function ResetPassword(){
   const toggleShowPassword = () => {
     setShowPassword(!showPassword);
   };
-
-
 
     return(
         <View className='flex-1 '>

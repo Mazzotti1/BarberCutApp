@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
-import { View, Text, ScrollView, SafeAreaView, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 
 import { HeaderService } from "../components/Header/HeaderService";
-
-import ScheduleCalendar from "../components/Schedule/ScheduleCalendar";
 
 import { api } from "../lib/axios";
 
@@ -19,10 +17,6 @@ interface Barber {
   name: string;
 }
 
-interface Time {
-  isAvailable: boolean;
-  time: string;
-}
 
 export default function Availability (){
   const [barbers, setBarbers] = useState<Barber[]>([]);

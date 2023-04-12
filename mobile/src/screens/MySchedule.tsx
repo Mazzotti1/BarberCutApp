@@ -1,8 +1,8 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useIsFocused, useNavigation } from "@react-navigation/native"
-import { Calendar, FacebookLogo, GoogleLogo } from "phosphor-react-native"
+import { Calendar } from "phosphor-react-native"
 import { useEffect, useRef, useState } from "react"
-import { View, Text, TouchableOpacity, Animated, TouchableWithoutFeedback, StyleSheet } from "react-native"
+import { View, Text, TouchableOpacity, Animated } from "react-native"
 import { ScrollView } from "react-native"
 
 import { Header } from "../components/Header/Header"
@@ -13,7 +13,7 @@ import { api } from "../lib/axios"
 import jwt_decode from 'jwt-decode'
 import { Loading } from "../components/Utils/Loading"
 import  {GoogleSign}  from "../components/SignIn/GoogleSign"
-import { FacebookSign } from "../components/SignIn/FacebookSign"
+
 
 interface DecodedToken {
   name: string;
@@ -86,7 +86,6 @@ export function MySchedule (){
     }
   };
 
-
   const loadAppointments = async () => {
     const token = await AsyncStorage.getItem('userToken');
     const decodeToken = jwt_decode(token ?? '') as DecodedToken;
@@ -115,7 +114,6 @@ export function MySchedule (){
       </View>
     );
   }
-
 
   return (
     <View
@@ -211,8 +209,6 @@ export function MySchedule (){
                   <Text className='font-regular text-gray-300 text-xl'>Continuar com email</Text>
               </View>
               </TouchableOpacity>
-
-                <FacebookSign />
 
                 <GoogleSign />
 

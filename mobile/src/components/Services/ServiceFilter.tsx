@@ -1,10 +1,7 @@
 
-
 import React, { useState } from 'react';
 import {View, Text, FlatList } from 'react-native'
 import { SearchBar } from 'react-native-screens';
-
-
 
 type Item = {
     id: string;
@@ -14,9 +11,6 @@ type Item = {
   type ServicesListProps = {
     items: Item[];
   };
-
-
-
 
 export function ServiceFilter({ items }: ServicesListProps) {
   const [filteredItems, setFilteredItems] = useState(items);

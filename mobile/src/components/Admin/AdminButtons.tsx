@@ -1,15 +1,8 @@
 import { TouchableOpacity, View,Text } from "react-native";
-
-import { Calendar,Scissors, UsersThree, MapPin, UserList, UserGear, UserPlus, BookOpen } from "phosphor-react-native";
-
+import { UserList, UserGear, UserPlus, BookOpen } from "phosphor-react-native";
 import { useNavigation } from "@react-navigation/native";
-import { Linking } from 'react-native';
-
 export function AdminButtons() {
   const { navigate } = useNavigation()
-
-
-
   return (
     <TouchableOpacity className="flex-row gap-3 mt-1"
 

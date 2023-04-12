@@ -1,8 +1,9 @@
 import {useState} from 'react'
-import { TouchableOpacity, View, Text, Dimensions, StyleSheet, Animated, TouchableWithoutFeedback } from "react-native"
+import { TouchableOpacity, View, Text, StyleSheet, Animated, TouchableWithoutFeedback } from "react-native"
 
 import { DeviceMobileSpeaker, FacebookLogo,GoogleLogo } from 'phosphor-react-native';
 import { useNavigation } from '@react-navigation/native';
+import { GoogleSign } from '../SignIn/GoogleSign';
 
 export function ScheduleButton(){
 
@@ -63,15 +64,7 @@ export function ScheduleButton(){
                     </View>
                     </TouchableOpacity>
 
-                    <View className='items-center flex-row p-2 w-fit rounded-xl mt-4 bg-blue-800'>
-                      <FacebookLogo size={32} color="#ededed" weight="thin" />
-                      <Text className='font-regular text-gray-300 text-xl '>Continuar com facebook</Text>
-                    </View>
-
-                    <View className='items-center flex-row p-2 w-fit rounded-xl mt-4 bg-slate-600'>
-                      <GoogleLogo size={32} color="#ededed" weight="thin" />
-                      <Text className='font-regular text-gray-300 text-xl '>Continuar com Google</Text>
-                    </View>
+                   <GoogleSign />
 
                     <TouchableOpacity
                       className='items-center mt-4'

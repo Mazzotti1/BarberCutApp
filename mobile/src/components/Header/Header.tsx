@@ -1,11 +1,10 @@
-import { View, TouchableOpacity, Text, Animated, TouchableWithoutFeedback, StyleSheet, SafeAreaView } from "react-native";
+import { View, TouchableOpacity, Text, SafeAreaView } from "react-native";
 
-import { useNavigation, useIsFocused  } from "@react-navigation/native";
+import {  useIsFocused  } from "@react-navigation/native";
 
 import { useState, useEffect, useRef } from "react";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import {User} from 'phosphor-react-native'
 import { Photo } from "../Profile/Photo";
 
 
@@ -14,16 +13,8 @@ interface SidebarProps {
 }
 
 export function Header({handleSidebar}:SidebarProps) {
-
-  const navigation = useNavigation();
-
   const [isLogged, setIsLogged] = useState(false);
   const isFocused = useIsFocused();
-
-  const [openSidebar, setOpenSidebar] = useState(false);
-  const translateX = useRef(new Animated.Value(-400)).current;
-
-
   useEffect(() => {
     checkIsLogged();
   }, [isFocused]);
@@ -37,7 +28,6 @@ export function Header({handleSidebar}:SidebarProps) {
     }
 
   };
-
 
   return (
     <SafeAreaView  className="w-screen h-16 mt-3 justify-center bg-black   ">

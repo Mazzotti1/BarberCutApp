@@ -8,21 +8,12 @@ import { useEffect, useState, } from "react";
 import { HeaderService } from "../components/Header/HeaderService";
 import { useIsFocused } from "@react-navigation/native";
 
-
 import { api } from "../lib/axios";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import ScheduleCalendar from "../components/Schedule/ScheduleCalendar";
 import { XCircle } from "phosphor-react-native";
 
 interface Barber {
     id: string;
     name: string;
-  }
-
-
-  interface Time {
-    isAvailable: boolean;
-    time: string;
   }
 
   export function AdminBarbers(){
@@ -174,7 +165,7 @@ interface Barber {
                   </TouchableOpacity>
                   {showUserInfo && selectedBarberId === barber.id &&
                     <View className="  border border-stone-200 rounded-lg bg-zinc-900">
-                      <Text className="text-white font-regular text-md text-center mt-5">Escolha o DIA e os HORARIOS disponiveis para você:</Text>
+                      <Text className="text-white font-regular text-md text-center mt-5">Escolha os HORARIOS disponiveis para você:</Text>
                       <SafeAreaView className='flex-1'>
 
                     </SafeAreaView>

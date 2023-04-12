@@ -5,13 +5,8 @@ import Corte from '../../assets/corte.svg'
 import Barba from '../../assets/barba.svg'
 import Sobrancelha from '../../assets/sobrancelha.svg'
 import BarbaCorte from '../../assets/barbaCorte.svg'
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { useFocusEffect } from '@react-navigation/native'
-import { BarbersProfile } from '../Barbers/BarbersProfile'
-import { ScheduleButtonLogged } from '../Schedule/ScheduleButtonLogged'
-
-
 
 const services = [
     {
@@ -31,28 +26,15 @@ const services = [
         img:<BarbaCorte />
     }
 ]
-
-
 export function ServicesGrid(){
     const [selectedService, setSelectedService] = useState('');
-
-
-
     function handleClick(title:string){
         setSelectedService(title);
-
       }
-
       async function saveTittle(title: string) {
         setSelectedService(title);
         await AsyncStorage.setItem('selectedService', title);
-
       }
-
-
-
-
-
     return(
         <View>
         <ScrollView

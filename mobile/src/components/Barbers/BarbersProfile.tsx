@@ -2,7 +2,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 import {View, ScrollView, Text, TouchableOpacity} from 'react-native'
-
 import Barber1 from '../../assets/barber1.svg'
 import Barber2 from '../../assets/barber2.svg'
 import { api } from '../../lib/axios';
@@ -11,7 +10,6 @@ interface Barber {
     id: string;
     name: string;
   }
-
 export function BarbersProfile(){
     const [barbers, setBarbers] = useState<Barber[]>([]);
     const [selectedBarberId, setSelectedBarberId] = useState('');
@@ -41,8 +39,6 @@ export function BarbersProfile(){
   async function handleClick(id: string) {
   setSelectedBarberId(id);
   await AsyncStorage.setItem('selectedBarber', id);
-
-
 }
 
 
@@ -64,7 +60,6 @@ export function BarbersProfile(){
                         <View>{item.img}</View>
                         <Text className='text-gray-300  text-lg font-regular p-3 '>{item.name}</Text>
                         </TouchableOpacity>
-
                      )
                       })}
             </View>

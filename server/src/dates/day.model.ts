@@ -1,8 +1,3 @@
-import { string } from '@hapi/joi';
-import { Prisma, User } from '@prisma/client';
-
-
-
 
 export interface HorariosDisponiveis {
   id :string;
@@ -10,7 +5,6 @@ export interface HorariosDisponiveis {
   horario:string;
   disponivel:boolean;
 }
-
 
 export interface Appointment {
   id: string;
@@ -22,7 +16,6 @@ export interface Appointment {
   service:string;
 
 }
-
 export interface barbers {
   id: string;
   name:string;

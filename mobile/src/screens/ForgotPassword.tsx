@@ -1,8 +1,6 @@
 
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
-import { Check } from 'phosphor-react-native';
 import React, { useState } from 'react';
 import {View, ScrollView, Text, TextInput, TouchableOpacity, Alert} from 'react-native'
 
@@ -50,7 +48,6 @@ export function ForgotPassword(){
         <View className='flex  items-center pt-20 '>
             <Text className='text-white mt-5 m-6 font-regular text-center text-2xl'>Digite seu email para recuperar a senha</Text>
 
-
         <View  className='gap-5  mt-2 flex-row'>
          <View className='justify-center '>
          <TextInput
@@ -60,7 +57,6 @@ export function ForgotPassword(){
               maxLength={40}
               onChangeText={setEmail}
               >
-
               </TextInput>
            <View style={{height:1, backgroundColor:'white', width:250}}></View>
          </View>
@@ -72,7 +68,6 @@ export function ForgotPassword(){
          <Text className='text-center font-regular text-xl'>Enviar</Text>
      </TouchableOpacity>
        </View>
-
         </ScrollView>
            <NavContainer />
         </View>

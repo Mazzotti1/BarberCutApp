@@ -3,16 +3,13 @@
   import React, { useState, useEffect } from 'react';
   import {View, Text, TextInput, TouchableOpacity, Alert} from 'react-native'
 
-
   import { HeaderService } from '../components/Header/HeaderService'
-
 
   import { User, Envelope, Phone, IdentificationCard, Calendar } from 'phosphor-react-native';
 
   import { api } from '../lib/axios';
   import AsyncStorage from '@react-native-async-storage/async-storage';
   import jwt_decode from 'jwt-decode'
-
 
   interface DecodedToken {
       id: string;
@@ -24,15 +21,10 @@
     }
 
 
-
   export function MyData(){
        const [usuario, setUsuario] = useState({ nome: '', email: '', userNumber:'', cpf:'' , birth:'', });
 
-
-
       useEffect(() => {
-
-
           async function carregarUsuario() {
             const token = await AsyncStorage.getItem('userToken');
             const decodeToken = jwt_decode(token ?? '') as DecodedToken
@@ -54,13 +46,11 @@
           carregarUsuario()
         }, []);
 
-
         const [nome, setNome] = useState(usuario.nome);
         const [email, setEmail] = useState(usuario.email);
         const [userNumber, setUserNumber] = useState(usuario.userNumber);
         const [cpf, setCpf] = useState(usuario.cpf);
         const [birth, setBirth] = useState(usuario.birth);
-
 
         const datas = [
           {
@@ -104,8 +94,6 @@
             minLenght: 8,
           },
         ];
-
-
 
         async function atualizarDados() {
           const token = await AsyncStorage.getItem('userToken');
@@ -156,8 +144,6 @@
             console.error(error);
           }
         }
-
-
 
       return(
           <View className='flex-1 pt-11'style={{backgroundColor:'#030303',}}>

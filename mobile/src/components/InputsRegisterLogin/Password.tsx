@@ -2,7 +2,6 @@ import { useState } from "react";
 
 import { View, TextInput, TouchableOpacity} from 'react-native';
 import {Eye, Lock } from 'phosphor-react-native'
-
 interface Props {
     value: string;
     onChangeText: (value: string) => void;

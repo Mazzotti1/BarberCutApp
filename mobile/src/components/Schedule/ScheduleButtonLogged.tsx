@@ -3,7 +3,6 @@ import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
 import { TouchableOpacity, View, Text, Alert } from "react-native";
 
-
 export function ScheduleButtonLogged () {
     const { navigate } = useNavigation()
     const [disabled, setDisabled] = useState(false);

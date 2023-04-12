@@ -1,12 +1,8 @@
 import { View, TouchableOpacity, Text } from "react-native";
-
 import { useNavigation } from "@react-navigation/native";
-
-import {House, Calendar, BookBookmark, Newspaper, Question, ShieldWarning } from 'phosphor-react-native'
-
+import {House, Calendar, BookBookmark, Question, ShieldWarning } from 'phosphor-react-native'
 import { useEffect, useState } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
 import jwt_decode from 'jwt-decode'
 import { api } from "../lib/axios";
 import { useIsFocused } from '@react-navigation/native';
@@ -16,36 +12,36 @@ interface DecodedToken {
  admin:boolean;
 }
 
-
 export function NavContainer() {
   const { navigate } = useNavigation()
 
   const [isAdmin, setIsAdmin] = useState(false);
   const [usuario, setUsuario] = useState({ id:'', admin:{}, });
-
   const isFocused = useIsFocused();
 
   useEffect(() => {
     async function carregarUsuario() {
       const token = await AsyncStorage.getItem('userToken');
-      const decodeToken = jwt_decode(token ?? '') as DecodedToken
-      const userId = decodeToken.id
-      try {
-        const response = await api.get(`/users/${userId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        });
-        const userData = response.data;
-        setUsuario(userData);
-        const isAdmin = userData.admin;
-        setIsAdmin(isAdmin);
+      if (token) { // Verifica se existe um token
+        const decodeToken = jwt_decode(token) as DecodedToken;
+        const userId = decodeToken.id;
+        try {
+          const response = await api.get(`/users/${userId}`, {
+            headers: {
+              Authorization: `Bearer ${token}`
+            }
+          });
+          const userData = response.data;
+          setUsuario(userData);
+          const isAdm = userData.admin;
+          setIsAdmin(isAdm);
 
-      } catch (error) {
-        console.log(error)
+        } catch (error) {
+          console.log(error)
+        }
       }
-
     }
+
     carregarUsuario()
   }, [isFocused]);
 

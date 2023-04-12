@@ -34,7 +34,6 @@ async function userRoutes(app: FastifyInstance) {
         }
     },registerUserHandler)
 
-
     app.post('/login', {
         schema:{
             body:$ref('loginSchema'),
@@ -67,7 +66,7 @@ async function userRoutes(app: FastifyInstance) {
         }
       });
 
-      app.delete<{ Params: { id: string } }>('/users/:id', async (request, reply) => {
+    app.delete<{ Params: { id: string } }>('/users/:id', async (request, reply) => {
         try {
           const id = request.params.id;
           const user = await deleteUser(id);
@@ -85,7 +84,7 @@ async function userRoutes(app: FastifyInstance) {
         }
       });
 
-      app.patch<{ Params: UserUpdate }>('/update/:id', async (request, reply) => {
+    app.patch<{ Params: UserUpdate }>('/update/:id', async (request, reply) => {
         const { id } = request.params;
         const updateData: UserUpdate = request.body as UserUpdate;
 
@@ -102,7 +101,7 @@ async function userRoutes(app: FastifyInstance) {
 
       });
 
-      app.put<{ Params: UserUpdate }>('/users/:id', async (request, reply) => {
+    app.put<{ Params: UserUpdate }>('/users/:id', async (request, reply) => {
         const { id } = request.params;
         const imagePath: UserUpdate = request.body as UserUpdate;
         try {

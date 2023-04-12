@@ -1,23 +1,18 @@
 
 import React, { useRef, useState } from 'react';
-import {View, Text, ScrollView, TouchableOpacity, Animated, TouchableWithoutFeedback, StyleSheet} from 'react-native'
-
+import {View, Text, TouchableOpacity, Animated, TouchableWithoutFeedback, StyleSheet} from 'react-native'
 
 import Barber1 from '../../assets/barber1.svg'
 import Barber2 from '../../assets/barber2.svg'
 
-
 import { useNavigation } from '@react-navigation/native';
 import { SvgProps } from 'react-native-svg';
-
-
 
 type ServiceDetails = {
     title: string;
     img: React.FC<SvgProps>;
     description:string;
   };
-
   const details = [
     {
         title:"Matheus Souza",
@@ -29,18 +24,11 @@ type ServiceDetails = {
         img:Barber2,
         description:"Atuo como barbeiro a 6 anos, manjo muito em platinar e deixar a barba na régua."
     },
-
 ]
-
 export function BarbersList(){
-
     const { navigate } = useNavigation()
-
-
     const [selectedService, setSelectedService] = useState<ServiceDetails | null>(null);
     const translateY = useRef(new Animated.Value(0)).current;
-
-
     function handleServiceClick(details: ServiceDetails){
       setSelectedService(details);
       Animated.timing(translateY, {
@@ -49,7 +37,6 @@ export function BarbersList(){
         useNativeDriver: true,
       }).start();
     }
-
     function handleCloseClick(){
       Animated.timing(translateY, {
         toValue: 0,
@@ -62,7 +49,6 @@ export function BarbersList(){
     className=''>
             <View className='grid-rows-3  gap-10 p-5 h-screen ' >
                 { details.map(function(item, index){
-
                 return(
                     <TouchableOpacity  key={index} onPress={() => handleServiceClick(item)}>
                     <View key={index} className='flex flex-row items-start w-fit rounded-3xl' style={{backgroundColor:'#0a0a0a'}}>
@@ -75,7 +61,6 @@ export function BarbersList(){
                   </TouchableOpacity>
                      )
                       })}
-
                 {selectedService && (
                   <>
                     <TouchableWithoutFeedback onPress={handleCloseClick}>
@@ -108,7 +93,6 @@ export function BarbersList(){
                     </Animated.View>
                     </>
                     )}
-
             </View>
         </View>
     )

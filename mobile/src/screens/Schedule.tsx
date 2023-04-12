@@ -1,13 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import {View, Text, ScrollView, SafeAreaView, Animated, TouchableWithoutFeedback, StyleSheet, TouchableOpacity} from 'react-native'
+import {View, Text, ScrollView, SafeAreaView, Animated} from 'react-native'
 import { Loading } from '../components/Utils/Loading';
 
 import { NavContainer } from '../components/NavContainer';
 import { Header } from '../components/Header/Header';
-
-
-
  import { ScheduleButton } from '../components/Schedule/ScheduleButton';
  import { BarbersProfile } from '../components/Barbers/BarbersProfile';
  import { ServicesGrid } from '../components/Services/ServicesGrid';
@@ -19,11 +16,9 @@ import Sidebar from '../components/Utils/SideBar';
 import { useIsFocused } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ScheduleButtonLogged } from '../components/Schedule/ScheduleButtonLogged';
+import { HeaderService } from '../components/Header/HeaderService';
 
  export function Schedule(){
-
-  const startDate = dayjs();
-
 
   const [isLogged, setIsLogged] = useState(false);
   const isFocused = useIsFocused();
@@ -119,7 +114,7 @@ import { ScheduleButtonLogged } from '../components/Schedule/ScheduleButtonLogge
                 className='flex-1 pt-11'
                 style={{backgroundColor:'#030303',}}
                 >
-                <Header handleSidebar={handleSidebar}/>
+                <HeaderService />
                 <Sidebar isOpen={openSidebar} handleCloseSideBar={handleCloseSideBar} />
                     <View className='bg-black mt-6 flex items-center p-4'>
                         <View className='flex-row bg-black '>

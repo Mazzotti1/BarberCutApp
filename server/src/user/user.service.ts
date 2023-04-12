@@ -11,7 +11,6 @@ export async function createUser(input: CreatUserInput){
     return user;
 }
 
-
 export async function findUserByEmail(email:string) {
 
   return prisma.user.findUnique({
@@ -20,6 +19,7 @@ export async function findUserByEmail(email:string) {
     }
   })
 }
+
 export async function findUserByNumber(userNumber: string) {
   return prisma.user.findUnique({
     where: {

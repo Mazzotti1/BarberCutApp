@@ -1,8 +1,6 @@
 
-
 import React, {useState} from 'react';
 import {View, Text, TextInput} from 'react-native';
-
 import { MagnifyingGlass } from 'phosphor-react-native'
 
 const data = [
@@ -19,7 +17,6 @@ export function ServiceSearchBar() {
 
     function handleSearchTextChange(text:string) {
         setSearchText(text);
-
 
         const filteredResults = data.filter((item) =>
         item.toLowerCase().includes(text.toLowerCase())

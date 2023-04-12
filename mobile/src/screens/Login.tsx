@@ -1,23 +1,16 @@
 
 import { useState } from "react";
 import { View, Text, ScrollView, TextInput, Alert } from "react-native"
-
 import { HeaderService } from "../components/Header/HeaderService"
-
-
 import { TouchableOpacity } from "react-native";
-
 
 import { Email } from "../components/InputsRegisterLogin/Email";
 import { Password } from "../components/InputsRegisterLogin/Password";
 import { Scissors } from "phosphor-react-native";
 
 import { api } from "../lib/axios";
-
 import { useNavigation } from "@react-navigation/native";
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 
 export function Login(){
     const { navigate } = useNavigation()
@@ -45,7 +38,6 @@ export function Login(){
             setEmail('');
             setPassword('');
 
-
             const user = await AsyncStorage.removeItem('googleData');
             Alert.alert('Login realizado com sucesso!');
             navigate('home')
@@ -59,7 +51,6 @@ export function Login(){
           Alert.alert('Por favor, preencha seu email e senha para fazer login');
         }
       };
-
 
     return(
         <View className='flex-1'>
@@ -101,18 +92,12 @@ export function Login(){
                 <TouchableOpacity onPress={()=>{
                 navigate('register')
                }}
-                className="w-64 h-10 mt-6 flex-row   items-center justify-center   border rounded-full">
+                className="w-64 h-10 mt-6 flex-row   items-center justify-center mb-8  border rounded-full">
                     <Text className="text-zinc-300 text-xl font-regular underline">Ainda não tenho uma conta</Text>
 
                 </TouchableOpacity>
         </View>
-
-
-
-
-
         </ScrollView>
-
         </View>
     )
 }

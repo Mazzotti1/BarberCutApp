@@ -1,23 +1,12 @@
 
-
 import { Check } from 'phosphor-react-native';
-import React, { useState } from 'react';
+import React from 'react';
 import {View, ScrollView, Text} from 'react-native'
-
 
 import { HeaderService } from '../components/Header/HeaderService'
 import { NavContainer } from '../components/NavContainer'
 
-
-
-import { ServicesList } from '../components/Services/ServicesList';
-
-
-
-
 export function Faq(){
-
-
     return(
         <View className='flex-1'>
         <ScrollView

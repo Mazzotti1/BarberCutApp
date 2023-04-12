@@ -1,4 +1,3 @@
-import { useState } from "react";
 
 import { View, TextInput} from 'react-native';
 import {  Phone } from "phosphor-react-native";
@@ -10,7 +9,6 @@ interface Props {
 
 
 export function PhoneNumber ({value, onChangeText}: Props){
-
 
     return(
         <View className="w-64 h-10 mt-6 flex-row bg-zinc-900 overflow-hidden items-center pl-4  border-white border rounded-full">

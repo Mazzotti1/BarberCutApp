@@ -1,14 +1,13 @@
-import { View, StyleSheet, Text, Alert } from 'react-native';
+import { View,  Alert } from 'react-native';
 import CalendarStrip from 'react-native-calendar-strip';
 
 import 'moment/locale/pt-br';
 import { useEffect, useState } from 'react';
 import { api } from '../../lib/axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import moment, { Moment } from 'moment';
+import { Moment } from 'moment';
 import { Loading } from '../Utils/Loading';
 import { CaretLeft, CaretRight } from 'phosphor-react-native';
-import { Ionicons } from '@expo/vector-icons';
 
 
 

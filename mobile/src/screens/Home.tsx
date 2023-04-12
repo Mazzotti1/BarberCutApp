@@ -1,7 +1,6 @@
 import { Loading } from "../components/Utils/Loading";
-
 import { View, Text, ScrollView, TouchableOpacity, Linking,
-   Animated, TouchableWithoutFeedback, StyleSheet } from "react-native"
+   Animated} from "react-native"
 
 import { Header } from "../components/Header/Header"
 import { HomeButtons } from "../components/HomeButtons";
@@ -11,7 +10,6 @@ import Logo from '../assets/logo.svg'
 import {DeviceMobileCamera, Envelope, InstagramLogo, FacebookLogo} from 'phosphor-react-native'
 import { useRef, useState } from "react";
 import Sidebar from "../components/Utils/SideBar";
-
 
 const days = ['Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado'];
 
@@ -52,19 +50,11 @@ export function Home(){
     contentContainerStyle={{ paddingBottom: 100, }}
     className='flex-1 pt-11'
     style={{backgroundColor:'#030303',}}>
-
-
         <Header handleSidebar={handleSidebar}/>
-
-
           <Sidebar isOpen={openSidebar}  handleCloseSideBar={handleCloseSideBar}/>
-
-
         <View className=" flex-1 items-center mt-6">
           <Logo width={350} height={335} />
-
           <HomeButtons />
-
           <View className="Calendario bg-neutral-900  rounded-xl border-black border shadow-lg"
           style={{ width: '90%' }}
           >
@@ -89,7 +79,6 @@ export function Home(){
   </View>
 </View>
 
-
           <View className="Line w-80 flex justify-center items-center mt-5  bg-zinc-500"style={{height:1}} ></View>
 
           <View className="Contact w-80 p-2 flex-row justify-between">
@@ -113,9 +102,6 @@ export function Home(){
               <Text className="text-white font-regular text-lg">Avenida brasil, 887 - Sharp Cut Barbershop 92039-120 - Los angeles</Text>
 
             </View>
-
-
-
         </View>
 
         <View className="Line w-80 flex justify-center items-center mt-5  bg-zinc-500"style={{height:1}} ></View>
@@ -132,8 +118,6 @@ export function Home(){
               <Text className="text-white font-regular text-lg">Instagram</Text>
               </TouchableOpacity>
 
-
-
               <TouchableOpacity
                activeOpacity={0.5}
                onPress={()=>{
@@ -141,9 +125,7 @@ export function Home(){
                }}>
               <Text className="text-white font-regular text-lg">Facebook</Text>
               </TouchableOpacity>
-
             </View>
-
             <View className="flex justify-end gap-1 mb-3 ">
             <TouchableOpacity
                activeOpacity={0.5}
@@ -152,9 +134,7 @@ export function Home(){
                }}
                 >
               <InstagramLogo size={32} color="#ededed" weight="thin" />
-
               </TouchableOpacity>
-
               <TouchableOpacity
                activeOpacity={0.5}
                onPress={()=>{
@@ -163,18 +143,10 @@ export function Home(){
                 >
               <FacebookLogo size={32} color="#ededed" weight="thin" />
               </TouchableOpacity>
-
             </View>
           </View>
-
-
-
         </View>
-
     </ScrollView>
-
-
-
         <NavContainer />
     </View>
       )

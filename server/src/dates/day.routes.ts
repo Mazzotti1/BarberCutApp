@@ -1,8 +1,6 @@
-import moment from "moment";
+
 import { FastifyInstance, FastifyRequest, FastifyReply } from "fastify";
 import prisma from "utils/prisma";
-
-import { deleteUser,  } from "../user/user.controller";
 
 
 interface CreateBarberRequestBody {
@@ -21,22 +19,12 @@ time:string;
 username:string
 }
 
-interface AvailabilityRequest {
-  id: string;
-  date: string;
-  isAvailable:boolean;
-}
 interface BarberID {
   id:string;
   horariosDisponiveis:string[];
 }
 
-
-
 export async function dayRoutes(app: FastifyInstance) {
-
-
-
   app.get('/calendar', async (request, reply) => {
     const today = new Date();
     const dates = [];
@@ -45,20 +33,17 @@ export async function dayRoutes(app: FastifyInstance) {
       const date = new Date(today.getTime() + i * 24 * 60 * 60 * 1000);
       dates.push(date);
     }
-
     reply.send(dates);
   });
 
 
   app.post('/barbers', async (request: FastifyRequest, reply: FastifyReply) => {
     const { name, id, horarios } = request.body as CreateBarberRequestBody;
-
     try {
       const newBarber = await prisma.barbers.create({
         data: {
           id: id,
           name,
-
         }
       });
 
@@ -102,8 +87,6 @@ export async function dayRoutes(app: FastifyInstance) {
       });
     }
   });
-
-
 
   app.post<{ Params: BarberID ; Body: BarberID}>('/barbers/:id/horarios', async (request, reply) => {
     try {
@@ -150,8 +133,6 @@ app.delete<{ Params: { id: string, horario: string } }>('/barbers/:id/horarios/:
         message: 'Barbeiro não encontrado.',
       });
     }
-
-
     const horarioIndex = barber.horariosDisponiveis.indexOf(horario);
     if (horarioIndex === -1) {
       return reply.code(404).send({
@@ -176,7 +157,6 @@ app.delete<{ Params: { id: string, horario: string } }>('/barbers/:id/horarios/:
     });
   }
 });
-
 
 
   app.post('/confirm', async (request, reply) => {
@@ -225,6 +205,23 @@ app.delete<{ Params: { id: string, horario: string } }>('/barbers/:id/horarios/:
     }
   });
 
+  app.get('/appointments', async (request, reply) => {
+    try {
+      const appointments = await prisma.appointment.findMany();
+      if (!appointments || appointments.length === 0) {
+        reply.status(404).send({
+          error: 'Nenhum agendamento encontrado.',
+        });
+        return;
+      }
+      reply.send(appointments);
+    } catch (error) {
+      reply.status(500).send({
+        error: 'Erro interno do servidor.',
+      });
+    }
+  });
+
   app.delete<{ Params: { id: string } }>('/appointment/:id', async (request, response) => {
     const appointmentId = (request.params.id);
 
@@ -247,7 +244,6 @@ app.delete<{ Params: { id: string, horario: string } }>('/barbers/:id/horarios/:
     }
   });
 
-
   app.get<{ Params: { id: string } }>('/appointments/:id', async (request, reply) => {
     try {
       const id = request.params.id;
@@ -268,22 +264,6 @@ app.delete<{ Params: { id: string, horario: string } }>('/barbers/:id/horarios/:
     }
   });
 
-  app.get('/appointments', async (request, reply) => {
-    try {
-      const appointments = await prisma.appointment.findMany();
-      if (!appointments || appointments.length === 0) {
-        reply.status(404).send({
-          error: 'Nenhum agendamento encontrado.',
-        });
-        return;
-      }
-      reply.send(appointments);
-    } catch (error) {
-      reply.status(500).send({
-        error: 'Erro interno do servidor.',
-      });
-    }
-  });
 
 
 }

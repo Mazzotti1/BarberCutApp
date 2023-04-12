@@ -1,18 +1,13 @@
 
 
-import React, { useState } from 'react';
+import React from 'react';
 import {View, ScrollView} from 'react-native'
 
 
 import { HeaderService } from '../components/Header/HeaderService'
 import { NavContainer } from '../components/NavContainer'
 
-
-
 import { ServicesList } from '../components/Services/ServicesList';
-
-
-
 
 export function Services(){
 
@@ -30,11 +25,7 @@ export function Services(){
         <View className='flex items-center mt-14'>
 
         </View>
-
         <ServicesList  />
-
-
-
         </ScrollView>
            <NavContainer />
         </View>

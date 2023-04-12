@@ -1,18 +1,10 @@
 
 import { View, ScrollView, Text, TouchableOpacity, Alert } from "react-native"
-
-
-
 import { useEffect, useState, } from "react";
-
-
 import { useIsFocused } from "@react-navigation/native";
-
 import { api } from "../../lib/axios";
 import {format} from 'date-fns'
 import { XCircle } from "phosphor-react-native";
-
-
 
 interface Agendamento {
   id: string;

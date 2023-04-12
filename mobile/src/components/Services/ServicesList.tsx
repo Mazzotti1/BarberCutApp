@@ -1,8 +1,6 @@
 
 import React, { useRef, useState } from 'react';
-import {View, Text, FlatList , Animated, TouchableOpacity, TouchableWithoutFeedback, StyleSheet, ScrollView} from 'react-native'
-
-
+import {View, Text , Animated, TouchableOpacity, TouchableWithoutFeedback, StyleSheet, ScrollView} from 'react-native'
 
 import Corte from '../../assets/corte.svg'
 import Barba from '../../assets/barba.svg'
@@ -13,11 +11,6 @@ import { Clock, Money } from 'phosphor-react-native'
 
 import { useNavigation } from '@react-navigation/native';
 
-
-
-
-
-
 type ServiceDetails = {
     title: string;
     img: JSX.Element;
@@ -25,10 +18,6 @@ type ServiceDetails = {
     value: string;
     description:string;
   };
-
-
-
-
 
 export function ServicesList() {
   const details: ServiceDetails[] = [
@@ -62,15 +51,9 @@ export function ServicesList() {
         description:"Serviço completo com todos os benefícios."
     }
 ]
-
-
     const { navigate } = useNavigation()
-
-
-
     const [selectedService, setSelectedService] = useState<ServiceDetails | null>(null);
     const translateY = useRef(new Animated.Value(0)).current;
-
 
     function handleServiceClick(details: ServiceDetails){
       setSelectedService(details);
@@ -89,17 +72,12 @@ export function ServicesList() {
       }).start(() => setSelectedService(null));
     }
 
-
-
     return(
-
     <ScrollView
-
     className=' '>
 
             <View className='grid-rows-3  gap-10 p-5' >
                 { details.map(function(item, index){
-
                 return(
                     <TouchableOpacity  key={index} onPress={() => handleServiceClick(item)}>
                     <View key={index} className='flex flex-row items-start w-fit rounded-3xl' style={{backgroundColor:'#0a0a0a'}}>

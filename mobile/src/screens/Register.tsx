@@ -1,9 +1,8 @@
 
-import { SetStateAction, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { View, Text, ScrollView, TextInput, Alert } from "react-native"
 
 import { HeaderService } from "../components/Header/HeaderService"
-
 
 import { TouchableOpacity } from "react-native";
 
@@ -15,11 +14,7 @@ import { PhoneNumber } from "../components/InputsRegisterLogin/PhoneNumber";
 import { api } from "../lib/axios";
 
 import { useNavigation, useRoute } from "@react-navigation/native";
-
-import * as WebBrowser from 'expo-web-browser';
-import * as Google from 'expo-auth-session/providers/google';
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
 
 
 export function Register(){
@@ -161,7 +156,7 @@ export function Register(){
                 onPress={() => {
                   navigate("login");
                 }}
-                className="w-64 h-10 mt-6 flex-row   items-center justify-center   border rounded-full"
+                className="w-64 h-10 mt-6 flex-row   items-center justify-center mb-8  border rounded-full"
               >
                 <Text className="text-zinc-300 text-xl font-regular underline">
                   Já tenho uma conta

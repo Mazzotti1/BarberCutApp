@@ -5,9 +5,6 @@ import prisma from "../utils/prisma";
 import mailgun from 'mailgun-js';
 
 export async function saveResetCode(email: string, resetCode: string): Promise<void> {
-
-
-
     await prisma.user.update({
         where: { email },
         data: { resetCode },
@@ -15,7 +12,6 @@ export async function saveResetCode(email: string, resetCode: string): Promise<v
   }
 
  export async function sendResetCodeEmail(email: string, resetCode: string): Promise<void> {
-
   const mg = mailgun({
     apiKey: String(process.env.API_KEY),
     domain: String(process.env.DOMAIN)
@@ -46,9 +42,6 @@ export async function removeResetCode(email: string, resetCode: string) {
     });
   }, 10 * 60 * 1000);
 }
-
-
-
 
 export async function checkResetCode(email: string, resetCode: string): Promise<boolean> {
   try {

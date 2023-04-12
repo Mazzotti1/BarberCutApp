@@ -4,7 +4,7 @@ import { createUser, findUserByEmail, findUsers, findUserByNumber, findUser, fin
 import bcrypt from "bcrypt"
 import { app } from "../server";
 import {  registerValidate } from "./user.validate";
-import prisma from "../utils/prisma";
+
 
 
 export async function registerUserHandler(
@@ -39,11 +39,8 @@ try {
 } catch (e) {
     console.error(e)
     return reply.code(500).send()
-
+    }
 }
-
-}
-
 export async function loginHandler(request:FastifyRequest<{
     Body:LoginInput
 }>, reply: FastifyReply
@@ -56,7 +53,6 @@ export async function loginHandler(request:FastifyRequest<{
             message:"Email ou a senha estão incorretos"
         })
     }
-
     const correctPassword = await bcrypt.compare(body.password, user.password)
         if(correctPassword){
             const {password, ...rest} = user
@@ -68,26 +64,19 @@ export async function loginHandler(request:FastifyRequest<{
 })
 }
 
-
-
-
-
 export async function getUsersHandler(){
     const users = await findUsers()
-
     return users;
 }
 
 
 export async function getUser(id: string){
     const user = await findUser(id)
-
     return user;
 }
 
 export async function deleteUser(id: string){
     const user = await findAndDelete(id)
-
     return user;
 }
 

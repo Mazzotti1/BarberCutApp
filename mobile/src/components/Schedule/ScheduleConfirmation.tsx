@@ -1,10 +1,9 @@
-import { View, StyleSheet, Text, TouchableOpacity, Alert } from 'react-native';
-import CalendarStrip from 'react-native-calendar-strip';
+import { View, Text, TouchableOpacity, Alert } from 'react-native';
+
 
 import { useEffect, useState } from 'react';
 import { api } from '../../lib/axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import moment, { Moment } from 'moment';
 import { useNavigation } from '@react-navigation/native';
 
 import jwt_decode from 'jwt-decode'
@@ -15,16 +14,10 @@ interface DecodedToken {
 
   }
 
-  interface AppointmentID {
-    id: string;
-  }
 
 export default function  ScheduleConfirmation(){
     const { navigate } = useNavigation()
     const [disabled, setDisabled] = useState(false);
-
-  const [appointmentID, setAppointmentID] = useState('');
-
 
     async function handlePress() {
         const selectedTime = await AsyncStorage.getItem('selectedTime');
@@ -45,14 +38,11 @@ export default function  ScheduleConfirmation(){
                 service: selectedService,
                 time: selectedTime
             };
-
-
        const response = await api.post('/confirm', payload, )
 
         if (disabled) {
           return;
         }
-
           setDisabled(true);
           setTimeout(() => {
             setDisabled(false);
@@ -61,8 +51,6 @@ export default function  ScheduleConfirmation(){
 
           navigate('myschedule')
       }
-
-
   return (
     <View className='font-regular pt-8 '>
           <TouchableOpacity
@@ -73,7 +61,6 @@ export default function  ScheduleConfirmation(){
           <Text className='font-regular text-black text-xl'>Confirmar agendamento</Text>
         </View>
       </TouchableOpacity>
-
     </View>
   );
 }

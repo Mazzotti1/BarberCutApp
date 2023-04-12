@@ -1,11 +1,10 @@
 import { User } from "phosphor-react-native";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { TouchableOpacity, View, Image } from "react-native";
-
 
 import * as ImagePicker from 'expo-image-picker';
 
-import { S3, Token } from 'aws-sdk';
+import { S3,} from 'aws-sdk';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import jwt_decode from 'jwt-decode'
 import { api } from "../../lib/axios";
@@ -39,7 +38,7 @@ export function Photo() {
       async function carregarUsuario() {
         const token = await AsyncStorage.getItem('userToken');
         if (!token) {
-          return; // usuário não está logado
+          return;
         }
 
         const decodeToken = jwt_decode(token ?? '') as DecodedToken

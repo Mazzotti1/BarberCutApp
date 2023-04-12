@@ -1,34 +1,26 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { House, MapPin, Scissors, SignOut, User, UsersThree, XCircle } from "phosphor-react-native";
 import { useEffect, useRef, useState, } from "react";
-import { Animated, Text, View, StyleSheet, TouchableOpacity, TouchableWithoutFeedback, Alert } from "react-native";
-
-
+import { Animated, Text, View, StyleSheet, TouchableOpacity, Alert } from "react-native";
 
 import { api } from "../../lib/axios";
 import jwt_decode from 'jwt-decode'
 import { Photo } from "../Profile/Photo";
 
 import { useNavigation } from "@react-navigation/native";
-
 interface SidebarProps {
     isOpen: boolean;
     handleCloseSideBar: ()=> void;
   }
-
    interface DecodedToken {
      id: string;
      name: string;
      email: string;
-
    }
 
 export default function Sidebar({ isOpen, handleCloseSideBar }: SidebarProps) {
     const translateX = useRef(new Animated.Value(-400)).current;
     const [usuario, setUsuario] = useState({ nome: '', email: '' });
-    const [image, setImage] = useState<string | undefined>(undefined);
-
-
     const { navigate } = useNavigation()
 
     useEffect(() => {
@@ -49,7 +41,7 @@ export default function Sidebar({ isOpen, handleCloseSideBar }: SidebarProps) {
       async function carregarUsuario() {
         const token = await AsyncStorage.getItem('userToken');
         if (!token) {
-          return; // usuário não está logado
+          return;
         }
         const decodeToken = jwt_decode(token ?? '') as DecodedToken
         const userId = decodeToken.id
@@ -64,7 +56,6 @@ export default function Sidebar({ isOpen, handleCloseSideBar }: SidebarProps) {
       }
       carregarUsuario()
     }, [isOpen]);
-
 
     const confirmSignOut = () => {
       Alert.alert(
@@ -130,7 +121,7 @@ export default function Sidebar({ isOpen, handleCloseSideBar }: SidebarProps) {
 
     return (
       <Animated.View style={[styles.sidebar, { transform: [{ translateX }], },]}>
-         <View className="items-end mt-4 mr-4">
+         <View className="items-end mt-7 mr-4">
           <TouchableOpacity
           onPress={()=> handleCloseSideBar()}
           >

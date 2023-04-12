@@ -71,7 +71,7 @@ export function GoogleSign  ()  {
     <TouchableOpacity
       disabled={!request}
       onPress={() => {promptAsync()}}
-      className='items-center flex-row p-2 w-fit rounded-xl mt-4 bg-slate-600'>
+      className='items-center flex-row p-2 w-fit rounded-xl mt-4 bg-red-500'>
       <GoogleLogo size={32} color="#ededed" weight="thin" />
       <Text className='font-regular text-gray-300 text-xl '>Continuar com Google</Text>
     </TouchableOpacity>

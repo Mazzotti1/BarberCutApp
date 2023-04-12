@@ -8,21 +8,15 @@ import {
 import { Loading } from './src/components/Utils/Loading';
 import { Routes } from './src/routes';
 
-
 export default function App() {
-
-
   const [fontsLoaded] = useFonts({
     Abel_400Regular,
   });
-
   if (!fontsLoaded) {
     return (
       <Loading />
     );
   }
-
-
   return (
     <>
       <Routes />

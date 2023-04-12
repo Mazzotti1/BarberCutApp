@@ -1,14 +1,8 @@
 
-import {View, ScrollView} from 'react-native'
-
-
+import {View} from 'react-native'
 import { HeaderService } from '../components/Header/HeaderService'
 import { NavContainer } from '../components/NavContainer'
-
-
-
 import { BarbersList } from '../components/Barbers/BarbersList';
-
 
 export function Barbers(){
 
@@ -20,15 +14,9 @@ export function Barbers(){
         style={{backgroundColor:'#030303',}}
         >
         <HeaderService />
-
         <View className='flex mt-16 items-center'>
-
         </View>
-
         <BarbersList />
-
-
-
         </View>
            <NavContainer />
         </View>

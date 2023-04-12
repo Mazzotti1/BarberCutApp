@@ -1,13 +1,10 @@
-import { useState } from "react";
 
 import { View, TextInput} from 'react-native';
 import {Envelope, } from 'phosphor-react-native'
-
 interface Props {
     value: string;
     onChangeText: (value: string) => void;
   }
-
 export function Email ({value, onChangeText}: Props){
 
     return(
@@ -21,7 +18,6 @@ export function Email ({value, onChangeText}: Props){
                     placeholderTextColor="#d3d3d3"
                     maxLength={40}
                     ></TextInput>
-
         </View>
     )
 }

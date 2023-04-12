@@ -49,12 +49,10 @@ interface DecodedToken {
         try {
             const response = await api.get(`/users/${userId}`, {});
             setDadosUsuario(response.data);
-
         } catch (error) {
             console.log(error)
         }
     }
-
     async function deletarUsuario(userId: string)  {
         try {
             Alert.alert(
