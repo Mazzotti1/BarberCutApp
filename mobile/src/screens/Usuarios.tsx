@@ -32,6 +32,7 @@ interface DecodedToken {
     useEffect(() => {
       async function carregarUsuarios() {
         const token = await AsyncStorage.getItem('userToken');
+
         const decodeToken = jwt_decode(token ?? '') as DecodedToken
         const userId = decodeToken.id
         try {
@@ -84,7 +85,7 @@ interface DecodedToken {
         const user = usuarios.find(u => u.id === userId);
         if (!user) return;
         if (user.admin) {
-          // usuário já é administrador, não há necessidade de fazer a atualização
+
           return;
         }
         Alert.alert(
@@ -103,6 +104,7 @@ interface DecodedToken {
                 });
                 setUsuarios(usuarios.map(u => u.id === userId ? {...u, admin: true} : u));
                 setDadosUsuario(response.data);
+
               }
             }
           ]
@@ -110,6 +112,11 @@ interface DecodedToken {
       } catch (error) {
         console.log(error);
       }
+    }
+
+    function handleCloseUserInfo() {
+      setShowUserInfo(false)
+      setSelectedUserId('')
     }
 
     return(
@@ -126,11 +133,15 @@ interface DecodedToken {
               {usuarios.map((user) => (
                 <View key={user.id}>
                   <TouchableOpacity
-                    onPress={() => {
+                   onPress={() => {
+                    if (showUserInfo && selectedUserId === user.id) {
+                      handleCloseUserInfo()
+                    } else {
                       setSelectedUserId(user.id);
                       carregarDadosUsuario(user.id);
                       setShowUserInfo(true);
                     }}
+                  }
                     className="bg-zinc-900 border rounded-xl flex-row justify-between items-center mt-2 p-4"
                   >
                     <View>

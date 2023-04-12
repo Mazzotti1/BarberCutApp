@@ -11,7 +11,7 @@ import jwt_decode from 'jwt-decode'
 
 interface DecodedToken {
     id: string;
-
+  nome:string;
 
   }
 
@@ -31,13 +31,15 @@ export default function  ScheduleConfirmation(){
         const selectedDate = await AsyncStorage.getItem('selectedDate');
         const selectedBarber = await AsyncStorage.getItem('selectedBarber');
         const selectedService = await AsyncStorage.getItem('selectedService');
+
         const userToken = await AsyncStorage.getItem('userToken');
 
         const decodeToken = jwt_decode(userToken ?? '') as DecodedToken
         const userId = decodeToken.id
-
+        const name = decodeToken.nome
             const payload = {
                 user_id: userId,
+                username:userId,
                 barber: selectedBarber,
                 date: selectedDate,
                 service: selectedService,

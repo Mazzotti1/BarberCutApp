@@ -3,15 +3,14 @@ import { Loading } from "../components/Utils/Loading";
 import { View, Text, ScrollView, TouchableOpacity, Linking,
    Animated, TouchableWithoutFeedback, StyleSheet } from "react-native"
 
-import { Header } from "../components/Header/Header"
-import { HomeButtons } from "../components/HomeButtons";
+
 import { NavContainer } from "../components/NavContainer";
 
-import Logo from '../assets/logo.svg'
-import {DeviceMobileCamera, Envelope, InstagramLogo, FacebookLogo} from 'phosphor-react-native'
 import { useRef, useState } from "react";
 import Sidebar from "../components/Utils/SideBar";
 import { AdminButtons } from "../components/Admin/AdminButtons";
+import { AdminAppointments } from "../components/Admin/AdminAppointments";
+import { HeaderService } from "../components/Header/HeaderService";
 
 
 
@@ -57,7 +56,7 @@ export function Admin(){
     style={{backgroundColor:'#030303',}}>
 
 
-        <Header handleSidebar={handleSidebar}/>
+        <HeaderService/>
 
 
           <Sidebar isOpen={openSidebar}  handleCloseSideBar={handleCloseSideBar}/>
@@ -65,7 +64,7 @@ export function Admin(){
 
         <View className=" flex-1 items-center mt-6">
             <AdminButtons />
-
+            <AdminAppointments/>
         </View>
 
     </ScrollView>

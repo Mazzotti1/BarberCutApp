@@ -127,6 +127,10 @@ interface Barber {
     deleteAvailability(barberId, horario);
   }
 
+  function handleCloseUserInfo() {
+    setShowUserInfo(false)
+    setSelectedBarberId('')
+  }
 
     return(
         <View className="flex-1">
@@ -142,12 +146,15 @@ interface Barber {
               {barbers.map((barber) => (
                 <View key={barber.id}>
                   <TouchableOpacity
-
                     onPress={() => {
+                      if (showUserInfo && selectedBarberId === barber.id) {
+                        handleCloseUserInfo()
+                      } else {
                       setSelectedBarberId(barber.id);
                       setShowUserInfo(true);
                       loadAvailability(barber.id);
                     }}
+                  }
                     className="bg-zinc-900 border rounded-xl flex-row justify-between items-center mt-2 p-4"
                   >
                     <View>

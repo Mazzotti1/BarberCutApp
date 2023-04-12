@@ -18,7 +18,7 @@ barber:string;
 date:Date;
 service:string;
 time:string;
-
+username:string
 }
 
 interface AvailabilityRequest {
@@ -184,15 +184,20 @@ app.delete<{ Params: { id: string, horario: string } }>('/barbers/:id/horarios/:
 
     try {
 
-      const { user_id, barber, date, time, service, } = request.body as CreateScheduleRequestBody;
+      const {  username, user_id, barber, date, time, service, } = request.body as CreateScheduleRequestBody;
 
       const foundBarber = await prisma.barbers.findUnique({
         where: { id: barber }
       });
 
-      if (foundBarber && typeof foundBarber.name === 'string' ) {
+      const foundUser = await prisma.user.findUnique({
+        where: { id: username }
+      });
+
+      if (foundBarber && typeof foundBarber.name === 'string' && foundUser && typeof foundUser.nome === 'string') {
       const newAppointment = await prisma.appointment.create({
         data: {
+          username: foundUser?.nome,
           user_id,
           barber: foundBarber?.name,
           barberId: foundBarber?.id,
@@ -220,6 +225,28 @@ app.delete<{ Params: { id: string, horario: string } }>('/barbers/:id/horarios/:
     }
   });
 
+  app.delete<{ Params: { id: string } }>('/appointment/:id', async (request, response) => {
+    const appointmentId = (request.params.id);
+
+    try {
+      const deletedAppointment = await prisma.appointment.delete({
+        where: {
+          id: appointmentId
+        }
+      });
+
+      response.send({
+        message: 'Agendamento excluído com sucesso!',
+        appointment: deletedAppointment
+      });
+    } catch (err) {
+      response.status(400).send({
+        message: 'Erro ao excluir o agendamento.',
+        error: err
+      });
+    }
+  });
+
 
   app.get<{ Params: { id: string } }>('/appointments/:id', async (request, reply) => {
     try {
@@ -241,6 +268,22 @@ app.delete<{ Params: { id: string, horario: string } }>('/barbers/:id/horarios/:
     }
   });
 
+  app.get('/appointments', async (request, reply) => {
+    try {
+      const appointments = await prisma.appointment.findMany();
+      if (!appointments || appointments.length === 0) {
+        reply.status(404).send({
+          error: 'Nenhum agendamento encontrado.',
+        });
+        return;
+      }
+      reply.send(appointments);
+    } catch (error) {
+      reply.status(500).send({
+        error: 'Erro interno do servidor.',
+      });
+    }
+  });
 
 
 }
