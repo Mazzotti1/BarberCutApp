@@ -1,4 +1,4 @@
-import Fastify from "fastify";
+import fastify from "fastify";
 import cors from '@fastify/cors'
 import * as dotenv from 'dotenv';
 import userRoutes from "./user/user.route";
@@ -6,18 +6,14 @@ import { userSchemas} from './user/user.schema'
 import fjwt from "@fastify/jwt"
 import { FastifyRequest ,FastifyReply } from "fastify";
 import { dayRoutes } from "./dates/day.routes";
-import { dataRoutes } from "data/data.route";
+import { dataRoutes } from "./data/data.route";
 
 
 
 
-export const app = Fastify();
+export const app = fastify();
 
-declare module "Fastify"{
-  export interface FastifyInstance{
-    authenticate:any;
-  }
-}
+
 
 app.register(fjwt,{
     secret: String(process.env.SECRET_FJWT)
@@ -56,10 +52,10 @@ app.register(dataRoutes, {prefix:"/"} )
 
 try {
     await app.listen({
-        port: Number(process.env.PORT),
+        port: Number(3333),
         host: '0.0.0.0'
     }).then(() => {
-        console.log(`Server Running on port ${process.env.PORT}`)
+        console.log(`Server Running on port 3333`)
     })
 } catch (e) {
     console.error(e);

@@ -113,9 +113,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace 'com.mazzotti.mobile2'
+    namespace 'com.mazzotti.SharpCut'
     defaultConfig {
-        applicationId 'com.mazzotti.mobile2'
+        applicationId 'com.mazzotti.SharpCut'
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

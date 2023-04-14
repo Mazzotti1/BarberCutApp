@@ -1,7 +1,6 @@
 
 import { FastifyInstance } from "fastify";
-import { app } from "server";
-import prisma from "utils/prisma";
+import prisma from "../utils/prisma";
 import { saveResetCode } from "./data.service";
 import { sendResetCodeEmail } from "./data.service";
 import { checkResetCode } from "./data.service";
