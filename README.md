@@ -116,4 +116,9 @@ Para garantir a melhor experiência de usuário possível, o aplicativo foi dese
       Feito por <a href="https://github.com/Mazzotti1">Gabriel Mazzotti</a>
     </td>
 </table>
+<table>
+    <td>
+        <a href="https://github.com/Mazzotti1/BarberCutApp/blob/main/LICENSE">Licence</a>
+    </td>
+</table>
 
