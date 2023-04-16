@@ -8,7 +8,7 @@ A base de dados foi construída com MongoDb e Prisma e o servidor da API foi hos
 
 A combinação dessas tecnologias permitiu uma experiência de desenvolvimento ágil e escalável.
 
-## Eu construí o APP de ponta a ponta e claro não podia falta o Design no Figma! Segue o link para conferir: <a href="https://www.figma.com/file/dQGgpP6ZoErJ4U79iMfNvM/SharpCut-Mobile-Design?node-id=0%3A1&t=VY0GwgB6jG8K4XmQ-1" >Clique aqui!</a>
+## Eu construí o APP de ponta a ponta e claro não podia faltar o Design no Figma! Segue o link para conferir: <a href="https://www.figma.com/file/dQGgpP6ZoErJ4U79iMfNvM/SharpCut-Mobile-Design?node-id=0%3A1&t=VY0GwgB6jG8K4XmQ-1" >Clique aqui!</a>
 
 ## Para aqueles que quiserem testar o aplicativo:
 
