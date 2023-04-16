@@ -14,7 +14,7 @@ A combinação dessas tecnologias permitiu uma experiência de desenvolvimento �
 
 Ele está completamente funcional basta baixar o **APK** dele e rodar no seu celular, eu não posso colocar na **Google playstore** por quê preciso pagar pela minha conta de desenvolvedor, e por enquanto vai ser apenas APK porquê também não tenho conta de **desenvolvedor IOS**, então nem adianta tentar buildar um arquivo **IPA**, que sem o registro nínguem vai conseguir abrir.
 
-## Mas pode utilizar enquanto os servidores estão no ar: <a href="https://expo.dev/artifacts/eas/jkkjNHTcieRrjfPnwdxcbb.apk" >SharpCut BarberShop</a>
+## Mas pode utilizar enquanto os servidores estão no ar: <a href="https://expo.dev/artifacts/eas/nbGTtnkofYjtCdUHoVdRAu.apk" >SharpCut BarberShop</a>
 
 ## Utilização
 
