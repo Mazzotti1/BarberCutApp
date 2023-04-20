@@ -10,12 +10,6 @@ A combinação dessas tecnologias permitiu uma experiência de desenvolvimento �
 
 ## Eu construí o APP de ponta a ponta e claro não podia faltar o Design no Figma! Segue o link para conferir: <a href="https://www.figma.com/file/dQGgpP6ZoErJ4U79iMfNvM/SharpCut-Mobile-Design?node-id=0%3A1&t=VY0GwgB6jG8K4XmQ-1" >Clique aqui!</a>
 
-## Para aqueles que quiserem testar o aplicativo:
-
-Ele está completamente funcional basta baixar o **APK** dele e rodar no seu celular, eu não posso colocar na **Google playstore** por quê preciso pagar pela minha conta de desenvolvedor, e por enquanto vai ser apenas APK porquê também não tenho conta de **desenvolvedor IOS**, então nem adianta tentar buildar um arquivo **IPA**, que sem o registro nínguem vai conseguir abrir.
-
-## Mas pode utilizar enquanto os servidores estão no ar: <a href="https://expo.dev/artifacts/eas/nbGTtnkofYjtCdUHoVdRAu.apk" >SharpCut BarberShop</a>
-
 ## Utilização
 
 O aplicativo móvel foi desenvolvido com o objetivo de fornecer aos usuários uma experiência de agendamentos para serviços de barbearia, com a possibilidade de gerar leads para venda e prospecção de clientes.
